@@ -79,7 +79,7 @@
     {
         for (int i = 0; i < keys.Length; i++)
         {
-            if (keys[i].Equals(key))
+            if (Equals(keys[i], key))
             {
                 return i;
             }
@@ -91,7 +91,7 @@
     {
         foreach (K k in keys)
         {
-            if (k.Equals(key))
+            if (Equals(k, key))
             {
                 return true;
             }
@@ -113,7 +113,7 @@
 
     private bool IsIndexEmpty(int index)
     {
-        return keys[index].Equals(default) && values[index].Equals(default);
+        return Equals(keys[index], default) && Equals(values[index], default);
     }
 
     private void DoubleTableSize()
