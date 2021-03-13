@@ -7,7 +7,9 @@ public class PositionUI : MonoBehaviour
 
     private enum ActiveState
     {
-        Default, Active, Inactive
+        Default,
+        Active,
+        Inactive
     }
     [SerializeField] ActiveState activeState;
 

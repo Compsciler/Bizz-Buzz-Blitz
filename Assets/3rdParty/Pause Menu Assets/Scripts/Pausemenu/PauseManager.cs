@@ -375,6 +375,10 @@ namespace GreatArcStudios
         /// Method to resume the game, so disable the pause menu and re-enable all other ui elements
         /// </summary>
         
+        public void Pause()
+        {
+            Pause(true);
+        }
         public void Pause(bool modifyTimeScale)  //| Moved code into function and added parameter
         {
             uiEventSystem.SetSelectedGameObject(defualtSelectedMain);
@@ -392,7 +396,7 @@ namespace GreatArcStudios
             }
             else
             {
-                GameManager.instance.isGameActive = false;
+                //| Not implemented
             }
             for (int i = 0; i < otherUIElements.Length; i++)
             {
@@ -403,6 +407,10 @@ namespace GreatArcStudios
                  blurEffect.enabled = true;
              }  */
         }
+        public void Resume()
+        {
+            Resume(true);
+        }
         public void Resume(bool modifyTimeScale)  //| Added parameter
         {
             if (modifyTimeScale)
@@ -411,7 +419,7 @@ namespace GreatArcStudios
             }
             else
             {
-                GameManager.instance.isGameActive = true;
+                //| Not implemented
             }
             mainPanel.SetActive(false);
             vidPanel.SetActive(false);

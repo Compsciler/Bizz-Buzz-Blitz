@@ -56,7 +56,7 @@ public class HighScoreLogger : MonoBehaviour
         int highScore = PlayerPrefs.GetInt(highScoreStrings[gameMode], 0);
         if (SceneManager.GetActiveScene().buildIndex == Constants.gameSceneBuildIndex)
         {
-            FindObjectOfType<SpawnPeople>().UpdateUnlockedModeText(highScore);
+            // FindObjectOfType<SpawnPeople>().UpdateUnlockedModeText(highScore);  //{ERROR: dependent on SpawnPeople.cs; remove or change game scene script updated unlocked modes}
         }
 
         if ((newScore > highScore) || isUpdatingToNewScore)

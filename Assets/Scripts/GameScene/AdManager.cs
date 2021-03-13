@@ -40,7 +40,7 @@ public class AdManager : MonoBehaviour, IUnityAdsListener
             Advertisement.Initialize(Constants.androidGameId, isTestMode);  // Android SPECIFIC
         }
 
-        if (GameManager.instance.areSymptomsDelayed && GameManager.instance.isResettingDelayedSymptoms)  //{Change if condition and description text}
+        if (true)  //{ERROR: dependent on GameManager.cs; Change if condition and description text}
         {
             descriptionErrorText.text = "Watch ad to reset infection timers and reveal all infected people";
         }
