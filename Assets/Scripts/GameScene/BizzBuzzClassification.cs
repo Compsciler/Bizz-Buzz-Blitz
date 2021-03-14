@@ -6,14 +6,17 @@ using UnityEngine;
 
 public class BizzBuzzClassification : MonoBehaviour
 {
-    private MyHashTable<string, List<object>> rules;
-    private List<string> rulesUsed;
+    private static MyHashTable<string, List<object>> rules;
+    private static List<string> rulesUsed;
+
+    internal static int number = 1;
 
     void Start()
     {
         SetUpRules();
-        /*
         rulesUsed = new List<string>() {"Bizz", "Buzz"};
+
+        /*
         for (int i = 1; i <= 35; i++)
         {
             Debug.Log(i + ": " + string.Join(", ", ClassifyNum(i)));
@@ -26,7 +29,7 @@ public class BizzBuzzClassification : MonoBehaviour
         
     }
 
-    public bool[] ClassifyNum(int n)
+    public static bool[] ClassifyNum(int n)
     {
         bool[] res = new bool[rulesUsed.Count];
         for (int i = 0; i < rulesUsed.Count; i++)
@@ -36,7 +39,7 @@ public class BizzBuzzClassification : MonoBehaviour
         return res;
     }
 
-    public bool ClassifyNum(int n, string rule)
+    public static bool ClassifyNum(int n, string rule)
     {
         List<object> ruleMethodList = rules.Get(rule);
         MethodInfo ruleMethod = (MethodInfo)ruleMethodList[0];
@@ -44,7 +47,7 @@ public class BizzBuzzClassification : MonoBehaviour
         object[] newRuleMethodParams = new object[ruleMethodParams.Length + 1];
         newRuleMethodParams[0] = n;
         ruleMethodParams.CopyTo(newRuleMethodParams, 1);
-        return (bool)ruleMethod.Invoke(GetComponent<BizzBuzzClassification>(), newRuleMethodParams);
+        return (bool)ruleMethod.Invoke(null, newRuleMethodParams);
     }
 
     public void SetUpRules()
@@ -64,12 +67,12 @@ public class BizzBuzzClassification : MonoBehaviour
         return new List<object>() {ruleMethod, ruleMethodParams};
     }
 
-    public bool IsDivisbleByOrContainsDigit(int n, int digit)
+    public static bool IsDivisbleByOrContainsDigit(int n, int digit)
     {
         return n % digit == 0 || ContainsDigit(n, digit);
     }
 
-    public bool ContainsDigit(int n, int digit)
+    public static bool ContainsDigit(int n, int digit)
     {
         if (n == 0 && digit == 0)
         {

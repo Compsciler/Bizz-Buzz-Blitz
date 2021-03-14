@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
     [SerializeField] internal bool isTutorial = false;
+    [SerializeField] internal bool isMultiplayer = true;
+    [SerializeField] internal int playerTotal = 2;
 
     void Awake()
     {
@@ -58,12 +60,14 @@ public class GameManager : MonoBehaviour
             ApplyGameModeSettings(defaultGameMode);
         }
 
-        StateManager.instance.SetState(new CountdownState());
-        if (gameCountdownTime > 0)
+        if (isMultiplayer)
         {
-            countdownGameMask.SetActive(true);
+            StateManager.instance.SetState(new Player1ActiveState());
         }
-        Timing.RunCoroutine(BeginAfterCountdown());
+        else
+        {
+            StateManager.instance.SetState(new PlayingState());
+        }
 
         // SceneManager.sceneUnloaded -= OnSceneUnloaded;  // Why can't the delegate be reset here?
         SceneManager.sceneUnloaded += OnSceneUnloaded;  // Adding OnSceneUnloaded() to delegate call when scene unloaded
@@ -125,21 +129,6 @@ public class GameManager : MonoBehaviour
 
             int newScore = -1;  //{Get new score
             HighScoreLogger.instance.UpdateHighScore(newScore, false);
-        }
-    }
-
-    IEnumerator<float> BeginAfterCountdown()
-    {
-        yield return Timing.WaitForSeconds(gameCountdownTime);
-        StateManager.instance.SetState(new PlayingState());
-        if (!isTutorial)
-        {
-            AudioManager.instance.SFX_Source.PlayOneShot(countdownEndSound, countdownEndSoundVolume);
-            AudioManager.instance.musicSource.enabled = true;
-        }
-        foreach (GameObject go in disableAfterCountdown)
-        {
-            go.SetActive(false);
         }
     }
 

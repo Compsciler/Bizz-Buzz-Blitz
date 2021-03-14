@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class StateManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    public bool StateEquals<T>()
+    {
+        return state is T;
     }
 
     public IState GetState()
