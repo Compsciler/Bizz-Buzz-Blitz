@@ -14,6 +14,8 @@ public class BizzBuzzButton : MonoBehaviour
     [SerializeField] TMP_Text buttonText;
     private static List<GameObject> neitherRuleButtons;
 
+    [SerializeField] GameObject[] timerBars;
+
     void Awake()
     {
         if (neitherRuleButtons == null)
@@ -24,10 +26,13 @@ public class BizzBuzzButton : MonoBehaviour
     
     void Start()
     {
+        UpdateNumberText();
         if (buttonRuleValues.SequenceEqual(new bool[] {false, false})){
             neitherRuleButtons.Add(gameObject);
         }
         SetPlayerNeitherRuleButtonText(1);
+        timerBars[0].GetComponent<TimerBar>().ResetTimer();
+        timerBars[0].GetComponent<TimerBar>().isTimerActive = true;
     }
 
     void Update()
@@ -59,12 +64,18 @@ public class BizzBuzzButton : MonoBehaviour
         if (IsButtonCorrect())
         {
             BizzBuzzClassification.number++;
-            numberGO.GetComponent<TMP_Text>().text = BizzBuzzClassification.number.ToString();
-            SetPlayerNeitherRuleButtonText(player % GameManager.instance.playerTotal + 1);
+            UpdateNumberText();
+
+            int nextPlayer = player % GameManager.instance.playerTotal + 1;
+            SetPlayerNeitherRuleButtonText(nextPlayer);
+            timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
+            timerBars[player - 1].GetComponent<TimerBar>().FillBar(0);
+            timerBars[nextPlayer - 1].GetComponent<TimerBar>().ResetTimer();
+            timerBars[nextPlayer - 1].GetComponent<TimerBar>().isTimerActive = true;
 
             if (GameManager.instance.isMultiplayer)
             {
-                numberGO.GetComponent<RectTransform>().Rotate(0, 0, 180);
+                numberGO.GetComponent<RectTransform>().Rotate(0, 0, 180f);
 
                 if (StateManager.instance.StateEquals<Player1ActiveState>())
                 {
@@ -87,6 +98,11 @@ public class BizzBuzzButton : MonoBehaviour
     {
         bool[] correctRuleValues = BizzBuzzClassification.ClassifyNum(BizzBuzzClassification.number);
         return buttonRuleValues.SequenceEqual(correctRuleValues);
+    }
+
+    public void UpdateNumberText()
+    {
+        numberGO.GetComponent<TMP_Text>().text = BizzBuzzClassification.number.ToString();
     }
 
     public void SetPlayerNeitherRuleButtonText(int playerNum)

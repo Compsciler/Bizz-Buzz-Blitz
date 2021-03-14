@@ -147,6 +147,9 @@ MonoBehaviour:
   buttonRuleValues: 0101
   numberGO: {fileID: 0}
   buttonText: {fileID: 3616454539948087146}
+  timerBars:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &3616454539948087144
 GameObject:
   m_ObjectHideFlags: 0
