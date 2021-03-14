@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MEC;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,8 +36,7 @@ public class TimerBar : MonoBehaviour
 
     public void OnTimerFinished()
     {
-        StateManager.instance.SetState(new GameOverState());
-        Debug.Log("Game over!");
+        Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
     }
 
     public void ResetTimer()

@@ -19,7 +19,7 @@
 
     internal static int connectionTimeoutTime = 10;
 
-    internal static Platform platform = Platform.PC;
+    internal static Platform platform = Platform.iOS;
     internal static bool isMobilePlatform = (platform == Platform.iOS || platform == Platform.Android);
 
     internal enum Platform

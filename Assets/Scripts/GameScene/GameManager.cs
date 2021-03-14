@@ -13,15 +13,17 @@ public class GameManager : MonoBehaviour
     private Camera mainCamera;
     public bool isUsingGameOver = true;
 
+    /* //<
     public float gameCountdownTime = 3f;
     public GameObject countdownGameMask;
     public GameObject[] disableAfterCountdown;
     public GameObject pauseButton;
     public GameObject adMenu;
+    */
 
     public GameObject gameOverMenu;
     public TMP_Text gameOverText;
-    public TMP_Text scoreText;
+    public TMP_Text gameOverScoreText;
     public AudioClip countdownEndSound;
     public float countdownEndSoundVolume;
     public AudioClip gameOverSound;
@@ -34,8 +36,8 @@ public class GameManager : MonoBehaviour
     private int defaultGameMode = 0;
 
     [Header("Additional Game Settings")]
-    [SerializeField] internal bool areParticlesOn = true;
-    [SerializeField] internal bool isTutorial = false;
+    //< [SerializeField] internal bool areParticlesOn = true;
+    //< [SerializeField] internal bool isTutorial = false;
     [SerializeField] internal bool isMultiplayer = true;
     [SerializeField] internal int playerTotal = 2;
 
@@ -80,7 +82,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator<float> GameOver()
     {
+        if (StateManager.instance.StateEquals<GameOverState>())
+        {
+            yield break;
+        }
         StateManager.instance.SetState(new GameOverState());
+        /* //<
         pauseButton.GetComponent<Button>().interactable = false;
         if (isTutorial)
         {
@@ -97,14 +104,16 @@ public class GameManager : MonoBehaviour
             }
             yield return Timing.WaitForOneFrame;
         }
-        else if (isUsingGameOver)
+        else */
+        if (isUsingGameOver)
         {
-            // JUST BEFORE REVIVE SCREEN
+            //< JUST BEFORE REVIVE SCREEN
             Timing.PauseCoroutines();  // Not perfect solution if second chance used, hopefully no coroutines will be used during Game Over screen
             Timing.ResumeCoroutines("GameOver");
 
             yield return Timing.WaitUntilDone(Timing.RunCoroutine(FadeObjectsBehindMenu()));
 
+            /* //<
             if ((AdManager.instance.adsWatchedTotal < AdManager.instance.maxAdsWatchedPerGame) && Constants.isMobilePlatform)
             {
                 adMenu.SetActive(true);
@@ -119,16 +128,17 @@ public class GameManager : MonoBehaviour
                     yield break;
                 }
             }
+            */
 
             // GAME OVER SCREEN
             gameOverMenu.SetActive(true);
-            // spawnPeopleScript.UpdateGameOverScoreText();  //{Update score text
-            AudioManager.instance.musicSource.Pause();
-            AudioManager.instance.SFX_Source.PlayOneShot(gameOverSound, gameOverSoundVolume);
+            //< spawnPeopleScript.UpdateGameOverScoreText();  //{Update score text
+            //< AudioManager.instance.musicSource.Pause();
+            //< AudioManager.instance.SFX_Source.PlayOneShot(gameOverSound, gameOverSoundVolume);
             Debug.Log("Game Over!");
 
-            int newScore = -1;  //{Get new score
-            HighScoreLogger.instance.UpdateHighScore(newScore, false);
+            //< int newScore = -1;  //{Get new score
+            //< HighScoreLogger.instance.UpdateHighScore(newScore, false);
         }
     }
 
@@ -137,9 +147,6 @@ public class GameManager : MonoBehaviour
         switch (gameMode)
         {
             case 0:
-                break;
-            case -1:
-                isTutorial = true;
                 break;
         }
     }
@@ -159,8 +166,11 @@ public class GameManager : MonoBehaviour
 
     public void ResetStaticVariables()
     {
-        PauseManager.isPaused = false;
+        //< PauseManager.isPaused = false;
         Time.timeScale = 1;  // Resetting time scale when restarting or quitting game
+        BizzBuzzClassification.rulesUsed = null;
+        BizzBuzzClassification.number = 1;
+        BizzBuzzButton.neitherRuleButtons = null;
         Debug.Log("Static variables reset!");
     }
 

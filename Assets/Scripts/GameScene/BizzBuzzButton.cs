@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MEC;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -12,9 +13,12 @@ public class BizzBuzzButton : MonoBehaviour
     [SerializeField] GameObject numberGO;
 
     [SerializeField] TMP_Text buttonText;
-    private static List<GameObject> neitherRuleButtons;
+    internal static List<GameObject> neitherRuleButtons;
 
     [SerializeField] GameObject[] timerBars;
+
+    private int losingPlayer = -1;
+    private int losingNumber = -1;
 
     void Awake()
     {
@@ -89,8 +93,12 @@ public class BizzBuzzButton : MonoBehaviour
         }
         else
         {
-            StateManager.instance.SetState(new GameOverState());
-            Debug.Log("Game over!");
+            timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
+            losingPlayer = player;
+            losingNumber = BizzBuzzClassification.number;
+            UpdateGameOverScoreText();
+
+            Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
         }
     }
 
@@ -113,6 +121,17 @@ public class BizzBuzzButton : MonoBehaviour
             {
                 go.GetComponent<BizzBuzzButton>().buttonText.text = BizzBuzzClassification.number.ToString();
             }
+        }
+    }
+
+    public void UpdateGameOverScoreText()
+    {
+        if (GameManager.instance.isMultiplayer)
+        {
+            GameManager.instance.gameOverScoreText.text = "Player " + losingPlayer + " lost!\n" +
+                losingNumber + " is " +
+                BizzBuzzClassification.GetClassificationText(losingNumber) + ", not " +
+                BizzBuzzClassification.GetClassificationText(buttonRuleValues);
         }
     }
 }

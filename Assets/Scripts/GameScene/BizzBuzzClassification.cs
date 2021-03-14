@@ -7,13 +7,18 @@ using UnityEngine;
 public class BizzBuzzClassification : MonoBehaviour
 {
     private static MyHashTable<string, List<object>> rules;
-    private static List<string> rulesUsed;
+    private static List<Color> ruleColorsUsed;
+
+    internal static List<string> rulesUsed;
 
     internal static int number = 1;
 
     void Start()
     {
-        SetUpRules();
+        if (rules == null)
+        {
+            SetUpRules();
+        }
         rulesUsed = new List<string>() {"Bizz", "Buzz"};
 
         /*
@@ -58,6 +63,10 @@ public class BizzBuzzClassification : MonoBehaviour
         rules.Put("Buzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 7));
         rules.Put("Fuzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 8));
         rules.Put("Bazz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 9));
+
+        ruleColorsUsed = new List<Color>();
+        ruleColorsUsed.Add(new Color(1f, 0, 0));
+        ruleColorsUsed.Add(new Color(0, 0, 1f));
     }
 
     public List<object> SetUpRuleMethodList(string ruleMethodName, params object[] ruleMethodParams)
@@ -87,5 +96,37 @@ public class BizzBuzzClassification : MonoBehaviour
             n /= 10;
         }
         return false;
+    }
+
+    public static string GetClassificationText(bool[] ruleValues)
+    {
+        string res = "";
+        for (int i = 0; i < ruleValues.Length; i++)
+        {
+            if (ruleValues[i])
+            {
+                res += GetColoredRichText(rulesUsed[i] + " ", ruleColorsUsed[i]);
+            }
+        }
+        if (res.Equals(""))
+        {
+            res = "Neither";
+        }
+        else
+        {
+            int lastSpaceIndex = res.LastIndexOf(" ");
+            res = res.Remove(lastSpaceIndex, 1);  // " ".Length = 1
+        }
+        return res;
+    }
+
+    public static string GetClassificationText(int n)
+    {
+        return GetClassificationText(ClassifyNum(n));
+    }
+
+    public static string GetColoredRichText(string s, Color color)
+    {
+        return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + s + "</color>";
     }
 }
