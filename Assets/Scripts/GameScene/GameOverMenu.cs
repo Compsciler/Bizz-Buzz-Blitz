@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class GameOverMenu : MonoBehaviour
 {
-    // public Text averageFPS_Text;
-
     public void Restart()
     {
         Timing.KillCoroutines();

@@ -118,11 +118,11 @@
 
     private void DoubleTableSize()
     {
-        DoubleArraySize<K>(keys);
-        DoubleArraySize<V>(values);
+        DoubleArraySize<K>(ref keys);
+        DoubleArraySize<V>(ref values);
     }
 
-    private void DoubleArraySize<T>(T[] arr)
+    private void DoubleArraySize<T>(ref T[] arr)
     {
         T[] newArr = new T[arr.Length * 2];
 
