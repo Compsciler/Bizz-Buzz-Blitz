@@ -18,7 +18,8 @@ public class BizzBuzzButton : MonoBehaviour
     [SerializeField] GameObject[] timerBars;
 
     private int losingPlayer = -1;
-    private int losingNumber = -1;
+
+    [SerializeField] GameOverMenu gameOverMenuScript;
 
     void Awake()
     {
@@ -34,12 +35,8 @@ public class BizzBuzzButton : MonoBehaviour
         if (buttonRuleValues.SequenceEqual(new bool[] {false, false})){
             neitherRuleButtons.Add(gameObject);
         }
+        SetRuleButtonText();
         SetPlayerNeitherRuleButtonText(1);
-    }
-
-    void Update()
-    {
-        
     }
 
     public void ButtonClick()
@@ -93,8 +90,7 @@ public class BizzBuzzButton : MonoBehaviour
         {
             timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
             losingPlayer = player;
-            losingNumber = BizzBuzzClassification.number;
-            UpdateGameOverScoreText();
+            gameOverMenuScript.UpdateGameOverScoreText(losingPlayer, buttonRuleValues);
 
             Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
         }
@@ -111,6 +107,11 @@ public class BizzBuzzButton : MonoBehaviour
         numberGO.GetComponent<TMP_Text>().text = BizzBuzzClassification.number.ToString();
     }
 
+    public void SetRuleButtonText()
+    {
+        buttonText.text = BizzBuzzClassification.GetClassificationText(buttonRuleValues);
+    }
+
     public void SetPlayerNeitherRuleButtonText(int playerNum)
     {
         foreach (GameObject go in neitherRuleButtons)
@@ -119,17 +120,6 @@ public class BizzBuzzButton : MonoBehaviour
             {
                 go.GetComponent<BizzBuzzButton>().buttonText.text = BizzBuzzClassification.number.ToString();
             }
-        }
-    }
-
-    public void UpdateGameOverScoreText()
-    {
-        if (GameManager.instance.isMultiplayer)
-        {
-            GameManager.instance.gameOverScoreText.text = "Player " + losingPlayer + " lost!\n" +
-                losingNumber + " is " +
-                BizzBuzzClassification.GetClassificationText(losingNumber) + ", not " +
-                BizzBuzzClassification.GetClassificationText(buttonRuleValues);
         }
     }
 }

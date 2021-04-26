@@ -14,6 +14,11 @@ public class TimerBar : MonoBehaviour
     [SerializeField] Image fill;
     [SerializeField] bool isHueCyclingOnce;
 
+    // End of generic fields
+
+    [SerializeField] int player;
+    [SerializeField] GameOverMenu gameOverMenuScript;
+
     void Start()
     {
         // ResetTimer();
@@ -36,7 +41,7 @@ public class TimerBar : MonoBehaviour
 
     public void OnTimerFinished()
     {
-        UpdateGameOverScoreText();
+        gameOverMenuScript.UpdateGameOverScoreText(player);
         Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
     }
 
@@ -57,16 +62,6 @@ public class TimerBar : MonoBehaviour
         if (isHueCyclingOnce)
         {
             fill.color = Color.HSVToRGB(Mathf.Lerp(0f, 1f, fillAmount), 1, 1);
-        }
-    }
-
-    public void UpdateGameOverScoreText()
-    {
-        if (GameManager.instance.isMultiplayer)
-        {
-            GameManager.instance.gameOverScoreText.text = "Player " + ((BizzBuzzClassification.number + 1) % 2 + 1) + " lost!\n" +
-                BizzBuzzClassification.number + " is " +
-                BizzBuzzClassification.GetClassificationText(BizzBuzzClassification.number);
         }
     }
 }

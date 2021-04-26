@@ -255,3 +255,5 @@ MonoBehaviour:
   mask: {fileID: 7077484060953957512}
   fill: {fileID: 7077484060026650153}
   isHueCyclingOnce: 1
+  player: 1
+  gameOverMenuScript: {fileID: 0}

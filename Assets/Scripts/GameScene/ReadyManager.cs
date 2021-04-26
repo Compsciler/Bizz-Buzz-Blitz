@@ -72,7 +72,7 @@ public class ReadyManager : MonoBehaviour
             {
                 readyButtonGOs[i].SetActive(false);
                 TimerBar timerBar1 = timerBar1GO.GetComponent<TimerBar>();
-                if (!timerBar1.isTimerActive)
+                if (StateManager.instance.StateEquals<ReadyingState>())
                 {
                     timerBar1.ResetTimer();
                     timerBar1.isTimerActive = true;

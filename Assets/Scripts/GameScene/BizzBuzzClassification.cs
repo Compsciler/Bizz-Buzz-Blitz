@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -13,7 +12,7 @@ public class BizzBuzzClassification : MonoBehaviour
 
     internal static int number = 1;
 
-    void Start()
+    void Awake()
     {
         if (rules == null)
         {
@@ -26,6 +25,17 @@ public class BizzBuzzClassification : MonoBehaviour
         {
             Debug.Log(i + ": " + string.Join(", ", ClassifyNum(i)));
         }
+        */
+        /*
+        string s = "";
+        for (int i = 1; i <= 200; i++)
+        {
+            if (IsSemiprime(i))
+            {
+                s += i + ", ";
+            }
+        }
+        Debug.Log(s);
         */
     }
 
@@ -44,7 +54,7 @@ public class BizzBuzzClassification : MonoBehaviour
         return res;
     }
 
-    public static bool ClassifyNum(int n, string rule)
+    private static bool ClassifyNum(int n, string rule)
     {
         List<object> ruleMethodList = rules.Get(rule);
         MethodInfo ruleMethod = (MethodInfo)ruleMethodList[0];
@@ -63,6 +73,10 @@ public class BizzBuzzClassification : MonoBehaviour
         rules.Put("Buzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 7));
         rules.Put("Fuzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 8));
         rules.Put("Bazz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 9));
+        rules.Put("Dupe", SetUpRuleMethodList("ContainsDuplicateDigit"));
+        rules.Put("Pow", SetUpRuleMethodList("IsPerfectPower"));
+        rules.Put("Semi", SetUpRuleMethodList("IsSemiprime"));
+        rules.Put("Pyth", SetUpRuleMethodList("IsSumOf2NonzeroSquares"));
 
         ruleColorsUsed = new List<Color>();
         ruleColorsUsed.Add(new Color(1f, 0, 0));
@@ -81,7 +95,7 @@ public class BizzBuzzClassification : MonoBehaviour
         return n % digit == 0 || ContainsDigit(n, digit);
     }
 
-    public static bool ContainsDigit(int n, int digit)
+    private static bool ContainsDigit(int n, int digit)
     {
         if (n == 0 && digit == 0)
         {
@@ -94,6 +108,76 @@ public class BizzBuzzClassification : MonoBehaviour
                 return true;
             }
             n /= 10;
+        }
+        return false;
+    }
+
+    public static bool ContainsDuplicateDigit(int n)
+    {
+        HashSet<int> digits = new HashSet<int>();
+        while (n > 0)
+        {
+            int digit = n % 10;
+            if (digits.Contains(digit))
+            {
+                return true;
+            }
+            digits.Add(digit);
+            n /= 10;
+        }
+        return false;
+    }
+
+    public static bool IsPerfectPower(int n)
+    {
+        if (n == 1)
+        {
+            return true;
+        }
+        for (int base_ = 2; base_ <= Mathf.Sqrt(n); base_++)
+        {
+            for (int exponent = 2; exponent <= Mathf.Log(n, 2); exponent++)
+            {
+                if (Mathf.Pow(base_, exponent) == n)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static bool IsSemiprime(int n)
+    {
+        return NumPrimeDivisors(n) == 2;
+    }
+
+    private static int NumPrimeDivisors(int n)
+    {
+        int dividedN = n;
+        int primeDivisorTotal = 0;
+        for (int divisor = 2; divisor <= n; divisor++)
+        {
+            while (dividedN % divisor == 0)
+            {
+                dividedN /= divisor;
+                primeDivisorTotal++;
+            }
+        }
+        return primeDivisorTotal;
+    }
+
+    public static bool IsSumOf2NonzeroSquares(int n)
+    {
+        for (int i = 1; i < Mathf.Sqrt(n); i++)
+        {
+            for (int j = 1; j < Mathf.Sqrt(n); j++)
+            {
+                if (i * i + j * j == n)
+                {
+                    return true;
+                }
+            }
         }
         return false;
     }

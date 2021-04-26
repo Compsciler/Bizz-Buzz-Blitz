@@ -264,6 +264,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1463724612}
     m_Modifications:
+    - target: {fileID: 7077484061271860224, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
+        type: 3}
+      propertyPath: player
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077484061271860224, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 7077484061271860227, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -633,6 +643,21 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4498172732374797783, guid: 251d699335ee67b488a2e56abea941da,
+        type: 3}
+      propertyPath: m_Name
+      value: Title Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498172733259868864, guid: 251d699335ee67b488a2e56abea941da,
+        type: 3}
+      propertyPath: gameOverText
+      value: 
+      objectReference: {fileID: 979676673}
+    - target: {fileID: 4498172733259868864, guid: 251d699335ee67b488a2e56abea941da,
+        type: 3}
+      propertyPath: gameOverScoreText
+      value: 
+      objectReference: {fileID: 979676673}
     - target: {fileID: 4498172733259868870, guid: 251d699335ee67b488a2e56abea941da,
         type: 3}
       propertyPath: m_Name
@@ -824,6 +849,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 979676671}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &979676676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4498172733259868864, guid: 251d699335ee67b488a2e56abea941da,
+    type: 3}
+  m_PrefabInstance: {fileID: 979676671}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979676675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667d407950c02e24e961360aee2b91d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1033235182 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7428937651320012982, guid: fd6aba0cfd0e24f4d925344f8397e142,
@@ -1014,6 +1051,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
+    - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
       objectReference: {fileID: 1194256569}
@@ -1044,6 +1086,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
+    - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
       objectReference: {fileID: 1194256569}
@@ -1082,6 +1129,11 @@ PrefabInstance:
       propertyPath: numberGO
       value: 
       objectReference: {fileID: 1421230160}
+    - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[0]
@@ -1222,6 +1274,11 @@ PrefabInstance:
       propertyPath: numberGO
       value: 
       objectReference: {fileID: 1421230160}
+    - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[0]
@@ -1638,6 +1695,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1463724612}
     m_Modifications:
+    - target: {fileID: 7077484061271860224, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 7077484061271860227, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2186,6 +2248,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
+    - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
       objectReference: {fileID: 1194256569}
@@ -2209,6 +2276,11 @@ PrefabInstance:
       propertyPath: numberGO
       value: 
       objectReference: {fileID: 1421230160}
+    - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[0]
@@ -2239,6 +2311,11 @@ PrefabInstance:
       propertyPath: numberGO
       value: 
       objectReference: {fileID: 1421230160}
+    - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[0]
@@ -2384,6 +2461,11 @@ PrefabInstance:
       propertyPath: numberGO
       value: 
       objectReference: {fileID: 1421230160}
+    - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
+      propertyPath: gameOverMenuScript
+      value: 
+      objectReference: {fileID: 979676676}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[0]
