@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
             ApplyGameModeSettings(defaultGameMode);
         }
 
+        StateManager.instance.SetState(new ReadyingState());
+        /*
         if (isMultiplayer)
         {
             StateManager.instance.SetState(new Player1ActiveState());
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
         {
             StateManager.instance.SetState(new PlayingState());
         }
+        */
 
         // SceneManager.sceneUnloaded -= OnSceneUnloaded;  // Why can't the delegate be reset here?
         SceneManager.sceneUnloaded += OnSceneUnloaded;  // Adding OnSceneUnloaded() to delegate call when scene unloaded

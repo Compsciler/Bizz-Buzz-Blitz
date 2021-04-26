@@ -35,8 +35,6 @@ public class BizzBuzzButton : MonoBehaviour
             neitherRuleButtons.Add(gameObject);
         }
         SetPlayerNeitherRuleButtonText(1);
-        timerBars[0].GetComponent<TimerBar>().ResetTimer();
-        timerBars[0].GetComponent<TimerBar>().isTimerActive = true;
     }
 
     void Update()
