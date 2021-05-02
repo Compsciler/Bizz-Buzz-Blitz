@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public static class ExtensionMethods
         List<T> randomItemList = new List<T>();
         for (int i = 0; i < numItemsToSelect; i++)
         {
-            int randomIndex = Random.Range(0, listClone.Count);
+            int randomIndex = UnityEngine.Random.Range(0, listClone.Count);
             randomItemList.Add(listClone[randomIndex]);
             listClone.RemoveAt(randomIndex);
         }
@@ -34,4 +35,21 @@ public static class ExtensionMethods
         // Debug.Log(ListToString(randomItemList));
         return randomItemList;
     }
+
+    public static T[] CloneSubarray<T>(this T[] arr, int startIndex, int endIndex)  // startIndex: inclusive; endIndex: exclusive
+    {
+        int subarrayLength = endIndex - startIndex;
+        T[] result = new T[subarrayLength];
+        Array.Copy(arr, startIndex, result, 0, subarrayLength);
+        return result;
+    }
+
+    /*
+    public static T[] CloneSubarray<T>(this T[] arr, int startIndex, int length)
+    {
+        T[] result = new T[length];
+        Array.Copy(arr, startIndex, result, 0, length);
+        return result;
+    }
+    */
 }

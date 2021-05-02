@@ -38,8 +38,11 @@ public class GameManager : MonoBehaviour
     [Header("Additional Game Settings")]
     //< [SerializeField] internal bool areParticlesOn = true;
     //< [SerializeField] internal bool isTutorial = false;
-    [SerializeField] internal bool isMultiplayer = true;
-    [SerializeField] internal int playerTotal = 2;
+    internal bool isMultiplayer = false;
+    internal int playerTotal = 1;
+
+    [SerializeField] GameObject[] enableOnMultiplayer;
+    [SerializeField] GameObject[] disableOnMultiplayer;
 
     void Awake()
     {
@@ -47,11 +50,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-    }
-
-    void Start()
-    {
-        mainCamera = Camera.main;
 
         try
         {
@@ -61,18 +59,14 @@ public class GameManager : MonoBehaviour
         {
             ApplyGameModeSettings(defaultGameMode);
         }
+    }
+
+    void Start()
+    {
+        mainCamera = Camera.main;
 
         StateManager.instance.SetState(new ReadyingState());
-        /*
-        if (isMultiplayer)
-        {
-            StateManager.instance.SetState(new Player1ActiveState());
-        }
-        else
-        {
-            StateManager.instance.SetState(new PlayingState());
-        }
-        */
+        // StateManager.instance.SetState(new Player1ActiveState());
 
         // SceneManager.sceneUnloaded -= OnSceneUnloaded;  // Why can't the delegate be reset here?
         SceneManager.sceneUnloaded += OnSceneUnloaded;  // Adding OnSceneUnloaded() to delegate call when scene unloaded
@@ -151,6 +145,21 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 break;
+            case 100:  // Multiplayer modes start from 100
+                isMultiplayer = true;
+                playerTotal = 2;
+                break;
+        }
+        if (isMultiplayer)
+        {
+            foreach (GameObject go in enableOnMultiplayer)
+            {
+                go.SetActive(true);
+            }
+            foreach (GameObject go in disableOnMultiplayer)
+            {
+                go.SetActive(false);
+            }
         }
     }
 

@@ -62,7 +62,7 @@ public class BizzBuzzButton : MonoBehaviour
 
         if (IsButtonCorrect())
         {
-            BizzBuzzClassification.number++;
+            BizzBuzzClassification.number++;  // Add method for other game modes
             UpdateNumberText();
 
             int nextPlayer = player % GameManager.instance.playerTotal + 1;

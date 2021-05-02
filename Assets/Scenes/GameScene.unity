@@ -384,6 +384,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Timer Bar 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7077484061271860236, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa6fe038ef60d4949a5baa5f986e0ab9, type: 3}
 --- !u!224 &356300905 stripped
@@ -950,6 +955,18 @@ MonoBehaviour:
   maxTransparency: 0.625
   isMultiplayer: 1
   playerTotal: 2
+  enableOnMultiplayer:
+  - {fileID: 1856928939}
+  - {fileID: 2107800270}
+  - {fileID: 1344190820}
+  - {fileID: 1086995528}
+  disableOnMultiplayer: []
+--- !u!1 &1086995528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7897302165544753443, guid: dfcb4cfa01391df41ac9abcd7c9a0717,
+    type: 3}
+  m_PrefabInstance: {fileID: 1905321573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1122180304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,6 +1176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button Set 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7428937651320012981, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7428937651320012982, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1328,6 +1350,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ready Button 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1639302276742688888, guid: 151bdaf107d49a84daa6524f72da61ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1639302276742688889, guid: 151bdaf107d49a84daa6524f72da61ca,
         type: 3}
@@ -1830,6 +1857,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1639302277224914728}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1856928939 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7428937651320012981, guid: fd6aba0cfd0e24f4d925344f8397e142,
+    type: 3}
+  m_PrefabInstance: {fileID: 1215099529}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1905321573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1947,6 +1980,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ready Text 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7897302165544753443, guid: dfcb4cfa01391df41ac9abcd7c9a0717,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfcb4cfa01391df41ac9abcd7c9a0717, type: 3}
 --- !u!224 &1905321574 stripped
@@ -1961,7 +1999,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1905321573}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1086995528}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}

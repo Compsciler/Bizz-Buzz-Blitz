@@ -29,6 +29,9 @@ public class ReadyManager : MonoBehaviour
 
     void Start()
     {
+        readyButtonGOs = readyButtonGOs.CloneSubarray(0, GameManager.instance.playerTotal);
+        readyTexts = readyTexts.CloneSubarray(0, GameManager.instance.playerTotal);
+
         buttonStates = new ButtonState[readyButtonGOs.Length];
         for (int i = 0; i < readyButtonGOs.Length; i++)
         {
@@ -46,6 +49,10 @@ public class ReadyManager : MonoBehaviour
 
         for (int i = 0; i < buttonStates.Length; i++)
         {
+            if (!buttonStates[i].gameObject.activeSelf)
+            {
+                readyStates[i] = ReadyState.Holding;
+            }
             switch (buttonStates[i].clickState)
             {
                 case ButtonState.ClickState.PointerDown:
@@ -76,14 +83,7 @@ public class ReadyManager : MonoBehaviour
                 {
                     timerBar1.ResetTimer();
                     timerBar1.isTimerActive = true;
-                    if (GameManager.instance.isMultiplayer)
-                    {
-                        StateManager.instance.SetState(new Player1ActiveState());
-                    }
-                    else
-                    {
-                        StateManager.instance.SetState(new PlayingState());
-                    }
+                    StateManager.instance.SetState(new Player1ActiveState());
                 }
             }
         }

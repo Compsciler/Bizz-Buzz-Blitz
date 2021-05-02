@@ -36,14 +36,18 @@ public class GameOverMenu : MonoBehaviour
         int losingNumber = BizzBuzzClassification.number;
         if (GameManager.instance.isMultiplayer)
         {
-            gameOverScoreText.text = "Player " + losingPlayer + " lost!\n" +
-                losingNumber + " is " +
-                BizzBuzzClassification.GetClassificationText(losingNumber);
-            if (!isLostOnTime)
-            {
-                gameOverScoreText.text += ", not " +
-                    BizzBuzzClassification.GetClassificationText(losingButtonRuleValues);
-            }
+            gameOverScoreText.text = "Player " + losingPlayer + " lost!\n";  
+        }
+        else
+        {
+            gameOverScoreText.text = "";
+        }
+        gameOverScoreText.text += losingNumber + " is " +
+            BizzBuzzClassification.GetClassificationText(losingNumber);
+        if (!isLostOnTime)
+        {
+            gameOverScoreText.text += ", not " +
+                BizzBuzzClassification.GetClassificationText(losingButtonRuleValues);
         }
     }
 }
