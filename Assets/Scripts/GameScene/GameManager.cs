@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject[] enableOnMultiplayer;
     [SerializeField] GameObject[] disableOnMultiplayer;
+    [SerializeField] GameObject numberGO;
+    [SerializeField] float numberMultiplayerY;
+    [SerializeField] float numberMultiplayerFontSize;
 
     void Awake()
     {
@@ -160,6 +163,9 @@ public class GameManager : MonoBehaviour
             {
                 go.SetActive(false);
             }
+            RectTransform numberRectTransform = numberGO.GetComponent<RectTransform>();
+            numberRectTransform.anchoredPosition = new Vector2(numberRectTransform.anchoredPosition.x, numberMultiplayerY);
+            numberGO.GetComponent<TMP_Text>().fontSize = numberMultiplayerFontSize;
         }
     }
 

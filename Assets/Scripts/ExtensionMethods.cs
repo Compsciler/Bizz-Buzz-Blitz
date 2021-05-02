@@ -52,4 +52,14 @@ public static class ExtensionMethods
         return result;
     }
     */
+
+    public static float RoundToDecimalPlaces(float n, int decimalPlaces)
+    {
+        return Mathf.Round(n * Mathf.Pow(10, decimalPlaces)) / Mathf.Pow(10, decimalPlaces);
+    }
+
+    public static string RoundWithTrailingDecimalZeroes(float n, int decimalPlaces)
+    {
+        return string.Format("Value: {0:F2}", Mathf.Round(n * Mathf.Pow(10, decimalPlaces)) / Mathf.Pow(10, decimalPlaces));
+    }
 }

@@ -7,6 +7,7 @@ public class ReadyManager : MonoBehaviour
     [SerializeField] GameObject[] readyButtonGOs;
     [SerializeField] TMP_Text[] readyTexts;
     [SerializeField] GameObject timerBar1GO;
+    [SerializeField] GameObject stopwatchGO;
 
     private ButtonState[] buttonStates;
 
@@ -83,6 +84,7 @@ public class ReadyManager : MonoBehaviour
                 {
                     timerBar1.ResetTimer();
                     timerBar1.isTimerActive = true;
+                    stopwatchGO.GetComponent<Stopwatch>().isStopwatchActive = true;
                     StateManager.instance.SetState(new Player1ActiveState());
                 }
             }

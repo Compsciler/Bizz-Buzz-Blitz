@@ -13,7 +13,6 @@ public class TimerBar : MonoBehaviour
     [SerializeField] Image mask;
     [SerializeField] Image fill;
     [SerializeField] bool isHueCyclingOnce;
-
     // End of generic fields
 
     [SerializeField] int player;
