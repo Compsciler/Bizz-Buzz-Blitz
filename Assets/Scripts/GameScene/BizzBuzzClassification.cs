@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -21,16 +22,18 @@ public class BizzBuzzClassification : MonoBehaviour
         rulesUsed = new List<string>() {"Bizz", "Buzz"};
 
         /*
-        for (int i = 1; i <= 35; i++)
+        for (int i = 1; i <= 100; i++)
         {
-            Debug.Log(i + ": " + string.Join(", ", ClassifyNum(i)));
+            Debug.Log(string.Join(", ", ClassifyNum(i)));
+            // Debug.Log(i + ": " + string.Join(", ", ClassifyNum(i)));
         }
         */
+        
         /*
         string s = "";
         for (int i = 1; i <= 200; i++)
         {
-            if (IsSemiprime(i))
+            if (ClassifyNum(i).All(b => b))
             {
                 s += i + ", ";
             }
