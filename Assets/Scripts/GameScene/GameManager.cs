@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     public float minTransparency;
     public float maxTransparency;
 
-    private int defaultGameMode = 0;
+    private int defaultGameMode = 100;
 
     [Header("Additional Game Settings")]
     //< [SerializeField] internal bool areParticlesOn = true;

@@ -36,7 +36,10 @@ public class GameOverMenu : MonoBehaviour
         int losingNumber = BizzBuzzClassification.number;
         if (GameManager.instance.isMultiplayer)
         {
-            gameOverScoreText.text = "Player " + losingPlayer + " lost!\n";  
+            float zRotation = (float)(losingPlayer - 1) / GameManager.instance.playerTotal * 360;
+            GetComponent<RectTransform>().Rotate(0, 0, zRotation);
+            Debug.Log(zRotation);
+            gameOverScoreText.text = "Player " + losingPlayer + " lost!\n";
         }
         else
         {
