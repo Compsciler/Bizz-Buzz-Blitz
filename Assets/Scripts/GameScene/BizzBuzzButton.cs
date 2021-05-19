@@ -21,6 +21,8 @@ public class BizzBuzzButton : MonoBehaviour
 
     [SerializeField] GameOverMenu gameOverMenuScript;
 
+    private BizzBuzzButtonEffects bizzBuzzButtonEffectsScript;
+
     void Awake()
     {
         if (neitherRuleButtons == null)
@@ -31,6 +33,8 @@ public class BizzBuzzButton : MonoBehaviour
     
     void Start()
     {
+        bizzBuzzButtonEffectsScript = GetComponent<BizzBuzzButtonEffects>();
+
         UpdateNumberText();
         if (buttonRuleValues.SequenceEqual(new bool[] {false, false})){
             neitherRuleButtons.Add(gameObject);
@@ -62,6 +66,11 @@ public class BizzBuzzButton : MonoBehaviour
 
         if (IsButtonCorrect())
         {
+            if (GameManager.instance.areParticlesOn)
+            {
+                bizzBuzzButtonEffectsScript.PlayParticle(BizzBuzzButtonEffects.ParticleType.Correct);
+            }
+
             BizzBuzzClassification.number++;  // Add method for other game modes
             UpdateNumberText();
 
@@ -88,6 +97,11 @@ public class BizzBuzzButton : MonoBehaviour
         }
         else
         {
+            if (GameManager.instance.areParticlesOn)
+            {
+                bizzBuzzButtonEffectsScript.PlayParticle(BizzBuzzButtonEffects.ParticleType.Incorrect);
+            }
+
             timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
             losingPlayer = player;
             gameOverMenuScript.UpdateGameOverScoreText(losingPlayer, buttonRuleValues);

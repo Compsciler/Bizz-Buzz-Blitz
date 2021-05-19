@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     private int defaultGameMode = 100;
 
     [Header("Additional Game Settings")]
-    //< [SerializeField] internal bool areParticlesOn = true;
+    [SerializeField] internal bool areParticlesOn = true;
     //< [SerializeField] internal bool isTutorial = false;
     internal bool isMultiplayer = false;
     internal int playerTotal = 1;
