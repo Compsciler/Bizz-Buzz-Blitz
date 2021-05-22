@@ -33,7 +33,9 @@ public class GameManager : MonoBehaviour
     public float minTransparency;
     public float maxTransparency;
 
-    private int defaultGameMode = 100;
+    [SerializeField] float gameOverTimeScale = 0.5f;
+
+    private int defaultGameMode = 0;
 
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
@@ -111,6 +113,7 @@ public class GameManager : MonoBehaviour
             Timing.PauseCoroutines();  // Not perfect solution if second chance used, hopefully no coroutines will be used during Game Over screen
             Timing.ResumeCoroutines("GameOver");
 
+            Time.timeScale = gameOverTimeScale;
             yield return Timing.WaitUntilDone(Timing.RunCoroutine(FadeObjectsBehindMenu()));
 
             /* //<

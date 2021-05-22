@@ -1340,9 +1340,10 @@ MonoBehaviour:
   gameOverSound: {fileID: 0}
   gameOverSoundVolume: 0
   fadingMask: {fileID: 334735255}
-  fadeInTime: 1
+  fadeInTime: 0.5
   minTransparency: 0.125
   maxTransparency: 0.625
+  gameOverTimeScale: 0.5
   areParticlesOn: 1
   enableOnMultiplayer:
   - {fileID: 1856928939}

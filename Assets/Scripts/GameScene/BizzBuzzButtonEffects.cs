@@ -7,7 +7,14 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     [SerializeField] ParticleSystem correctParticle;
     [SerializeField] ParticleSystem incorrectParticle;
 
+    [SerializeField] float clickScaleFactor;
+    private Vector3 initialScale;
+    private Vector3 clickScale;
+    [SerializeField] float clickScalingTime;
+    [SerializeField] LeanTweenType clickScaleEaseType;
+
     [SerializeField] RectTransform canvasRect;
+    private RectTransform rect;
 
     public enum ParticleType
     {
@@ -17,12 +24,40 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
     void Start()
     {
-        
+        rect = GetComponent<RectTransform>();
+
+        initialScale = rect.localScale;
+        clickScale = initialScale * clickScaleFactor;
     }
 
     void Update()
     {
         
+    }
+
+    public void PlayGenericEffects()
+    {
+        LeanTween.cancel(gameObject);
+        rect.localScale = initialScale;
+        LeanTween.scale(rect, clickScale, clickScalingTime).setEase(clickScaleEaseType);
+    }
+
+    public void PlayCorrectEffects()
+    {
+        PlayGenericEffects();
+        if (GameManager.instance.areParticlesOn)
+        {
+            PlayParticle(ParticleType.Correct);
+        }
+    }
+
+    public void PlayIncorrectEffects()
+    {
+        PlayGenericEffects();
+        if (GameManager.instance.areParticlesOn)
+        {
+            PlayParticle(ParticleType.Incorrect);
+        }
     }
 
     public void PlayParticle(ParticleType particleType)

@@ -168,6 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctParticle: {fileID: 8087262303249502776}
   incorrectParticle: {fileID: 7886253552920801993}
+  clickScaleFactor: 1.08
+  clickScalingTime: 0.3
+  clickScaleEaseType: 34
   canvasRect: {fileID: 0}
 --- !u!1 &3616454539948087144
 GameObject:
