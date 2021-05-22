@@ -66,7 +66,10 @@ public class BizzBuzzButton : MonoBehaviour
 
         if (IsButtonCorrect())
         {
-            bizzBuzzButtonEffectsScript.PlayCorrectEffects();
+            if (GameManager.instance.areEffectsOn)
+            {
+                bizzBuzzButtonEffectsScript.PlayCorrectEffects();
+            }
 
             BizzBuzzClassification.number++;  // Add method for other game modes
             UpdateNumberText();
@@ -94,7 +97,10 @@ public class BizzBuzzButton : MonoBehaviour
         }
         else
         {
-            bizzBuzzButtonEffectsScript.PlayIncorrectEffects();
+            if (GameManager.instance.areEffectsOn)
+            {
+                bizzBuzzButtonEffectsScript.PlayIncorrectEffects();
+            }
 
             timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
             losingPlayer = player;

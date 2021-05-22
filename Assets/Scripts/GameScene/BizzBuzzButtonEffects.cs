@@ -13,6 +13,8 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     [SerializeField] float clickScalingTime;
     [SerializeField] LeanTweenType clickScaleEaseType;
 
+    [SerializeField] TraumaInducer traumaInducer;
+
     [SerializeField] RectTransform canvasRect;
     private RectTransform rect;
 
@@ -58,6 +60,8 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         {
             PlayParticle(ParticleType.Incorrect);
         }
+        traumaInducer.InduceTrauma();
+        Handheld.Vibrate();
     }
 
     public void PlayParticle(ParticleType particleType)
