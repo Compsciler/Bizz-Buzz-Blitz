@@ -171,6 +171,19 @@ MonoBehaviour:
   clickScaleFactor: 1.08
   clickScalingTime: 0.3
   clickScaleEaseType: 34
+  correctButtonClickSound: {fileID: 8300000, guid: 52b096897d33b7c4a9325ad5c073e7c6,
+    type: 3}
+  correctButtonClickSoundVolume: 0.8
+  maxCorrectButtonClickSound: {fileID: 8300000, guid: 7463e5e78bb6baa4b8caeec3645d5ae7,
+    type: 3}
+  maxCorrectButtonClickSoundVolume: 1
+  correctButtonClickPitchMultiplier: 1.01396
+  maxConsecutiveCorrectButtonClicks: 100
+  incorrectButtonClickSound: {fileID: 8300000, guid: b024f2d5cfa03e7429a41694469e74d8,
+    type: 3}
+  incorrectButtonClickSoundVolume: 1
+  traumaInducer: {fileID: 0}
+  mainCamera: {fileID: 0}
   canvasRect: {fileID: 0}
 --- !u!1 &3616454539948087144
 GameObject:

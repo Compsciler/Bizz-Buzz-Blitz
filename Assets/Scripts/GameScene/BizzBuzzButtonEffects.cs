@@ -13,12 +13,27 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     [SerializeField] float clickScalingTime;
     [SerializeField] LeanTweenType clickScaleEaseType;
 
+    [SerializeField] AudioClip correctButtonClickSound;
+    [SerializeField] float correctButtonClickSoundVolume;
+    [SerializeField] AudioClip maxCorrectButtonClickSound;
+    [SerializeField] float maxCorrectButtonClickSoundVolume;
+    [SerializeField] float correctButtonClickPitchMultiplier;
+    [SerializeField] float maxConsecutiveCorrectButtonClicks;
+    internal static float correctButtonClickPitch;
+    private static float initialCorrectButtonClickPitch;
+    private static float consecutiveCorrectButtonClicks = 0;
+
+    [SerializeField] AudioClip incorrectButtonClickSound;
+    [SerializeField] float incorrectButtonClickSoundVolume;
+
     [SerializeField] TraumaInducer traumaInducer;
 
+    [SerializeField] Camera mainCamera;
+    private ButtonClickSound buttonClickSoundScript;
     [SerializeField] RectTransform canvasRect;
     private RectTransform rect;
 
-    public enum ParticleType
+    public enum ButtonType
     {
         Correct,
         Incorrect
@@ -26,7 +41,12 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
     void Start()
     {
+        mainCamera = Camera.main;
+        buttonClickSoundScript = mainCamera.GetComponent<ButtonClickSound>();
         rect = GetComponent<RectTransform>();
+
+        initialCorrectButtonClickPitch = AudioManager.instance.SFX_SourceVariablePitch.pitch;
+        correctButtonClickPitch = initialCorrectButtonClickPitch;
 
         initialScale = rect.localScale;
         clickScale = initialScale * clickScaleFactor;
@@ -49,8 +69,9 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         PlayGenericEffects();
         if (GameManager.instance.areParticlesOn)
         {
-            PlayParticle(ParticleType.Correct);
+            PlayParticle(ButtonType.Correct);
         }
+        PlayButtonSound(ButtonType.Correct);
     }
 
     public void PlayIncorrectEffects()
@@ -58,21 +79,22 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         PlayGenericEffects();
         if (GameManager.instance.areParticlesOn)
         {
-            PlayParticle(ParticleType.Incorrect);
+            PlayParticle(ButtonType.Incorrect);
         }
         traumaInducer.InduceTrauma();
+        PlayButtonSound(ButtonType.Incorrect);
         Handheld.Vibrate();
     }
 
-    public void PlayParticle(ParticleType particleType)
+    public void PlayParticle(ButtonType buttonType)
     {
         ParticleSystem particle = null;
-        switch (particleType)
+        switch (buttonType)
         {
-            case ParticleType.Correct:
+            case ButtonType.Correct:
                 particle = correctParticle;
                 break;
-            case ParticleType.Incorrect:
+            case ButtonType.Incorrect:
                 particle = incorrectParticle;
                 break;
         }
@@ -82,5 +104,31 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         particle.transform.position = canvasRect.transform.TransformPoint(particlePos);
         
         particle.Play();
+    }
+
+    public void PlayButtonSound(ButtonType buttonType)
+    {
+        switch (buttonType)
+        {
+            case ButtonType.Correct:
+                consecutiveCorrectButtonClicks++;
+                if (consecutiveCorrectButtonClicks >= maxConsecutiveCorrectButtonClicks)
+                {
+                    buttonClickSoundScript.PlaySound(maxCorrectButtonClickSound, maxCorrectButtonClickSoundVolume);
+                    correctButtonClickPitch = initialCorrectButtonClickPitch;
+                    consecutiveCorrectButtonClicks = 0;
+                }
+                else
+                {
+                    buttonClickSoundScript.PlaySound(correctButtonClickSound, correctButtonClickSoundVolume, correctButtonClickPitch);
+                }
+                correctButtonClickPitch *= correctButtonClickPitchMultiplier;
+                break;
+            case ButtonType.Incorrect:
+                buttonClickSoundScript.PlaySound(incorrectButtonClickSound, incorrectButtonClickSoundVolume);
+                correctButtonClickPitch = initialCorrectButtonClickPitch;
+                consecutiveCorrectButtonClicks = 0;
+                break;
+        }
     }
 }

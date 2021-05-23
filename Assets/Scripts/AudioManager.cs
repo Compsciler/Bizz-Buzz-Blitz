@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     internal static AudioManager instance;
     internal AudioSource SFX_Source;
     internal AudioSource musicSource;
+    internal AudioSource SFX_SourceVariablePitch;
 
     [SerializeField] GameObject SFX_MuteButton;
     [SerializeField] GameObject musicMuteButton;
@@ -20,13 +21,14 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
         }
+
+        SFX_Source = GetComponents<AudioSource>()[0];
+        musicSource = GetComponents<AudioSource>()[1];
+        SFX_SourceVariablePitch = GetComponents<AudioSource>()[2];
     }
 
     void Start()
     {
-        SFX_Source = GetComponents<AudioSource>()[0];
-        musicSource = GetComponents<AudioSource>()[1];
-
         DisplayCorrectSFX();
         DisplayCorrectMusic();
     }
@@ -66,12 +68,20 @@ public class AudioManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsSFX_Muted", 0) == 1)
         {
             SFX_Source.mute = true;
-            SFX_MuteButton.GetComponent<Image>().sprite = SFX_MutedSprite;
+            SFX_SourceVariablePitch.mute = true;
+            if (SFX_MuteButton != null)
+            {
+                SFX_MuteButton.GetComponent<Image>().sprite = SFX_MutedSprite;
+            }
         }
         else
         {
             SFX_Source.mute = false;
-            SFX_MuteButton.GetComponent<Image>().sprite = SFX_UnmutedSprite;
+            SFX_SourceVariablePitch.mute = false;
+            if (SFX_MuteButton != null)
+            {
+                SFX_MuteButton.GetComponent<Image>().sprite = SFX_UnmutedSprite;
+            }
         }
     }
 
@@ -81,12 +91,18 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.mute = true;  // Muting to not need checking for all pausing and unpausing situations in the game scene
             musicSource.Pause();
-            musicMuteButton.GetComponent<Image>().sprite = musicMutedSprite;
+            if (musicMuteButton != null)
+            {
+                musicMuteButton.GetComponent<Image>().sprite = musicMutedSprite;
+            }
         }
         else
         {
             musicSource.mute = false;
-            musicMuteButton.GetComponent<Image>().sprite = musicUnmutedSprite;
+            if (musicMuteButton != null)
+            {
+                musicMuteButton.GetComponent<Image>().sprite = musicUnmutedSprite;
+            }
         }
     }
 }

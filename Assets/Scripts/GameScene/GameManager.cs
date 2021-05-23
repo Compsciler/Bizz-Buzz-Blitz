@@ -137,8 +137,8 @@ public class GameManager : MonoBehaviour
             // GAME OVER SCREEN
             gameOverMenu.SetActive(true);
             //< spawnPeopleScript.UpdateGameOverScoreText();  //{Update score text
-            //< AudioManager.instance.musicSource.Pause();
-            //< AudioManager.instance.SFX_Source.PlayOneShot(gameOverSound, gameOverSoundVolume);
+            AudioManager.instance.musicSource.Pause();
+            AudioManager.instance.SFX_Source.PlayOneShot(gameOverSound, gameOverSoundVolume);
             Debug.Log("Game Over!");
 
             //< int newScore = -1;  //{Get new score

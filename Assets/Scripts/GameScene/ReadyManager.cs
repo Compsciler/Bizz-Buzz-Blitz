@@ -11,6 +11,11 @@ public class ReadyManager : MonoBehaviour
 
     private ButtonState[] buttonStates;
 
+    [SerializeField] AudioClip buttonDownSound;
+    [SerializeField] float buttonDownSoundVolume;
+    [SerializeField] AudioClip gameStartSound;
+    [SerializeField] float gameStartSoundVolume;
+
     private enum ReadyState
     {
         NotReady = 0,
@@ -58,6 +63,7 @@ public class ReadyManager : MonoBehaviour
             {
                 case ButtonState.ClickState.PointerDown:
                     readyStates[i] = ReadyState.Holding;
+                    AudioManager.instance.SFX_Source.PlayOneShot(buttonDownSound, buttonDownSoundVolume);
                     break;
                 case ButtonState.ClickState.PointerUp:
                     if (isAllReady)
@@ -86,6 +92,7 @@ public class ReadyManager : MonoBehaviour
                     timerBar1.isTimerActive = true;
                     stopwatchGO.GetComponent<Stopwatch>().isStopwatchActive = true;
                     StateManager.instance.SetState(new Player1ActiveState());
+                    AudioManager.instance.SFX_Source.PlayOneShot(gameStartSound, gameStartSoundVolume);
                 }
             }
         }
