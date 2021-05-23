@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+using MEC;
 
 public class BizzBuzzButtonEffects : MonoBehaviour
 {
@@ -26,6 +29,10 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     [SerializeField] AudioClip incorrectButtonClickSound;
     [SerializeField] float incorrectButtonClickSoundVolume;
 
+    [SerializeField] Color correctButtonHighlightColor;
+    [SerializeField] float correctButtonHighlightTime;
+    private Color buttonInitialColor;
+
     [SerializeField] TraumaInducer traumaInducer;
 
     [SerializeField] Camera mainCamera;
@@ -50,6 +57,8 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
         initialScale = rect.localScale;
         clickScale = initialScale * clickScaleFactor;
+
+        buttonInitialColor = gameObject.GetComponent<Image>().color;
     }
 
     void Update()
@@ -66,23 +75,38 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
     public void PlayCorrectEffects()
     {
+        PlayButtonSound(ButtonType.Correct);
+        
+        if (!GameManager.instance.areEffectsOn)
+        {
+            return;
+        }
+
         PlayGenericEffects();
         if (GameManager.instance.areParticlesOn)
         {
             PlayParticle(ButtonType.Correct);
         }
-        PlayButtonSound(ButtonType.Correct);
     }
 
     public void PlayIncorrectEffects()
     {
+        int player = GetComponent<BizzBuzzButton>().player;
+        Timing.KillCoroutines("HighlightCorrectButton" + player);
+        Timing.RunCoroutine(HighlightCorrectButton(), "HighlightCorrectButton" + player);
+        PlayButtonSound(ButtonType.Incorrect);
+        
+        if (!GameManager.instance.areEffectsOn)
+        {
+            return;
+        }
+
         PlayGenericEffects();
         if (GameManager.instance.areParticlesOn)
         {
             PlayParticle(ButtonType.Incorrect);
         }
         traumaInducer.InduceTrauma();
-        PlayButtonSound(ButtonType.Incorrect);
         Handheld.Vibrate();
     }
 
@@ -130,5 +154,26 @@ public class BizzBuzzButtonEffects : MonoBehaviour
                 consecutiveCorrectButtonClicks = 0;
                 break;
         }
+    }
+
+    public IEnumerator<float> HighlightCorrectButton()
+    {
+        int incorrectNumber = BizzBuzzClassification.number;
+        bool[] correctRuleValues = BizzBuzzClassification.ClassifyNum(incorrectNumber);
+        BizzBuzzButton[] buttonSetBizzBuzzButtons = transform.parent.gameObject.GetComponentsInChildren<BizzBuzzButton>();
+        
+        Image correctButtonImage = null;
+        foreach (BizzBuzzButton buttonSetBizzBuzzButton in buttonSetBizzBuzzButtons)
+        {
+            GameObject buttonGO = buttonSetBizzBuzzButton.gameObject;
+            buttonGO.GetComponent<Image>().color = buttonInitialColor;
+            if (buttonSetBizzBuzzButton.buttonRuleValues.SequenceEqual(correctRuleValues))
+            {
+                correctButtonImage = buttonGO.GetComponent<Image>();
+                correctButtonImage.color = correctButtonHighlightColor;
+            }
+        }
+        yield return Timing.WaitForSeconds(correctButtonHighlightTime);
+        correctButtonImage.color = buttonInitialColor;
     }
 }

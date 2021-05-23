@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class BizzBuzzButton : MonoBehaviour
 {
-    [SerializeField] int player;
-    [SerializeField] bool[] buttonRuleValues;
+    [SerializeField] internal int player;
+    [SerializeField] internal bool[] buttonRuleValues;
 
     [SerializeField] GameObject numberGO;
 
@@ -18,6 +18,8 @@ public class BizzBuzzButton : MonoBehaviour
     [SerializeField] GameObject[] timerBars;
 
     private int losingPlayer = -1;
+
+    [SerializeField] LifeController lifeController;
 
     [SerializeField] GameOverMenu gameOverMenuScript;
 
@@ -66,47 +68,54 @@ public class BizzBuzzButton : MonoBehaviour
 
         if (IsButtonCorrect())
         {
-            if (GameManager.instance.areEffectsOn)
-            {
-                bizzBuzzButtonEffectsScript.PlayCorrectEffects();
-            }
+            bizzBuzzButtonEffectsScript.PlayCorrectEffects();
 
-            BizzBuzzClassification.number++;  // Add method for other game modes
-            UpdateNumberText();
-
-            int nextPlayer = player % GameManager.instance.playerTotal + 1;
-            SetPlayerNeitherRuleButtonText(nextPlayer);
-            timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
-            timerBars[player - 1].GetComponent<TimerBar>().FillBar(0);
-            timerBars[nextPlayer - 1].GetComponent<TimerBar>().ResetTimer();
-            timerBars[nextPlayer - 1].GetComponent<TimerBar>().isTimerActive = true;
-
-            if (GameManager.instance.isMultiplayer)
-            {
-                numberGO.GetComponent<RectTransform>().Rotate(0, 0, 180f);
-
-                if (StateManager.instance.StateEquals<Player1ActiveState>())
-                {
-                    StateManager.instance.SetState(new Player2ActiveState());
-                }
-                else
-                {
-                    StateManager.instance.SetState(new Player1ActiveState());
-                }
-            }
+            GoToNextNumber();
         }
         else
         {
-            if (GameManager.instance.areEffectsOn)
+            bizzBuzzButtonEffectsScript.PlayIncorrectEffects();
+
+            lifeController.LoseLife();
+            if (lifeController.lives > 0)
             {
-                bizzBuzzButtonEffectsScript.PlayIncorrectEffects();
+                GoToNextNumber();
             }
+            else
+            {
+                timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
+                losingPlayer = player;
+                gameOverMenuScript.UpdateGameOverScoreText(losingPlayer, buttonRuleValues);
 
-            timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
-            losingPlayer = player;
-            gameOverMenuScript.UpdateGameOverScoreText(losingPlayer, buttonRuleValues);
+                Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
+            }
+        }
+    }
 
-            Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
+    public void GoToNextNumber()
+    {
+        BizzBuzzClassification.number++;  // Add method for other game modes
+        UpdateNumberText();
+
+        int nextPlayer = player % GameManager.instance.playerTotal + 1;
+        SetPlayerNeitherRuleButtonText(nextPlayer);
+        timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
+        timerBars[player - 1].GetComponent<TimerBar>().FillBar(0);
+        timerBars[nextPlayer - 1].GetComponent<TimerBar>().ResetTimer();
+        timerBars[nextPlayer - 1].GetComponent<TimerBar>().isTimerActive = true;
+
+        if (GameManager.instance.isMultiplayer)
+        {
+            numberGO.GetComponent<RectTransform>().Rotate(0, 0, 180f);
+
+            if (StateManager.instance.StateEquals<Player1ActiveState>())
+            {
+                StateManager.instance.SetState(new Player2ActiveState());
+            }
+            else
+            {
+                StateManager.instance.SetState(new Player1ActiveState());
+            }
         }
     }
 
