@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
-    [SerializeField] internal bool areEffectsOn = true;
+    [SerializeField] internal bool isSFX_On = true;
     //< [SerializeField] internal bool isTutorial = false;
     internal bool isMultiplayer = false;
     internal int playerTotal = 1;

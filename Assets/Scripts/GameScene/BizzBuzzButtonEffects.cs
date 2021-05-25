@@ -77,7 +77,7 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     {
         PlayButtonSound(ButtonType.Correct);
         
-        if (!GameManager.instance.areEffectsOn)
+        if (!GameManager.instance.isSFX_On)
         {
             return;
         }
@@ -96,7 +96,12 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         Timing.RunCoroutine(HighlightCorrectButton(), "HighlightCorrectButton" + player);
         PlayButtonSound(ButtonType.Incorrect);
         
-        if (!GameManager.instance.areEffectsOn)
+        if (!AudioManager.instance.SFX_Source.mute)
+        {
+            Handheld.Vibrate();
+        }
+
+        if (!GameManager.instance.isSFX_On)
         {
             return;
         }
@@ -107,7 +112,6 @@ public class BizzBuzzButtonEffects : MonoBehaviour
             PlayParticle(ButtonType.Incorrect);
         }
         traumaInducer.InduceTrauma();
-        Handheld.Vibrate();
     }
 
     public void PlayParticle(ButtonType buttonType)
