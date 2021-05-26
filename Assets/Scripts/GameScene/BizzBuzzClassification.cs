@@ -11,8 +11,6 @@ public class BizzBuzzClassification : MonoBehaviour
 
     internal static List<string> rulesUsed;
 
-    internal static int number = 1;
-
     void Awake()
     {
         if (rules == null)
@@ -192,7 +190,7 @@ public class BizzBuzzClassification : MonoBehaviour
         {
             if (ruleValues[i])
             {
-                res += GetColoredRichText(rulesUsed[i] + " ", ruleColorsUsed[i]);
+                res += ExtensionMethods.GetColoredRichText(rulesUsed[i] + " ", ruleColorsUsed[i]);
             }
         }
         if (res.Equals(""))
@@ -210,10 +208,5 @@ public class BizzBuzzClassification : MonoBehaviour
     public static string GetClassificationText(int n)
     {
         return GetClassificationText(ClassifyNum(n));
-    }
-
-    public static string GetColoredRichText(string s, Color color)
-    {
-        return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + s + "</color>";
     }
 }

@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameOverMenu : MonoBehaviour
 {
-    [SerializeField] TMP_Text gameOverScoreText;
+    [SerializeField] TMP_Text titleText;
+    [SerializeField] TMP_Text descriptionText;
 
     [SerializeField] AudioClip restartButtonClickSound;
     [SerializeField] AudioClip goToMainMenuButtonClickSound;
 
+    [SerializeField] Stopwatch stopwatch;
+    
     [SerializeField] GameObject mainCamera;
 
     public void Restart()
@@ -30,35 +33,41 @@ public class GameOverMenu : MonoBehaviour
         // ResetStaticVariables() delegate in GameManager.cs on scene unload
     }
 
-    public void UpdateGameOverScoreText(int losingPlayer)
+    public void UpdateLoseText(int losingPlayer)
     {
-        UpdateGameOverScoreText(true, losingPlayer, null);
+        UpdateLoseText(true, losingPlayer, null);
     }
 
-    public void UpdateGameOverScoreText(int losingPlayer, bool[] losingButtonRuleValues)
+    public void UpdateLoseText(int losingPlayer, bool[] losingButtonRuleValues)
     {
-        UpdateGameOverScoreText(false, losingPlayer, losingButtonRuleValues);
+        UpdateLoseText(false, losingPlayer, losingButtonRuleValues);
     }
 
-    private void UpdateGameOverScoreText(bool isLostOnTime, int losingPlayer, bool[] losingButtonRuleValues)
+    private void UpdateLoseText(bool isLostOnTime, int losingPlayer, bool[] losingButtonRuleValues)
     {
-        int losingNumber = BizzBuzzClassification.number;
+        int losingNumber = BizzBuzzButton.number;
         if (GameManager.instance.isMultiplayer)
         {
             float zRotation = (float)(losingPlayer - 1) / GameManager.instance.playerTotal * 360;
             GetComponent<RectTransform>().Rotate(0, 0, zRotation);
-            gameOverScoreText.text = "Player " + losingPlayer + " lost!\n";
+            descriptionText.text = "Player " + losingPlayer + " lost!\n";
         }
         else
         {
-            gameOverScoreText.text = "";
+            descriptionText.text = "";
         }
-        gameOverScoreText.text += losingNumber + " is " +
+        descriptionText.text += losingNumber + " is " +
             BizzBuzzClassification.GetClassificationText(losingNumber);
         if (!isLostOnTime)
         {
-            gameOverScoreText.text += ", not " +
+            descriptionText.text += ", not " +
                 BizzBuzzClassification.GetClassificationText(losingButtonRuleValues);
         }
+    }
+
+    public void UpdateWinText()
+    {
+        titleText.text = "LEVEL COMPLETE";
+        descriptionText.text = stopwatch.stopwatchWithPenaltyAddedText;
     }
 }

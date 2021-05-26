@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
 
             // GAME OVER SCREEN
             gameOverMenu.SetActive(true);
-            //< spawnPeopleScript.UpdateGameOverScoreText();  //{Update score text
+            //< spawnPeopleScript.UpdateLoseScoreText();  //{Update score text
             AudioManager.instance.musicSource.Pause();
             AudioManager.instance.SFX_Source.PlayOneShot(gameOverSound, gameOverSoundVolume);
             Debug.Log("Game Over!");
@@ -191,7 +191,8 @@ public class GameManager : MonoBehaviour
         //< PauseManager.isPaused = false;
         Time.timeScale = 1;  // Resetting time scale when restarting or quitting game
         BizzBuzzClassification.rulesUsed = null;
-        BizzBuzzClassification.number = 1;
+        BizzBuzzButton.number = 1;
+        BizzBuzzButton.targetNum = -1;
         BizzBuzzButton.neitherRuleButtons = null;
         Debug.Log("Static variables reset!");
     }

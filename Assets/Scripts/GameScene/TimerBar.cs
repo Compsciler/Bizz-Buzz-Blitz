@@ -40,7 +40,7 @@ public class TimerBar : MonoBehaviour
 
     public void OnTimerFinished()
     {
-        gameOverMenuScript.UpdateGameOverScoreText(player);
+        gameOverMenuScript.UpdateLoseText(player);
         Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
     }
 

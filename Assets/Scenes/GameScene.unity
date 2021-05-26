@@ -153,6 +153,9 @@ MonoBehaviour:
   VFX_ToggleButtonGO: {fileID: 0}
   VFX_OnSprite: {fileID: 21300000, guid: 46ede435fa317c4478735b47e947bb95, type: 3}
   VFX_OffSprite: {fileID: 21300000, guid: f749d6f5fe71dcf48beb9d9045cee173, type: 3}
+  VFX_SpriteText: {fileID: 0}
+  VFX_OnSpriteColor: {r: 0, g: 0, b: 0, a: 0}
+  VFX_OffSpriteColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &65672288
 Transform:
   m_ObjectHideFlags: 0
@@ -1457,24 +1460,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4498172732374797777, guid: 251d699335ee67b488a2e56abea941da,
         type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
+      propertyPath: m_fontSize
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4498172732374797777, guid: 251d699335ee67b488a2e56abea941da,
         type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4498172732374797783, guid: 251d699335ee67b488a2e56abea941da,
-        type: 3}
-      propertyPath: m_Name
-      value: Title Text
+      propertyPath: m_fontSizeBase
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4498172732556078729, guid: 251d699335ee67b488a2e56abea941da,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4498172733259868864, guid: 251d699335ee67b488a2e56abea941da,
+        type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
     - target: {fileID: 4498172733259868864, guid: 251d699335ee67b488a2e56abea941da,
         type: 3}
       propertyPath: mainCamera
@@ -1652,11 +1655,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TextStyleHashCode
       value: -1183493901
-      objectReference: {fileID: 0}
-    - target: {fileID: 4498172734034753843, guid: 251d699335ee67b488a2e56abea941da,
-        type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 251d699335ee67b488a2e56abea941da, type: 3}
@@ -2278,6 +2276,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1492537184}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1194256570 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7077484061271860224, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1492537184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194256569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03322e2ca34717a40bc44d738e26d18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1215099529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2307,6 +2317,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 1055571938}
@@ -2319,12 +2334,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -2347,6 +2362,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 1055571938}
@@ -2359,12 +2379,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -2397,6 +2417,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 1055571938}
@@ -2409,12 +2434,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -2582,6 +2607,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 1055571938}
@@ -2594,12 +2624,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -3440,7 +3470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1686760860
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4085,6 +4115,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 356300904}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2107800271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7077484061271860224, guid: aa6fe038ef60d4949a5baa5f986e0ab9,
+    type: 3}
+  m_PrefabInstance: {fileID: 356300904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107800270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03322e2ca34717a40bc44d738e26d18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1639302277224914728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4316,6 +4358,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3343222545345779245, guid: 2a7ed1306367b764e967108be962e13d,
+        type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
     - target: {fileID: 3343222545345779247, guid: 2a7ed1306367b764e967108be962e13d,
         type: 3}
       propertyPath: m_Name
@@ -4755,6 +4802,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 573531987}
@@ -4767,12 +4819,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 5716975399903022254, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -4790,6 +4842,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 573531987}
@@ -4802,12 +4859,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 5732231475044413720, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -4830,6 +4887,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 573531987}
@@ -4842,12 +4904,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 6315864588180925601, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]
@@ -5015,6 +5077,11 @@ PrefabInstance:
       objectReference: {fileID: 1421230160}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
+      propertyPath: stopwatch
+      value: 
+      objectReference: {fileID: 1686760863}
+    - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
+        type: 3}
       propertyPath: lifeController
       value: 
       objectReference: {fileID: 573531987}
@@ -5027,12 +5094,12 @@ PrefabInstance:
         type: 3}
       propertyPath: timerBars.Array.data[0]
       value: 
-      objectReference: {fileID: 1194256569}
+      objectReference: {fileID: 1194256570}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: timerBars.Array.data[1]
       value: 
-      objectReference: {fileID: 2107800270}
+      objectReference: {fileID: 2107800271}
     - target: {fileID: 7807888829165456589, guid: fd6aba0cfd0e24f4d925344f8397e142,
         type: 3}
       propertyPath: buttonRuleValues.Array.data[0]

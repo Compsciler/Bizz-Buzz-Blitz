@@ -5,8 +5,10 @@ using UnityEngine;
 public class LifeController : MonoBehaviour
 {
     [SerializeField] GameObject[] strikes;
-    private int maxLives;
+    internal int maxLives;
     internal int lives;
+
+    [SerializeField] Stopwatch stopwatch;
 
     void Start()
     {
@@ -24,5 +26,10 @@ public class LifeController : MonoBehaviour
     {
         lives--;
         strikes[maxLives - lives - 1].SetActive(true);
+
+        if (stopwatch != null)
+        {
+            stopwatch.AddStrikePenalty();
+        }
     }
 }

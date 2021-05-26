@@ -162,7 +162,7 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
     public IEnumerator<float> HighlightCorrectButton()
     {
-        int incorrectNumber = BizzBuzzClassification.number;
+        int incorrectNumber = BizzBuzzButton.number;
         bool[] correctRuleValues = BizzBuzzClassification.ClassifyNum(incorrectNumber);
         BizzBuzzButton[] buttonSetBizzBuzzButtons = transform.parent.gameObject.GetComponentsInChildren<BizzBuzzButton>();
         

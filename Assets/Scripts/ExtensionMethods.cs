@@ -60,6 +60,15 @@ public static class ExtensionMethods
 
     public static string RoundWithTrailingDecimalZeroes(float n, int decimalPlaces)
     {
-        return string.Format("Value: {0:F2}", Mathf.Round(n * Mathf.Pow(10, decimalPlaces)) / Mathf.Pow(10, decimalPlaces));
+        if (decimalPlaces <= 0)
+        {
+            return (Mathf.RoundToInt(Mathf.Round(n * Mathf.Pow(10, decimalPlaces)) / Mathf.Pow(10, decimalPlaces))).ToString();  // Outer round to remove floating-point innacuracies
+        }
+        return string.Format("{0:F" + decimalPlaces + "}", Mathf.Round(n * Mathf.Pow(10, decimalPlaces)) / Mathf.Pow(10, decimalPlaces));
+    }
+
+    public static string GetColoredRichText(string s, Color color)
+    {
+        return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + s + "</color>";
     }
 }

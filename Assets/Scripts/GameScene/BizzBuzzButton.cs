@@ -15,12 +15,15 @@ public class BizzBuzzButton : MonoBehaviour
     [SerializeField] TMP_Text buttonText;
     internal static List<GameObject> neitherRuleButtons;
 
-    [SerializeField] GameObject[] timerBars;
+    [SerializeField] TimerBar[] timerBars;
+    [SerializeField] Stopwatch stopwatch;
 
     private int losingPlayer = -1;
 
-    [SerializeField] LifeController lifeController;
+    internal static int number = 1;
+    internal static int targetNum = -1;  // -1 means endless game mode
 
+    [SerializeField] LifeController lifeController;
     [SerializeField] GameOverMenu gameOverMenuScript;
 
     private BizzBuzzButtonEffects bizzBuzzButtonEffectsScript;
@@ -83,10 +86,9 @@ public class BizzBuzzButton : MonoBehaviour
             }
             else
             {
-                timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
+                PauseTimersAndStopwatches();
                 losingPlayer = player;
-                gameOverMenuScript.UpdateGameOverScoreText(losingPlayer, buttonRuleValues);
-
+                gameOverMenuScript.UpdateLoseText(losingPlayer, buttonRuleValues);
                 Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
             }
         }
@@ -94,15 +96,23 @@ public class BizzBuzzButton : MonoBehaviour
 
     public void GoToNextNumber()
     {
-        BizzBuzzClassification.number++;  // Add method for other game modes
+        if (number >= targetNum && !IsGameModeEndless())
+        {
+            PauseTimersAndStopwatches();
+            gameOverMenuScript.UpdateWinText();
+            Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
+            return;
+        }
+
+        number++;  // Add method for other game modes
         UpdateNumberText();
 
         int nextPlayer = player % GameManager.instance.playerTotal + 1;
         SetPlayerNeitherRuleButtonText(nextPlayer);
-        timerBars[player - 1].GetComponent<TimerBar>().isTimerActive = false;
-        timerBars[player - 1].GetComponent<TimerBar>().FillBar(0);
-        timerBars[nextPlayer - 1].GetComponent<TimerBar>().ResetTimer();
-        timerBars[nextPlayer - 1].GetComponent<TimerBar>().isTimerActive = true;
+        timerBars[player - 1].isTimerActive = false;
+        timerBars[player - 1].FillBar(0);
+        timerBars[nextPlayer - 1].ResetTimer();
+        timerBars[nextPlayer - 1].isTimerActive = true;
 
         if (GameManager.instance.isMultiplayer)
         {
@@ -121,13 +131,13 @@ public class BizzBuzzButton : MonoBehaviour
 
     public bool IsButtonCorrect()
     {
-        bool[] correctRuleValues = BizzBuzzClassification.ClassifyNum(BizzBuzzClassification.number);
+        bool[] correctRuleValues = BizzBuzzClassification.ClassifyNum(number);
         return buttonRuleValues.SequenceEqual(correctRuleValues);
     }
 
     public void UpdateNumberText()
     {
-        numberGO.GetComponent<TMP_Text>().text = BizzBuzzClassification.number.ToString();
+        numberGO.GetComponent<TMP_Text>().text = number.ToString();
     }
 
     public void SetRuleButtonText()
@@ -141,8 +151,19 @@ public class BizzBuzzButton : MonoBehaviour
         {
             if (go.GetComponent<BizzBuzzButton>().player == playerNum)
             {
-                go.GetComponent<BizzBuzzButton>().buttonText.text = BizzBuzzClassification.number.ToString();
+                go.GetComponent<BizzBuzzButton>().buttonText.text = number.ToString();
             }
         }
+    }
+
+    public static bool IsGameModeEndless()
+    {
+        return targetNum == -1;
+    }
+
+    public void PauseTimersAndStopwatches()
+    {
+        timerBars[player - 1].isTimerActive = false;
+        stopwatch.isStopwatchActive = false;
     }
 }
