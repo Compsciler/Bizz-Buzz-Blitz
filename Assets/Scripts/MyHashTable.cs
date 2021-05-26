@@ -143,4 +143,21 @@
     {
         return keyCount == 0;
     }
+
+    public K[] GetKeySet()
+    {
+        K[] keySet = new K[keyCount];
+        int keySetIndex = 0;
+        int keyIndex = 0;
+        while (keySetIndex < keyCount)
+        {
+            if (!IsIndexEmpty(keyIndex))
+            {
+                keySet[keySetIndex] = keys[keyIndex];
+                keySetIndex++;
+            }
+            keyIndex++;
+        }
+        return keySet;
+    }
 }

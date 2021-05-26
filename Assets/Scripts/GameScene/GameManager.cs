@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject[] enableOnMultiplayer;
     [SerializeField] GameObject[] disableOnMultiplayer;
+    [SerializeField] TimerBar[] timerBars;
+    [SerializeField] Stopwatch stopwatch;
     [SerializeField] GameObject numberGO;
     [SerializeField] float numberMultiplayerY;
     [SerializeField] float numberMultiplayerFontSize;
@@ -151,8 +153,10 @@ public class GameManager : MonoBehaviour
         switch (gameMode)
         {
             case 0:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
                 break;
             case 100:  // Multiplayer modes start from 100
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
                 isMultiplayer = true;
                 playerTotal = 2;
                 break;
@@ -170,6 +174,21 @@ public class GameManager : MonoBehaviour
             RectTransform numberRectTransform = numberGO.GetComponent<RectTransform>();
             numberRectTransform.anchoredPosition = new Vector2(numberRectTransform.anchoredPosition.x, numberMultiplayerY);
             numberGO.GetComponent<TMP_Text>().fontSize = numberMultiplayerFontSize;
+        }
+        if (BizzBuzzButton.IsGameModeEndless())
+        {
+            stopwatch.gameObject.SetActive(false);
+        }
+        else
+        {
+            foreach (TimerBar timerBar in timerBars)
+            {
+                timerBar.enabled = false;
+                foreach (GameObject go in timerBar.gameObject.GetChildren())
+                {
+                    go.SetActive(false);
+                }
+            }
         }
     }
 
@@ -190,9 +209,15 @@ public class GameManager : MonoBehaviour
     {
         //< PauseManager.isPaused = false;
         Time.timeScale = 1;  // Resetting time scale when restarting or quitting game
+        BizzBuzzClassification.ruleIntervalList = new List<RuleInterval>();
         BizzBuzzClassification.rulesUsed = null;
         BizzBuzzButton.number = 1;
         BizzBuzzButton.targetNum = -1;
+        BizzBuzzButton.roundNum = 1;
+        BizzBuzzButton.nextRuleChangeRound = int.MaxValue;
+        BizzBuzzButton.areNumbersRandomRange = false;
+        BizzBuzzButton.randomNumberRangeSize = 100;
+        BizzBuzzButton.randomNumberRangeRoundInterval = 20;
         BizzBuzzButton.neitherRuleButtons = null;
         Debug.Log("Static variables reset!");
     }

@@ -9,15 +9,21 @@ public class BizzBuzzClassification : MonoBehaviour
     private static MyHashTable<string, List<object>> rules;
     private static List<Color> ruleColorsUsed;
 
+    private static List<string> ruleNames;
+    private static List<string> isDivisbleByOrContainsDigitRuleNames;
+    private static string isDivisbleByOrContainsDigitMethodInfoString = "Boolean IsDivisbleByOrContainsDigit(Int32, Int32)";
+
+    internal static List<RuleInterval> ruleIntervalList = new List<RuleInterval>();
     internal static List<string> rulesUsed;
+    private static int rulesUsedIndex;
 
     void Awake()
     {
         if (rules == null)
         {
             SetUpRules();
+            SetUpRandomRuleLists();
         }
-        rulesUsed = new List<string>() {"Bizz", "Buzz"};
 
         /*
         for (int i = 1; i <= 100; i++)
@@ -26,7 +32,7 @@ public class BizzBuzzClassification : MonoBehaviour
             // Debug.Log(i + ": " + string.Join(", ", ClassifyNum(i)));
         }
         */
-        
+
         /*
         string s = "";
         for (int i = 1; i <= 200; i++)
@@ -38,6 +44,11 @@ public class BizzBuzzClassification : MonoBehaviour
         }
         Debug.Log(s);
         */
+    }
+
+    void Start()
+    {
+        UpdateRulesUsed();
     }
 
     void Update()
@@ -208,5 +219,82 @@ public class BizzBuzzClassification : MonoBehaviour
     public static string GetClassificationText(int n)
     {
         return GetClassificationText(ClassifyNum(n));
+    }
+
+    public static void AddRuleInterval(List<string> ruleList, int roundInterval)
+    {
+        ruleIntervalList.Add(new RuleInterval(ruleList, roundInterval));
+    }
+
+    public static void UpdateRulesUsed()
+    {
+        if (rulesUsed == null)
+        {
+            rulesUsedIndex = 0;
+        }
+        else
+        {
+            rulesUsedIndex = (rulesUsedIndex + 1) % ruleIntervalList.Count;
+        }
+        rulesUsed = ruleIntervalList[rulesUsedIndex].ruleList;
+        SetRandomRules();
+        BizzBuzzButton.nextRuleChangeRound = BizzBuzzButton.roundNum + ruleIntervalList[rulesUsedIndex].roundInterval;
+        if (BizzBuzzButton.nextRuleChangeRound < 0)
+        {
+            BizzBuzzButton.nextRuleChangeRound = int.MaxValue;
+        }
+
+        foreach (BizzBuzzButton bizzBuzzButton in BizzBuzzButton.bizzBuzzButtons)
+        {
+            bizzBuzzButton.SetRuleButtonText();
+        }
+        BizzBuzzButton.SetPlayerNeitherRuleButtonText(1);
+    }
+
+    public static void SetRandomRules()
+    {
+        List<string> ruleNamesClone = new List<string>(ruleNames);
+        List<string> isDivisbleByOrContainsDigitRuleNamesClone = new List<string>(isDivisbleByOrContainsDigitRuleNames);
+
+        for (int i = 0; i < rulesUsed.Count; i++)
+        {
+            switch (rulesUsed[i]) {
+                case "Random":
+                    rulesUsed[i] = ruleNamesClone[UnityEngine.Random.Range(0, ruleNamesClone.Count)];
+                    break;
+                case "RandomIsDivisbleByOrContainsDigit":
+                    rulesUsed[i] = isDivisbleByOrContainsDigitRuleNamesClone[UnityEngine.Random.Range(0, isDivisbleByOrContainsDigitRuleNamesClone.Count)];
+                    break;
+            }
+            ruleNamesClone.Remove(rulesUsed[i]);
+            isDivisbleByOrContainsDigitRuleNamesClone.Remove(rulesUsed[i]);
+        }
+        rulesUsed = rulesUsed.OrderBy(s => ruleNames.IndexOf(s)).ToList();
+    }
+
+    public static void SetUpRandomRuleLists()
+    {
+        ruleNames = new List<string>();
+        isDivisbleByOrContainsDigitRuleNames = new List<string>();
+        foreach (string ruleName in rules.GetKeySet())
+        {
+            if (rules.Get(ruleName)[0].ToString().Equals(isDivisbleByOrContainsDigitMethodInfoString))
+            {
+                isDivisbleByOrContainsDigitRuleNames.Add(ruleName);
+            }
+            ruleNames.Add(ruleName);
+        }
+    }
+}
+
+public struct RuleInterval
+{
+    public List<string> ruleList;
+    public int roundInterval;
+
+    public RuleInterval(List<string> ruleList, int roundInterval)
+    {
+        this.ruleList = ruleList;
+        this.roundInterval = roundInterval;
     }
 }

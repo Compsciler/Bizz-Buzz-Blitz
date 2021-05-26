@@ -11,9 +11,11 @@ public class BizzBuzzButton : MonoBehaviour
     [SerializeField] internal bool[] buttonRuleValues;
 
     [SerializeField] GameObject numberGO;
+    private float fourDigitNumberFontSize = 450f;
 
     [SerializeField] TMP_Text buttonText;
-    internal static List<GameObject> neitherRuleButtons;
+    internal static List<BizzBuzzButton> bizzBuzzButtons;
+    internal static List<BizzBuzzButton> neitherRuleButtons;
 
     [SerializeField] TimerBar[] timerBars;
     [SerializeField] Stopwatch stopwatch;
@@ -22,6 +24,13 @@ public class BizzBuzzButton : MonoBehaviour
 
     internal static int number = 1;
     internal static int targetNum = -1;  // -1 means endless game mode
+    internal static int roundNum = 1;
+    internal static int nextRuleChangeRound = int.MaxValue;
+
+    internal static bool areNumbersRandomRange = false;
+    internal static int randomNumberRangeSize = 100;
+    internal static int randomNumberRangeRoundInterval = 20;
+    private static List<int> randomNumberRange;
 
     [SerializeField] LifeController lifeController;
     [SerializeField] GameOverMenu gameOverMenuScript;
@@ -30,9 +39,18 @@ public class BizzBuzzButton : MonoBehaviour
 
     void Awake()
     {
+        if (bizzBuzzButtons == null)
+        {
+            bizzBuzzButtons = new List<BizzBuzzButton>();
+        }
+        bizzBuzzButtons.Add(this);
         if (neitherRuleButtons == null)
         {
-            neitherRuleButtons = new List<GameObject>();
+            neitherRuleButtons = new List<BizzBuzzButton>();
+        }
+        if (buttonRuleValues.SequenceEqual(new bool[] {false, false}))
+        {
+            neitherRuleButtons.Add(this);
         }
     }
     
@@ -40,12 +58,12 @@ public class BizzBuzzButton : MonoBehaviour
     {
         bizzBuzzButtonEffectsScript = GetComponent<BizzBuzzButtonEffects>();
 
-        UpdateNumberText();
-        if (buttonRuleValues.SequenceEqual(new bool[] {false, false})){
-            neitherRuleButtons.Add(gameObject);
+        if (areNumbersRandomRange)
+        {
+            GoToNextNumber();
         }
-        SetRuleButtonText();
-        SetPlayerNeitherRuleButtonText(1);
+
+        UpdateNumberText();
     }
 
     public void ButtonClick()
@@ -73,7 +91,7 @@ public class BizzBuzzButton : MonoBehaviour
         {
             bizzBuzzButtonEffectsScript.PlayCorrectEffects();
 
-            GoToNextNumber();
+            GoToNextRound();
         }
         else
         {
@@ -82,7 +100,7 @@ public class BizzBuzzButton : MonoBehaviour
             lifeController.LoseLife();
             if (lifeController.lives > 0)
             {
-                GoToNextNumber();
+                GoToNextRound();
             }
             else
             {
@@ -94,7 +112,7 @@ public class BizzBuzzButton : MonoBehaviour
         }
     }
 
-    public void GoToNextNumber()
+    public void GoToNextRound()
     {
         if (number >= targetNum && !IsGameModeEndless())
         {
@@ -104,8 +122,14 @@ public class BizzBuzzButton : MonoBehaviour
             return;
         }
 
-        number++;  // Add method for other game modes
+        roundNum++;
+        GoToNextNumber();
         UpdateNumberText();
+
+        if (roundNum >= nextRuleChangeRound)
+        {
+            BizzBuzzClassification.UpdateRulesUsed();
+        }
 
         int nextPlayer = player % GameManager.instance.playerTotal + 1;
         SetPlayerNeitherRuleButtonText(nextPlayer);
@@ -129,6 +153,22 @@ public class BizzBuzzButton : MonoBehaviour
         }
     }
 
+    public void GoToNextNumber()
+    {
+        if (areNumbersRandomRange)
+        {
+            if ((roundNum - 1) % randomNumberRangeRoundInterval == 0)
+            {
+                int randomNumberRangeMin = randomNumberRangeSize * (roundNum - 1) / randomNumberRangeRoundInterval + 1;
+                randomNumberRange = Enumerable.Range(randomNumberRangeMin, randomNumberRangeSize).ToList();
+            }
+            number = randomNumberRange[Random.Range(0, randomNumberRange.Count)];
+            randomNumberRange.Remove(number);
+            return;
+        }
+        number++;
+    }
+
     public bool IsButtonCorrect()
     {
         bool[] correctRuleValues = BizzBuzzClassification.ClassifyNum(number);
@@ -138,6 +178,10 @@ public class BizzBuzzButton : MonoBehaviour
     public void UpdateNumberText()
     {
         numberGO.GetComponent<TMP_Text>().text = number.ToString();
+        if (number >= 1000)
+        {
+            numberGO.GetComponent<TMP_Text>().fontSize = fourDigitNumberFontSize;
+        }
     }
 
     public void SetRuleButtonText()
@@ -145,13 +189,13 @@ public class BizzBuzzButton : MonoBehaviour
         buttonText.text = BizzBuzzClassification.GetClassificationText(buttonRuleValues);
     }
 
-    public void SetPlayerNeitherRuleButtonText(int playerNum)
+    public static void SetPlayerNeitherRuleButtonText(int playerNum)
     {
-        foreach (GameObject go in neitherRuleButtons)
+        foreach (BizzBuzzButton neitherRuleButton in neitherRuleButtons)
         {
-            if (go.GetComponent<BizzBuzzButton>().player == playerNum)
+            if (neitherRuleButton.player == playerNum)
             {
-                go.GetComponent<BizzBuzzButton>().buttonText.text = number.ToString();
+                neitherRuleButton.buttonText.text = number.ToString();
             }
         }
     }

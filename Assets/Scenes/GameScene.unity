@@ -1843,6 +1843,10 @@ MonoBehaviour:
   - {fileID: 1055571939}
   disableOnMultiplayer:
   - {fileID: 1023463943}
+  timerBars:
+  - {fileID: 1194256570}
+  - {fileID: 2107800271}
+  stopwatch: {fileID: 1686760863}
   numberGO: {fileID: 1421230160}
   numberMultiplayerY: 0
   numberMultiplayerFontSize: 500
