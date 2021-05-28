@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
             numberRectTransform.anchoredPosition = new Vector2(numberRectTransform.anchoredPosition.x, numberMultiplayerY);
             numberGO.GetComponent<TMP_Text>().fontSize = numberMultiplayerFontSize;
         }
-        if (BizzBuzzButton.IsGameModeEndless())
+        if (BizzBuzzButton.IsGameModeEndless() && stopwatch != null)
         {
             stopwatch.gameObject.SetActive(false);
         }

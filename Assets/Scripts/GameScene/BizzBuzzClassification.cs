@@ -9,7 +9,7 @@ public class BizzBuzzClassification : MonoBehaviour
     private static MyHashTable<string, List<object>> rules;
     private static List<Color> ruleColorsUsed;
 
-    private static List<string> ruleNames;
+    internal static List<string> ruleNames;
     private static List<string> isDivisbleByOrContainsDigitRuleNames;
     private static string isDivisbleByOrContainsDigitMethodInfoString = "Boolean IsDivisbleByOrContainsDigit(Int32, Int32)";
 
@@ -201,7 +201,16 @@ public class BizzBuzzClassification : MonoBehaviour
         {
             if (ruleValues[i])
             {
-                res += ExtensionMethods.GetColoredRichText(rulesUsed[i] + " ", ruleColorsUsed[i]);
+                string ruleText;
+                if (BizzBuzzFontManager.instance.isUsingSymbols)
+                {
+                    ruleText = BizzBuzzFontManager.instance.GetRuleSymbolText(rulesUsed[i]);
+                }
+                else
+                {
+                    ruleText = rulesUsed[i];
+                }
+                res += ExtensionMethods.GetColoredRichText(ruleText + " ", ruleColorsUsed[i]);
             }
         }
         if (res.Equals(""))
