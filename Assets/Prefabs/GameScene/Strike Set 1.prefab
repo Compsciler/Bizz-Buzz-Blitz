@@ -55,6 +55,8 @@ MonoBehaviour:
   - {fileID: 3343222545216388682}
   - {fileID: 170489789404227977}
   - {fileID: 170489788631405188}
+  maxLives: 3
+  stopwatch: {fileID: 0}
 --- !u!1001 &170489788799208879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,7 +152,7 @@ PrefabInstance:
     - target: {fileID: 3186350329232125833, guid: 7a46cab250673f948833f07148615a64,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 290
+      value: 470
       objectReference: {fileID: 0}
     - target: {fileID: 3186350329232125833, guid: 7a46cab250673f948833f07148615a64,
         type: 3}
@@ -412,7 +414,7 @@ PrefabInstance:
     - target: {fileID: 3186350329232125833, guid: 7a46cab250673f948833f07148615a64,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 470
+      value: 290
       objectReference: {fileID: 0}
     - target: {fileID: 3186350329232125833, guid: 7a46cab250673f948833f07148615a64,
         type: 3}

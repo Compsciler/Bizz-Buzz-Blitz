@@ -5,14 +5,14 @@ using UnityEngine;
 public class LifeController : MonoBehaviour
 {
     [SerializeField] GameObject[] strikes;
-    internal int maxLives;
+    [SerializeField] int maxLives;
     internal int lives;
 
     [SerializeField] Stopwatch stopwatch;
 
     void Start()
     {
-        maxLives = strikes.Length;
+        SetMaxLives(maxLives);
         lives = maxLives;
     }
 
@@ -25,11 +25,20 @@ public class LifeController : MonoBehaviour
     public void LoseLife()
     {
         lives--;
-        strikes[maxLives - lives - 1].SetActive(true);
+        strikes[lives].SetActive(true);
 
         if (stopwatch != null)
         {
             stopwatch.AddStrikePenalty();
+        }
+    }
+
+    public void SetMaxLives(int maxLives)
+    {
+        this.maxLives = maxLives;
+        for (int i = maxLives; i < strikes.Length; i++)
+        {
+            strikes[i].transform.parent.gameObject.SetActive(false);
         }
     }
 }

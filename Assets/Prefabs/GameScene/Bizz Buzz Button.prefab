@@ -190,6 +190,9 @@ MonoBehaviour:
   traumaInducer: {fileID: 0}
   blinkMinColorA: 0.4
   blinkPeriodTime: 0.4
+  ruleChangeSound: {fileID: 8300000, guid: 7da886a070ddeee4ba6bc0fd415e462c, type: 3}
+  ruleChangeSoundVolume: 0.8
+  minRoundIntervalForRuleChangeSound: 10
   mainCamera: {fileID: 0}
   canvasRect: {fileID: 0}
   buttonText: {fileID: 3616454539948087146}

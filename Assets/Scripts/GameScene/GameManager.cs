@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] float gameOverTimeScale = 0.5f;
 
-    private int defaultGameMode = 99;
+    private int defaultGameMode = 0;
 
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject numberGO;
     [SerializeField] float numberMultiplayerY;
     [SerializeField] float numberMultiplayerFontSize;
+    [SerializeField] TMP_Text gameModeText; 
+    [SerializeField] TMP_Text targetNumberText; 
 
     void Awake()  // Script Execution Order = -1
     {
@@ -165,15 +167,14 @@ public class GameManager : MonoBehaviour
                 break;
             case 100:  // Multiplayer modes start from 100
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
-                isMultiplayer = true;
                 playerTotal = 2;
                 break;
             case 199:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
-                isMultiplayer = true;
                 playerTotal = 2;
                 break;
         }
+        isMultiplayer = playerTotal > 1;
         if (isMultiplayer)
         {
             foreach (GameObject go in enableOnMultiplayer)
@@ -191,6 +192,7 @@ public class GameManager : MonoBehaviour
         if (BizzBuzzButton.IsGameModeEndless() && stopwatch != null)
         {
             stopwatch.gameObject.SetActive(false);
+            gameModeText.text = "Game mode: Endless";
         }
         else
         {
@@ -202,6 +204,8 @@ public class GameManager : MonoBehaviour
                     go.SetActive(false);
                 }
             }
+            gameModeText.text = "Game mode: Target";
+            targetNumberText.text = "Target number: " + BizzBuzzButton.targetNum;
         }
     }
 

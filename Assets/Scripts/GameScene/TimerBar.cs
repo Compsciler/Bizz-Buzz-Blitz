@@ -31,8 +31,8 @@ public class TimerBar : MonoBehaviour
             if (currentValue < 0)
             {
                 currentValue = 0;
+                // isTimerActive = false;
                 OnTimerFinished();
-                isTimerActive = false;
             }
             FillBar();
         }

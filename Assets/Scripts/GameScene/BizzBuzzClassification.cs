@@ -15,7 +15,7 @@ public class BizzBuzzClassification : MonoBehaviour
 
     internal static List<RuleInterval> ruleIntervalList = new List<RuleInterval>();
     internal static List<string> rulesUsed;
-    private static int rulesUsedIndex;
+    internal static int rulesUsedIndex;
 
     void Awake()
     {
@@ -278,7 +278,7 @@ public class BizzBuzzClassification : MonoBehaviour
             button.SetRuleButtonText();
             if (BizzBuzzButton.roundNum != 1)
             {
-                // bizzBuzzButton.GetComponent<BizzBuzzButtonEffects>().PlayRuleChangeEffects();
+                // button.GetComponent<BizzBuzzButtonEffects>().PlayRuleChangeEffects();
             }
         }
         if (BizzBuzzButton.roundNum == 1)

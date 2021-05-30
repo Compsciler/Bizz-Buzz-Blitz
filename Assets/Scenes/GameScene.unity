@@ -1851,6 +1851,8 @@ MonoBehaviour:
   numberGO: {fileID: 1421230160}
   numberMultiplayerY: 0
   numberMultiplayerFontSize: 500
+  gameModeText: {fileID: 1253801949}
+  targetNumberText: {fileID: 1729378659}
 --- !u!114 &1043897780
 MonoBehaviour:
   m_ObjectHideFlags: 0

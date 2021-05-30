@@ -40,6 +40,9 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
     [SerializeField] float blinkMinColorA;
     [SerializeField] float blinkPeriodTime;
+    [SerializeField] AudioClip ruleChangeSound;
+    [SerializeField] float ruleChangeSoundVolume;
+    [SerializeField] int minRoundIntervalForRuleChangeSound;
 
     [SerializeField] Camera mainCamera;
     private ButtonClickSound buttonClickSoundScript;
@@ -210,10 +213,17 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.a, 1f);
     }
 
-    public void PlayRuleChangeEffects2()
+    public void PlayRuleChangeEffects()
     {
+        int roundInterval = BizzBuzzClassification.ruleIntervalList[BizzBuzzClassification.rulesUsedIndex].roundInterval;
+        if (roundInterval >= minRoundIntervalForRuleChangeSound)
+        {
+            AudioManager.instance.SFX_Source.PlayOneShot(ruleChangeSound, ruleChangeSoundVolume);
+        }
+        /*
         LeanTween.cancel(gameObject);
         rect.localScale = initialScale;
         LeanTween.move(rect, Vector3.up * -665f, 0.4f).setEase(ruleChangeEaseType);
+        */
     }
 }

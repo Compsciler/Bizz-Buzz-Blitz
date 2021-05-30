@@ -125,6 +125,8 @@ public class BizzBuzzButton : MonoBehaviour
 
         if (roundNum >= nextRuleChangeRound)
         {
+            bizzBuzzButtonEffectsScript.PlayRuleChangeEffects();
+
             BizzBuzzClassification.UpdateRulesUsed();
             SetPlayerNeitherRuleButtonText(player, prevNumber);
         }
