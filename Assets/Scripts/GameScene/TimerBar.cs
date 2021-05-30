@@ -40,8 +40,11 @@ public class TimerBar : MonoBehaviour
 
     public void OnTimerFinished()
     {
+        BizzBuzzButton randomPlayerButton = BizzBuzzButton.buttonsByPlayer[player - 1][0];
+        randomPlayerButton.GetComponent<BizzBuzzButtonEffects>().PlayIncorrectEffects(true);
+        randomPlayerButton.LoseLifeAndGoToNextRound();
         gameOverMenuScript.UpdateLoseText(player);
-        Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
+        // Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
     }
 
     public void ResetTimer()

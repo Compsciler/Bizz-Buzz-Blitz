@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] float gameOverTimeScale = 0.5f;
 
-    private int defaultGameMode = 0;
+    private int defaultGameMode = 99;
 
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float numberMultiplayerY;
     [SerializeField] float numberMultiplayerFontSize;
 
-    void Awake()
+    void Awake()  // Script Execution Order = -1
     {
         if (instance == null)
         {
@@ -113,6 +113,11 @@ public class GameManager : MonoBehaviour
         if (isUsingGameOver)
         {
             //< JUST BEFORE REVIVE SCREEN
+            foreach (BizzBuzzButton button in BizzBuzzButton.buttons)
+            {
+                button.GetComponent<BizzBuzzButtonEffects>().CancelPreRuleChangeEffects(button.preRuleChangeEffectTweenID);
+            }
+
             Timing.PauseCoroutines();  // Not perfect solution if second chance used, hopefully no coroutines will be used during Game Over screen
             Timing.ResumeCoroutines("GameOver");
 
@@ -155,8 +160,16 @@ public class GameManager : MonoBehaviour
             case 0:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
                 break;
+            case 99:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
+                break;
             case 100:  // Multiplayer modes start from 100
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
+                isMultiplayer = true;
+                playerTotal = 2;
+                break;
+            case 199:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
                 isMultiplayer = true;
                 playerTotal = 2;
                 break;
@@ -218,6 +231,8 @@ public class GameManager : MonoBehaviour
         BizzBuzzButton.areNumbersRandomRange = false;
         BizzBuzzButton.randomNumberRangeSize = 100;
         BizzBuzzButton.randomNumberRangeRoundInterval = 20;
+        BizzBuzzButton.buttons = null;
+        BizzBuzzButton.buttonsByPlayer = null;
         BizzBuzzButton.neitherRuleButtons = null;
         Debug.Log("Static variables reset!");
     }

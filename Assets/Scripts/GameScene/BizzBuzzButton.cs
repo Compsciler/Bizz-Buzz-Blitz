@@ -14,7 +14,8 @@ public class BizzBuzzButton : MonoBehaviour
     private float fourDigitNumberFontSize = 450f;
 
     [SerializeField] TMP_Text buttonText;
-    internal static List<BizzBuzzButton> bizzBuzzButtons;
+    internal static List<BizzBuzzButton> buttons;
+    internal static List<List<BizzBuzzButton>> buttonsByPlayer;
     internal static List<BizzBuzzButton> neitherRuleButtons;
 
     [SerializeField] TimerBar[] timerBars;
@@ -26,6 +27,7 @@ public class BizzBuzzButton : MonoBehaviour
     internal static int targetNum = -1;  // -1 means endless game mode
     internal static int roundNum = 1;
     internal static int nextRuleChangeRound = int.MaxValue;
+    internal int preRuleChangeEffectTweenID;
 
     internal static bool areNumbersRandomRange = false;
     internal static int randomNumberRangeSize = 100;
@@ -39,19 +41,7 @@ public class BizzBuzzButton : MonoBehaviour
 
     void Awake()
     {
-        if (bizzBuzzButtons == null)
-        {
-            bizzBuzzButtons = new List<BizzBuzzButton>();
-        }
-        bizzBuzzButtons.Add(this);
-        if (neitherRuleButtons == null)
-        {
-            neitherRuleButtons = new List<BizzBuzzButton>();
-        }
-        if (buttonRuleValues.SequenceEqual(new bool[] {false, false}))
-        {
-            neitherRuleButtons.Add(this);
-        }
+        SetUpButtonLists();
     }
     
     void Start()
@@ -95,20 +85,25 @@ public class BizzBuzzButton : MonoBehaviour
         }
         else
         {
-            bizzBuzzButtonEffectsScript.PlayIncorrectEffects();
+            bizzBuzzButtonEffectsScript.PlayIncorrectEffects(false);
 
-            lifeController.LoseLife();
-            if (lifeController.lives > 0)
-            {
-                GoToNextRound();
-            }
-            else
-            {
-                PauseTimersAndStopwatches();
-                losingPlayer = player;
-                gameOverMenuScript.UpdateLoseText(losingPlayer, buttonRuleValues);
-                Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
-            }
+            LoseLifeAndGoToNextRound();
+        }
+    }
+
+    public void LoseLifeAndGoToNextRound()
+    {
+        lifeController.LoseLife();
+        if (lifeController.lives > 0)
+        {
+            GoToNextRound();
+        }
+        else
+        {
+            PauseTimersAndStopwatches();
+            losingPlayer = player;
+            gameOverMenuScript.UpdateLoseText(losingPlayer, buttonRuleValues);
+            Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
         }
     }
 
@@ -123,12 +118,22 @@ public class BizzBuzzButton : MonoBehaviour
         }
 
         roundNum++;
+
+        int prevNumber = number;
         GoToNextNumber();
         UpdateNumberText();
 
         if (roundNum >= nextRuleChangeRound)
         {
             BizzBuzzClassification.UpdateRulesUsed();
+            SetPlayerNeitherRuleButtonText(player, prevNumber);
+        }
+        if (roundNum >= nextRuleChangeRound - GameManager.instance.playerTotal)
+        {
+            foreach (BizzBuzzButton button in buttonsByPlayer[player % GameManager.instance.playerTotal])
+            {
+                button.preRuleChangeEffectTweenID = button.GetComponent<BizzBuzzButtonEffects>().PlayPreRuleChangeEffects();
+            }
         }
 
         int nextPlayer = player % GameManager.instance.playerTotal + 1;
@@ -191,11 +196,16 @@ public class BizzBuzzButton : MonoBehaviour
 
     public static void SetPlayerNeitherRuleButtonText(int playerNum)
     {
+        SetPlayerNeitherRuleButtonText(playerNum, number);
+    }
+
+    public static void SetPlayerNeitherRuleButtonText(int playerNum, int n)
+    {
         foreach (BizzBuzzButton neitherRuleButton in neitherRuleButtons)
         {
             if (neitherRuleButton.player == playerNum)
             {
-                neitherRuleButton.buttonText.text = number.ToString();
+                neitherRuleButton.buttonText.text = n.ToString();
             }
         }
     }
@@ -209,5 +219,31 @@ public class BizzBuzzButton : MonoBehaviour
     {
         timerBars[player - 1].isTimerActive = false;
         stopwatch.isStopwatchActive = false;
+    }
+
+    public void SetUpButtonLists()
+    {
+        if (buttons == null)
+        {
+            buttons = new List<BizzBuzzButton>();
+        }
+        buttons.Add(this);
+        if (buttonsByPlayer == null)
+        {
+            buttonsByPlayer = new List<List<BizzBuzzButton>>();
+            for (int i = 0; i < GameManager.instance.playerTotal; i++)
+            {
+                buttonsByPlayer.Add(new List<BizzBuzzButton>());
+            }
+        }
+        buttonsByPlayer[player - 1].Add(this);
+        if (neitherRuleButtons == null)
+        {
+            neitherRuleButtons = new List<BizzBuzzButton>();
+        }
+        if (buttonRuleValues.SequenceEqual(new bool[] {false, false}))
+        {
+            neitherRuleButtons.Add(this);
+        }
     }
 }

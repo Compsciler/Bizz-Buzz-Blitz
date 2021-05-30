@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using MEC;
+using TMPro;
 
 public class BizzBuzzButtonEffects : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     private Vector3 clickScale;
     [SerializeField] float clickScalingTime;
     [SerializeField] LeanTweenType clickScaleEaseType;
+
+    [SerializeField] LeanTweenType ruleChangeEaseType;
 
     [SerializeField] AudioClip correctButtonClickSound;
     [SerializeField] float correctButtonClickSoundVolume;
@@ -35,10 +38,15 @@ public class BizzBuzzButtonEffects : MonoBehaviour
 
     [SerializeField] TraumaInducer traumaInducer;
 
+    [SerializeField] float blinkMinColorA;
+    [SerializeField] float blinkPeriodTime;
+
     [SerializeField] Camera mainCamera;
     private ButtonClickSound buttonClickSoundScript;
     [SerializeField] RectTransform canvasRect;
     private RectTransform rect;
+
+    [SerializeField] TMP_Text buttonText;
 
     public enum ButtonType
     {
@@ -66,7 +74,7 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         
     }
 
-    public void PlayGenericEffects()
+    public void PlayGenericClickEffects()
     {
         LeanTween.cancel(gameObject);
         rect.localScale = initialScale;
@@ -82,14 +90,14 @@ public class BizzBuzzButtonEffects : MonoBehaviour
             return;
         }
 
-        PlayGenericEffects();
+        PlayGenericClickEffects();
         if (GameManager.instance.areParticlesOn)
         {
             PlayParticle(ButtonType.Correct);
         }
     }
 
-    public void PlayIncorrectEffects()
+    public void PlayIncorrectEffects(bool isIncorrectOnTime)
     {
         int player = GetComponent<BizzBuzzButton>().player;
         Timing.KillCoroutines("HighlightCorrectButton" + player);
@@ -106,8 +114,11 @@ public class BizzBuzzButtonEffects : MonoBehaviour
             return;
         }
 
-        PlayGenericEffects();
-        if (GameManager.instance.areParticlesOn)
+        if (!isIncorrectOnTime)
+        {
+            PlayGenericClickEffects();
+        }
+        if (!isIncorrectOnTime && GameManager.instance.areParticlesOn)
         {
             PlayParticle(ButtonType.Incorrect);
         }
@@ -179,5 +190,30 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         }
         yield return Timing.WaitForSeconds(correctButtonHighlightTime);
         correctButtonImage.color = buttonInitialColor;
+    }
+
+    public int PlayPreRuleChangeEffects()
+    {
+        int tweenID = LeanTween.value(1f, blinkMinColorA, blinkPeriodTime / 2)
+            .setOnUpdate((float value) =>
+            {
+                Color buttonTextColor = buttonText.color;
+                buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.a, value);
+            }).setLoopPingPong().id;
+        return tweenID;
+    }
+
+    public void CancelPreRuleChangeEffects(int tweenID)
+    {
+        LeanTween.cancel(tweenID);
+        Color buttonTextColor = buttonText.color;
+        buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.a, 1f);
+    }
+
+    public void PlayRuleChangeEffects2()
+    {
+        LeanTween.cancel(gameObject);
+        rect.localScale = initialScale;
+        LeanTween.move(rect, Vector3.up * -665f, 0.4f).setEase(ruleChangeEaseType);
     }
 }

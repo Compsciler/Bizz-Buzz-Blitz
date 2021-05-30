@@ -153,6 +153,7 @@ MonoBehaviour:
   timerBars:
   - {fileID: 0}
   - {fileID: 0}
+  stopwatch: {fileID: 0}
   lifeController: {fileID: 0}
   gameOverMenuScript: {fileID: 0}
 --- !u!114 &3775884343262975957
@@ -172,6 +173,7 @@ MonoBehaviour:
   clickScaleFactor: 1.08
   clickScalingTime: 0.3
   clickScaleEaseType: 34
+  ruleChangeEaseType: 34
   correctButtonClickSound: {fileID: 8300000, guid: 52b096897d33b7c4a9325ad5c073e7c6,
     type: 3}
   correctButtonClickSoundVolume: 0.8
@@ -186,8 +188,11 @@ MonoBehaviour:
   correctButtonHighlightColor: {r: 0.4, g: 0.8, b: 0.5019608, a: 1}
   correctButtonHighlightTime: 0.5
   traumaInducer: {fileID: 0}
+  blinkMinColorA: 0.4
+  blinkPeriodTime: 0.4
   mainCamera: {fileID: 0}
   canvasRect: {fileID: 0}
+  buttonText: {fileID: 3616454539948087146}
 --- !u!1 &3616454539948087144
 GameObject:
   m_ObjectHideFlags: 0

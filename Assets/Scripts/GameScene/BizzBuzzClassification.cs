@@ -49,6 +49,13 @@ public class BizzBuzzClassification : MonoBehaviour
     void Start()
     {
         UpdateRulesUsed();
+        if (BizzBuzzButton.nextRuleChangeRound <= GameManager.instance.playerTotal + 1)  // Condition equivalent to (BizzBuzzButton.roundNum >= BizzBuzzButton.nextRuleChangeRound - GameManager.instance.playerTotal)
+        {
+            foreach (BizzBuzzButton button in BizzBuzzButton.buttonsByPlayer[0])
+            {
+                button.preRuleChangeEffectTweenID = button.GetComponent<BizzBuzzButtonEffects>().PlayPreRuleChangeEffects();
+            }
+        }
     }
 
     void Update()
@@ -245,19 +252,39 @@ public class BizzBuzzClassification : MonoBehaviour
         {
             rulesUsedIndex = (rulesUsedIndex + 1) % ruleIntervalList.Count;
         }
-        rulesUsed = ruleIntervalList[rulesUsedIndex].ruleList;
+        rulesUsed = new List<string>(ruleIntervalList[rulesUsedIndex].ruleList);
         SetRandomRules();
-        BizzBuzzButton.nextRuleChangeRound = BizzBuzzButton.roundNum + ruleIntervalList[rulesUsedIndex].roundInterval;
+
+        int roundInterval = ruleIntervalList[rulesUsedIndex].roundInterval;
+        BizzBuzzButton.nextRuleChangeRound = BizzBuzzButton.roundNum + roundInterval;
         if (BizzBuzzButton.nextRuleChangeRound < 0)
         {
             BizzBuzzButton.nextRuleChangeRound = int.MaxValue;
         }
 
-        foreach (BizzBuzzButton bizzBuzzButton in BizzBuzzButton.bizzBuzzButtons)
+        int currPlayer = (BizzBuzzButton.roundNum - 1) % GameManager.instance.playerTotal + 1;
+        List<BizzBuzzButton> ruleChangeBizzBuzzButtons;
+        if (GameManager.instance.playerTotal > 1 && roundInterval == 1 && BizzBuzzButton.roundNum != 1)
         {
-            bizzBuzzButton.SetRuleButtonText();
+            ruleChangeBizzBuzzButtons = BizzBuzzButton.buttonsByPlayer[currPlayer - 1];
         }
-        BizzBuzzButton.SetPlayerNeitherRuleButtonText(1);
+        else
+        {
+            ruleChangeBizzBuzzButtons = BizzBuzzButton.buttons;
+        }
+        foreach (BizzBuzzButton button in ruleChangeBizzBuzzButtons)
+        {
+            button.GetComponent<BizzBuzzButtonEffects>().CancelPreRuleChangeEffects(button.preRuleChangeEffectTweenID);
+            button.SetRuleButtonText();
+            if (BizzBuzzButton.roundNum != 1)
+            {
+                // bizzBuzzButton.GetComponent<BizzBuzzButtonEffects>().PlayRuleChangeEffects();
+            }
+        }
+        if (BizzBuzzButton.roundNum == 1)
+        {
+            BizzBuzzButton.SetPlayerNeitherRuleButtonText(1);
+        }
     }
 
     public static void SetRandomRules()
