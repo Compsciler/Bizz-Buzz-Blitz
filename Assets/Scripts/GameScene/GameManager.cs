@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     internal static GameManager instance;
     private Camera mainCamera;
     public bool isUsingGameOver = true;
+    internal bool isGameWon = false;
 
     /* //<
     public float gameCountdownTime = 3f;
@@ -26,8 +27,10 @@ public class GameManager : MonoBehaviour
     public TMP_Text gameOverScoreText;
     public AudioClip countdownEndSound;
     public float countdownEndSoundVolume;
-    public AudioClip gameOverSound;
-    public float gameOverSoundVolume;
+    public AudioClip winSound;
+    public float winSoundVolume;
+    public AudioClip loseSound;
+    public float loseSoundVolume;
     public GameObject fadingMask;
     public float fadeInTime;
     public float minTransparency;
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] float gameOverTimeScale = 0.5f;
 
-    private int defaultGameMode = 0;
+    private int defaultGameMode = 50;
 
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
@@ -51,8 +54,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject numberGO;
     [SerializeField] float numberMultiplayerY;
     [SerializeField] float numberMultiplayerFontSize;
-    [SerializeField] TMP_Text gameModeText; 
-    [SerializeField] TMP_Text targetNumberText; 
+    [SerializeField] TMP_Text gameModeText;
+    [SerializeField] TMP_Text targetRoundText;
+    [SerializeField] TMP_Text roundText;
 
     void Awake()  // Script Execution Order = -1
     {
@@ -65,9 +69,12 @@ public class GameManager : MonoBehaviour
         {
             ApplyGameModeSettings(HighScoreLogger.instance.gameMode);
         }
-        catch (NullReferenceException)  // When not starting game from main menu
+        catch (NullReferenceException)  // When not starting game from main menu or GameManager.cs exists in main menu
         {
-            ApplyGameModeSettings(defaultGameMode);
+            if (SceneManager.GetActiveScene().buildIndex == Constants.mainMenuBuildIndex)
+            {
+                ApplyGameModeSettings(defaultGameMode);
+            }
         }
     }
 
@@ -147,7 +154,14 @@ public class GameManager : MonoBehaviour
             gameOverMenu.SetActive(true);
             //< spawnPeopleScript.UpdateLoseScoreText();  //{Update score text
             AudioManager.instance.musicSource.Pause();
-            AudioManager.instance.SFX_Source.PlayOneShot(gameOverSound, gameOverSoundVolume);
+            if (isGameWon)
+            {
+                AudioManager.instance.SFX_Source.PlayOneShot(winSound, winSoundVolume);
+            }
+            else
+            {
+                AudioManager.instance.SFX_Source.PlayOneShot(loseSound, loseSoundVolume);
+            }
             Debug.Log("Game Over!");
 
             //< int newScore = -1;  //{Get new score
@@ -161,8 +175,80 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 50;
                 break;
-            case 99:
+            case 1:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Fuzz", "Bazz"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 50;
+                break;
+            case 2:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Fuzz"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 100;
+                break;
+            case 3:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 200;
+                break;
+            case 4:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Buzz", "Bazz"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 100;
+                break;
+            case 5:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Pow"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 100;
+                break;
+            case 6:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Semi", "Pyth"}, int.MaxValue);
+                BizzBuzzButton.targetRoundNum = 50;
+                break;
+            case 7:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Pow"}, 25);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Buzz", "Pyth"}, 25);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bazz", "Semi"}, 25);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Fuzz", "Dupe"}, 25);
+                BizzBuzzButton.targetRoundNum = 100;
+                break;
+            case 8:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Pow"}, 50);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Buzz", "Pyth"}, 50);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bazz", "Semi"}, 50);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Fuzz", "Dupe"}, 50);
+                BizzBuzzButton.targetRoundNum = 200;
+                break;
+            case 50:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                break;
+            case 51:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Fuzz", "Bazz"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                break;
+            case 52:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Pow"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                break;
+            case 53:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Semi", "Pyth"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                BizzBuzzButton.randomNumberRangeSize = 1000;
+                BizzBuzzButton.randomNumberRangeRoundInterval = 100;
+                break;
+            case 54:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Semi", "Pyth"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                break;
+            case 55:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"RandomIsDivisbleByOrContainsDigit", "RandomIsDivisbleByOrContainsDigit"}, 20);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                break;
+            case 56:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                break;
+            case 57:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"RandomIsDivisbleByOrContainsDigit", "RandomIsDivisbleByOrContainsDigit"}, 1);
+                break;
+            case 58:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
                 break;
             case 100:  // Multiplayer modes start from 100
@@ -189,13 +275,17 @@ public class GameManager : MonoBehaviour
             numberRectTransform.anchoredPosition = new Vector2(numberRectTransform.anchoredPosition.x, numberMultiplayerY);
             numberGO.GetComponent<TMP_Text>().fontSize = numberMultiplayerFontSize;
         }
-        if (BizzBuzzButton.IsGameModeEndless() && stopwatch != null)
+        if (BizzBuzzButton.IsGameModeEndless())
         {
-            stopwatch.gameObject.SetActive(false);
             gameModeText.text = "Game mode: Endless";
+            BizzBuzzButton.isDisplayingRoundNum = true;
+            roundText.text = "Round number: 1";
         }
         else
         {
+            roundText.gameObject.SetActive(false);
+            stopwatch.gameObject.SetActive(true);
+            
             foreach (TimerBar timerBar in timerBars)
             {
                 timerBar.enabled = false;
@@ -205,7 +295,7 @@ public class GameManager : MonoBehaviour
                 }
             }
             gameModeText.text = "Game mode: Target";
-            targetNumberText.text = "Target number: " + BizzBuzzButton.targetNum;
+            targetRoundText.text = "Target round: " + BizzBuzzButton.targetRoundNum;
         }
     }
 
@@ -229,7 +319,7 @@ public class GameManager : MonoBehaviour
         BizzBuzzClassification.ruleIntervalList = new List<RuleInterval>();
         BizzBuzzClassification.rulesUsed = null;
         BizzBuzzButton.number = 1;
-        BizzBuzzButton.targetNum = -1;
+        BizzBuzzButton.targetRoundNum = -1;
         BizzBuzzButton.roundNum = 1;
         BizzBuzzButton.nextRuleChangeRound = int.MaxValue;
         BizzBuzzButton.areNumbersRandomRange = false;

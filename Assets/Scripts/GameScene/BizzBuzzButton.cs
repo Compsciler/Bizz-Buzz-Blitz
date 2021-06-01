@@ -24,9 +24,10 @@ public class BizzBuzzButton : MonoBehaviour
     private int losingPlayer = -1;
 
     internal static int number = 1;
-    internal static int targetNum = -1;  // -1 means endless game mode
+    internal static int targetRoundNum = -1;  // -1 means endless game mode
     internal static int roundNum = 1;
     internal static int nextRuleChangeRound = int.MaxValue;
+    internal static bool isDisplayingRoundNum = false;
     internal int preRuleChangeEffectTweenID;
 
     internal static bool areNumbersRandomRange = false;
@@ -36,6 +37,7 @@ public class BizzBuzzButton : MonoBehaviour
 
     [SerializeField] LifeController lifeController;
     [SerializeField] GameOverMenu gameOverMenuScript;
+    [SerializeField] TMP_Text roundText;
 
     private BizzBuzzButtonEffects bizzBuzzButtonEffectsScript;
 
@@ -109,15 +111,20 @@ public class BizzBuzzButton : MonoBehaviour
 
     public void GoToNextRound()
     {
-        if (number >= targetNum && !IsGameModeEndless())
+        if (roundNum >= targetRoundNum && !IsGameModeEndless())
         {
             PauseTimersAndStopwatches();
+            GameManager.instance.isGameWon = true;
             gameOverMenuScript.UpdateWinText();
             Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
             return;
         }
 
         roundNum++;
+        if (isDisplayingRoundNum)
+        {
+            roundText.text = "Round number: " + roundNum;
+        }
 
         int prevNumber = number;
         GoToNextNumber();
@@ -214,7 +221,7 @@ public class BizzBuzzButton : MonoBehaviour
 
     public static bool IsGameModeEndless()
     {
-        return targetNum == -1;
+        return targetRoundNum == -1;
     }
 
     public void PauseTimersAndStopwatches()
