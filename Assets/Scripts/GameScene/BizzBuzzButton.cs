@@ -224,6 +224,16 @@ public class BizzBuzzButton : MonoBehaviour
         return targetRoundNum == -1;
     }
 
+    public static float CalculateTargetScore()
+    {
+        BizzBuzzButton randomButton = buttons[0];
+        return randomButton.stopwatch.CalculateStopwatchWithPenaltyAdded();
+    }
+    public static int CalculateEndlessScore()
+    {
+        return roundNum;
+    }
+
     public void PauseTimersAndStopwatches()
     {
         timerBars[player - 1].isTimerActive = false;

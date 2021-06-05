@@ -33,7 +33,7 @@ public class Stopwatch : MonoBehaviour
 
             if (strikesCount > 0)
             {
-                CalculateStopwatchWithPenaltyAdded();
+                UpdateStopwatchWithPenaltyAddedText();
             }
             else
             {
@@ -50,12 +50,16 @@ public class Stopwatch : MonoBehaviour
         strikePenaltyText = "(+" + Mathf.RoundToInt(strikePenalty * 100) + "%)";
         strikePenaltyText = ExtensionMethods.GetColoredRichText(strikePenaltyText, strikePenaltyColor);
         stopwatchText.text = GetStopwatchText();
-        CalculateStopwatchWithPenaltyAdded();
+        UpdateStopwatchWithPenaltyAddedText();
     }
 
-    public void CalculateStopwatchWithPenaltyAdded()
+    public float CalculateStopwatchWithPenaltyAdded()
     {
-        stopwatchWithPenaltyAdded = currentValue * (strikePenalty + 1);
+        return currentValue * (strikePenalty + 1);
+    }
+    public void UpdateStopwatchWithPenaltyAddedText()
+    {
+        stopwatchWithPenaltyAdded = CalculateStopwatchWithPenaltyAdded();
         stopwatchWithPenaltyAddedText = stopwatchText.text + " = " +
             ExtensionMethods.RoundWithTrailingDecimalZeroes(stopwatchWithPenaltyAdded, roundedDecimalPlaces) + "s";
     }

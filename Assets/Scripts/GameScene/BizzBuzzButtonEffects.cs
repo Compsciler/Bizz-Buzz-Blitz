@@ -210,7 +210,7 @@ public class BizzBuzzButtonEffects : MonoBehaviour
     {
         LeanTween.cancel(tweenID);
         Color buttonTextColor = buttonText.color;
-        buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.a, 1f);
+        buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.b, 1f);
     }
 
     public void PlayRuleChangeEffects()

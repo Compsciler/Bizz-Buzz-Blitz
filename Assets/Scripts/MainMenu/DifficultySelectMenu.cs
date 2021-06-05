@@ -29,6 +29,12 @@ public class DifficultySelectMenu : MonoBehaviour
 
     [SerializeField] GameObject[] enableOnFirstTimePlaying;
 
+    [SerializeField] GameObject targetDifficultyButtonsHolder;
+    [SerializeField] GameObject endlessDifficultyButtonsHolder;
+
+    private GameObject[] targetDifficultyButtons;
+    private GameObject[] endlessDifficultyButtons;
+
     // https://stackoverflow.com/questions/5849548/is-this-array-initialization-incorrect
     //{Game mode unlock requirements, in order by the game mode (starting from tutorial here) considered for requirements}
     internal static int[][,] gameModeUnlockReqs = new int[][,]{
@@ -148,6 +154,21 @@ public class DifficultySelectMenu : MonoBehaviour
         }
     }
 
+    public void ToggleEndlessMode()
+    {
+        if (endlessDifficultyButtonsHolder.activeSelf)
+        {
+            endlessDifficultyButtonsHolder.SetActive(false);
+            targetDifficultyButtonsHolder.SetActive(true);
+        }
+        else
+        {
+            targetDifficultyButtonsHolder.SetActive(false);
+            endlessDifficultyButtonsHolder.SetActive(true);
+        }
+        ResetMenuPresses();
+    }
+
     private void SetDifficultyButtonRelatedUI()
     {
         pressedButtonImages = pressedButtonImagesHolder.GetChildren();
@@ -155,6 +176,9 @@ public class DifficultySelectMenu : MonoBehaviour
         lockIcons = lockIconsHolder.GetChildren();
         startButtons = startButtonsHolder.GetChildren();
         descriptionTexts = descriptionTextsHolder.GetChildren();
+
+        targetDifficultyButtons = targetDifficultyButtonsHolder.GetChildren();
+        endlessDifficultyButtons = endlessDifficultyButtonsHolder.GetChildren();
     }
 
     private void SetEachActive(GameObject[] gameObjects, bool value)

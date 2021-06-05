@@ -66,6 +66,21 @@ public class HighScoreLogger : MonoBehaviour
         }
     }
 
+    public void UpdateHighScore(float newScore, bool isUpdatingToNewScore)
+    {
+        float highScore = PlayerPrefs.GetFloat(highScoreStrings[gameMode], 0);
+        if (SceneManager.GetActiveScene().buildIndex == Constants.gameSceneBuildIndex)
+        {
+            // FindObjectOfType<SpawnPeople>().UpdateUnlockedModeText(highScore);  //{ERROR: dependent on SpawnPeople.cs; remove or change game scene script updated unlocked modes}
+        }
+
+        if ((newScore > highScore) || isUpdatingToNewScore)
+        {
+            PlayerPrefs.SetFloat(highScoreStrings[gameMode], newScore);
+            Debug.Log(highScoreStrings[gameMode] + " changed from " + highScore + " to " + newScore);
+        }
+    }
+
     public void ResetHighScores()
     {
         for (int i = 0; i < highScoreStrings.Length; i++)

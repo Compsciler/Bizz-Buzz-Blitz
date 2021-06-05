@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         }
         catch (NullReferenceException)  // When not starting game from main menu or GameManager.cs exists in main menu
         {
-            if (SceneManager.GetActiveScene().buildIndex == Constants.mainMenuBuildIndex)
+            if (SceneManager.GetActiveScene().buildIndex != Constants.mainMenuBuildIndex)
             {
                 ApplyGameModeSettings(defaultGameMode);
             }
@@ -164,8 +164,14 @@ public class GameManager : MonoBehaviour
             }
             Debug.Log("Game Over!");
 
-            //< int newScore = -1;  //{Get new score
-            //< HighScoreLogger.instance.UpdateHighScore(newScore, false);
+            if (BizzBuzzButton.IsGameModeEndless())  // TODO: finish logic in 0.8.7
+            {
+                HighScoreLogger.instance.UpdateHighScore(BizzBuzzButton.CalculateEndlessScore(), false);
+            }
+            else
+            {
+                HighScoreLogger.instance.UpdateHighScore(BizzBuzzButton.CalculateTargetScore(), false);
+            }
         }
     }
 
