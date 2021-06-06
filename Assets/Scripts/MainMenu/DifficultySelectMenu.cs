@@ -35,18 +35,36 @@ public class DifficultySelectMenu : MonoBehaviour
     private GameObject[] targetDifficultyButtons;
     private GameObject[] endlessDifficultyButtons;
 
+    [SerializeField] Button endlessModeToggleButton;
+    [SerializeField] TMP_Text endlessModeToggleButtonText;
+    [SerializeField] float endlessModeToggleButtonNoninteractableTime;
+
     // https://stackoverflow.com/questions/5849548/is-this-array-initialization-incorrect
     //{Game mode unlock requirements, in order by the game mode (starting from tutorial here) considered for requirements}
-    internal static int[][,] gameModeUnlockReqs = new int[][,]{
-        new int[,] {{}},
-        new int[,] {{}},
-        new int[,] {{0, 20}},
-        new int[,] {{1, 25}},
-        new int[,] {{0, 20}},
-        new int[,] {{3, 25}},
-        new int[,] {{0, 20}},
-        new int[,] {{5, 25}},
-        new int[,] {{2, 30}, {4, 20}, {6, 35}}
+    internal static int[][,] targetGameModeUnlockReqTargetRounds = new int[][,]{
+        new int[,] {},
+        new int[,] {{0, 50}},
+        new int[,] {{1, 50}},
+        new int[,] {{1, 50}},
+        new int[,] {{1, 50}},
+        new int[,] {{2, 100}},
+        new int[,] {{4, 100}},
+        new int[,] {{5, 100}, {6, 50}},
+        new int[,] {{7, 100}}
+    };
+    private static int targetGameModeUnlockReqTimePerRound = 10;
+    internal static int[][,] targetGameModeUnlockReqs = new int[targetGameModeUnlockReqTargetRounds.Length][,];
+
+    internal static int[][,] endlessGameModeUnlockReqs = new int[][,]{
+        new int[,] {},
+        new int[,] {{0, 5}},
+        new int[,] {{1, 5}},
+        new int[,] {{1, 5}},
+        new int[,] {{1, 5}},
+        new int[,] {{2, 5}},
+        new int[,] {{4, 5}},
+        new int[,] {{5, 5}, {6, 5}},
+        new int[,] {{7, 5}}
     };
 
     void Awake()
@@ -112,20 +130,56 @@ public class DifficultySelectMenu : MonoBehaviour
         SetEachActive(descriptionTexts, false);
     }
 
+    public void ResetScoreTextsAndLockIcons()
+    {
+        for (int i = 0; i < scoreTexts.Length; i++)
+        {
+            scoreTexts[i].SetActive(false);
+            lockIcons[i].SetActive(false);
+        }
+    }
+
     private void SetUpUnlocksAndScores()
     {
-        int[] highScores = HighScoreLogger.instance.GetHighScores(false);
+        for (int i = 0; i < targetGameModeUnlockReqTargetRounds.Length; i++){
+            int currentUnlockReqCount = targetGameModeUnlockReqTargetRounds[i].GetLength(0);
+            targetGameModeUnlockReqs[i] = new int[currentUnlockReqCount, 2];
+            for (int j = 0; j < currentUnlockReqCount; j++)
+            {
+                int targetGameModeUnlockReqTime = targetGameModeUnlockReqTargetRounds[i][j, 1] * targetGameModeUnlockReqTimePerRound;
+                targetGameModeUnlockReqs[i][j, 0] = targetGameModeUnlockReqTargetRounds[i][j, 0];
+                targetGameModeUnlockReqs[i][j, 1] = targetGameModeUnlockReqTime;
+                Debug.Log(targetGameModeUnlockReqs[i][j, 0] + " " + targetGameModeUnlockReqs[i][j, 1]);
+            }
+        }
+        GetUnlockStatus(false, 0, 0);
+        GetUnlockStatus(false, targetGameModeUnlockReqs.Length, HighScoreLogger.instance.endlessGameModeMinNum);
+    }
 
-        for (int i = 0; i < gameModeUnlockReqs.Length; i++)
+    public void GetUnlockStatus(bool isEndlessMode, int rawOffset, int gameModeOffset)
+    {
+        int[] highScores = HighScoreLogger.instance.GetHighScores(isEndlessMode, false);
+
+        int[][,] gameModeUnlockReqs;
+        if (isEndlessMode)
+        {
+            gameModeUnlockReqs = endlessGameModeUnlockReqs;
+        }
+        else
+        {
+            gameModeUnlockReqs = targetGameModeUnlockReqs;
+        }
+
+        for (int i = rawOffset; i < gameModeUnlockReqs.Length + rawOffset; i++)
         {
             // GameObject difficultyButton = difficultyButtons[i];
-            int[,] currentUnlockReqs = gameModeUnlockReqs[i];
+            int[,] currentUnlockReqs = gameModeUnlockReqs[i - rawOffset];
             bool currentUnlockReqsMet = true;
-            for (int j = 0; j < currentUnlockReqs.Length / 2; j++)  // Foreach loop doesn't work somehow, probably because C# Length property returns total number of integers in array
+            for (int j = 0; j < currentUnlockReqs.Length / 2; j++)  // Foreach loop doesn't work somehow, probably because C# Length property returns total number of integers in array, could change to .GetLength(0)
             {
                 int highScoreForReq = highScores[currentUnlockReqs[j, 0]];
-                int minScoreReq = currentUnlockReqs[j, 1];
-                if (highScoreForReq < minScoreReq)
+                int scoreReq = currentUnlockReqs[j, 1];
+                if ((isEndlessMode && highScoreForReq < scoreReq) || (!isEndlessMode && highScoreForReq > scoreReq && highScoreForReq != 0))
                 {
                     currentUnlockReqsMet = false;
                 }
@@ -141,15 +195,17 @@ public class DifficultySelectMenu : MonoBehaviour
                 {
 
                 }
-                if (i >= 1 && i < highScores.Length + 1)  // Does not access scores of Tutorial and Custom Mode  //{Optional: change if needed}
+                int highScore = highScores[i - rawOffset];
+                if (highScore > 0)
                 {
-                    int highScore = highScores[i - 1];
-                    if (highScore > 0)
-                    {
-                        TMP_Text scoreText = scoreTexts[i].GetComponent<TMP_Text>();
-                        scoreText.text = highScore.ToString();
-                    }
+                    TMP_Text scoreText = scoreTexts[i].GetComponent<TMP_Text>();
+                    scoreText.text = highScore.ToString();
+                    scoreTexts[i].tag = "ActivateOnToggleEndlessMode";
                 }
+            }
+            else
+            {
+                lockIcons[i].tag = "ActivateOnToggleEndlessMode";
             }
         }
     }
@@ -160,13 +216,48 @@ public class DifficultySelectMenu : MonoBehaviour
         {
             endlessDifficultyButtonsHolder.SetActive(false);
             targetDifficultyButtonsHolder.SetActive(true);
+            Timing.RunCoroutine(EndlessDifficultyButtonsTextChange(false));
         }
         else
         {
             targetDifficultyButtonsHolder.SetActive(false);
             endlessDifficultyButtonsHolder.SetActive(true);
+            Timing.RunCoroutine(EndlessDifficultyButtonsTextChange(true));
+        }
+    }
+
+    public IEnumerator<float> EndlessDifficultyButtonsTextChange(bool isChangingToEndlessMode)
+    {
+        endlessModeToggleButton.interactable = false;
+        yield return Timing.WaitForSeconds(endlessModeToggleButtonNoninteractableTime);
+        int iStart;
+        int iEnd;
+        if (isChangingToEndlessMode)
+        {
+            endlessModeToggleButtonText.text = "Switch to\nTarget Mode";
+            iStart = targetGameModeUnlockReqs.Length;
+            iEnd = targetGameModeUnlockReqs.Length + endlessGameModeUnlockReqs.Length;
+        }
+        else
+        {
+            endlessModeToggleButtonText.text = "Switch to\nEndless Mode";
+            iStart = 0;
+            iEnd = targetGameModeUnlockReqs.Length;
+        }
+        ResetScoreTextsAndLockIcons();
+        for (int i = iStart; i < iEnd; i++)
+        {
+            if (scoreTexts[i].CompareTag("ActivateOnToggleEndlessMode"))
+            {
+                scoreTexts[i].SetActive(true);
+            }
+            if (lockIcons[i].CompareTag("ActivateOnToggleEndlessMode"))
+            {
+                lockIcons[i].SetActive(true);
+            }
         }
         ResetMenuPresses();
+        endlessModeToggleButton.interactable = true;
     }
 
     private void SetDifficultyButtonRelatedUI()

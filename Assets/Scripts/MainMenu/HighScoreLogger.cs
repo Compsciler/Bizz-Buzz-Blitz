@@ -7,7 +7,9 @@ public class HighScoreLogger : MonoBehaviour
     internal static HighScoreLogger instance;
     [SerializeField] internal int gameMode = -1;
 
-    internal string[] highScoreStrings = {"GM0HighScore", "GM1HighScore", "GM2HighScore", "GM3HighScore", "GM4HighScore", "GM5HighScore", "GM6HighScore", "GM7HighScore"};  //{Optional: rename}
+    internal string[] targetHighScoreStrings = {"GM0HighScore", "GM1HighScore", "GM2HighScore", "GM3HighScore", "GM4HighScore", "GM5HighScore", "GM6HighScore", "GM7HighScore", "GM8HighScore"};
+    internal string[] endlessHighScoreStrings = {"GM50HighScore", "GM51HighScore", "GM52HighScore", "GM53HighScore", "GM54HighScore", "GM55HighScore", "GM56HighScore", "GM57HighScore", "GM58HighScore"};
+    internal int endlessGameModeMinNum = 50;
 
     void Awake()
     {
@@ -24,9 +26,18 @@ public class HighScoreLogger : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public int[] GetHighScores(bool isIncludingOverallHighScore)
+    public int[] GetHighScores(bool isEndlessMode, bool isIncludingOverallHighScore)
     {
         int[] highScores;
+        string[] highScoreStrings;
+        if (isEndlessMode)
+        {
+            highScoreStrings = endlessHighScoreStrings;
+        }
+        else
+        {
+            highScoreStrings = targetHighScoreStrings;
+        }
         if (isIncludingOverallHighScore)
         {
             highScores = new int[highScoreStrings.Length + 1];
@@ -41,19 +52,31 @@ public class HighScoreLogger : MonoBehaviour
         }
         if (isIncludingOverallHighScore)
         {
-            highScores[highScores.Length - 1] = GetOverallHighScore();
+            highScores[highScores.Length - 1] = GetOverallHighScore(isEndlessMode);
         }
         return highScores;
     }
 
-    public int GetOverallHighScore()
+    public int GetOverallHighScore(bool isEndlessMode)
     {
-        return GetHighScores(false).Sum();
+        return GetHighScores(isEndlessMode, false).Sum();
     }
 
-    public void UpdateHighScore(int newScore, bool isUpdatingToNewScore)
+    public void UpdateHighScore(bool isEndlessMode, int newScore, bool isUpdatingToNewScore)
     {
-        int highScore = PlayerPrefs.GetInt(highScoreStrings[gameMode], 0);
+        string[] highScoreStrings;
+        int highScoreStringsGameModeIndex;
+        if (isEndlessMode)
+        {
+            highScoreStrings = endlessHighScoreStrings;
+            highScoreStringsGameModeIndex = gameMode - endlessGameModeMinNum;
+        }
+        else
+        {
+            highScoreStrings = targetHighScoreStrings;
+            highScoreStringsGameModeIndex = gameMode;
+        }
+        int highScore = PlayerPrefs.GetInt(highScoreStrings[highScoreStringsGameModeIndex], 0);
         if (SceneManager.GetActiveScene().buildIndex == Constants.gameSceneBuildIndex)
         {
             // FindObjectOfType<SpawnPeople>().UpdateUnlockedModeText(highScore);  //{ERROR: dependent on SpawnPeople.cs; remove or change game scene script updated unlocked modes}
@@ -61,31 +84,20 @@ public class HighScoreLogger : MonoBehaviour
 
         if ((newScore > highScore) || isUpdatingToNewScore)
         {
-            PlayerPrefs.SetInt(highScoreStrings[gameMode], newScore);
-            Debug.Log(highScoreStrings[gameMode] + " changed from " + highScore + " to " + newScore);
-        }
-    }
-
-    public void UpdateHighScore(float newScore, bool isUpdatingToNewScore)
-    {
-        float highScore = PlayerPrefs.GetFloat(highScoreStrings[gameMode], 0);
-        if (SceneManager.GetActiveScene().buildIndex == Constants.gameSceneBuildIndex)
-        {
-            // FindObjectOfType<SpawnPeople>().UpdateUnlockedModeText(highScore);  //{ERROR: dependent on SpawnPeople.cs; remove or change game scene script updated unlocked modes}
-        }
-
-        if ((newScore > highScore) || isUpdatingToNewScore)
-        {
-            PlayerPrefs.SetFloat(highScoreStrings[gameMode], newScore);
-            Debug.Log(highScoreStrings[gameMode] + " changed from " + highScore + " to " + newScore);
+            PlayerPrefs.SetInt(highScoreStrings[highScoreStringsGameModeIndex], newScore);
+            Debug.Log(highScoreStrings[highScoreStringsGameModeIndex] + " changed from " + highScore + " to " + newScore);
         }
     }
 
     public void ResetHighScores()
     {
-        for (int i = 0; i < highScoreStrings.Length; i++)
+        for (int i = 0; i < targetHighScoreStrings.Length; i++)
         {
-            PlayerPrefs.SetInt(highScoreStrings[i], 0);
+            PlayerPrefs.SetInt(targetHighScoreStrings[i], 0);
+        }
+        for (int i = 0; i < endlessHighScoreStrings.Length; i++)
+        {
+            PlayerPrefs.SetInt(endlessHighScoreStrings[i], 0);
         }
         Debug.Log("High scores reset!");
     }
@@ -93,5 +105,10 @@ public class HighScoreLogger : MonoBehaviour
     public void UnlockAllGameModes(int value)
     {
         PlayerPrefs.SetInt("AreAllGameModesUnlocked", value);  // Restart needed if switching setting from 1 to 0
+    }
+
+    public bool IsEndlessGameMode(int gameMode)
+    {
+        return gameMode >= endlessGameModeMinNum;
     }
 }

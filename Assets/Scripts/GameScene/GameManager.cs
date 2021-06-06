@@ -166,11 +166,11 @@ public class GameManager : MonoBehaviour
 
             if (BizzBuzzButton.IsGameModeEndless())  // TODO: finish logic in 0.8.7
             {
-                HighScoreLogger.instance.UpdateHighScore(BizzBuzzButton.CalculateEndlessScore(), false);
+                HighScoreLogger.instance.UpdateHighScore(true, BizzBuzzButton.CalculateEndlessScore(), false);
             }
-            else
+            else if (isGameWon)
             {
-                HighScoreLogger.instance.UpdateHighScore(BizzBuzzButton.CalculateTargetScore(), false);
+                HighScoreLogger.instance.UpdateHighScore(false, Mathf.CeilToInt(BizzBuzzButton.CalculateTargetScore()), false);  // RIP float high scores
             }
         }
     }

@@ -695,9 +695,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Tutorial:
+  m_text: 'Target game mode <color=#C0C0C0>0</color>:
 
-    Learn the rules of the game!'
+    
+
+    Rules: Bizz Buzz
+
+    Target
+    round: 50'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -3274,10 +3279,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 3B
+  m_text: 'Target game mode <color=orange>5</color>:
 
+    
 
-    [Score <color=#00ffff>25</color> in Level 2B to unlock]'
+    Rules: Dupe Pow
+
+    Target
+    round: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -3612,7 +3621,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 56
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4019,6 +4028,9 @@ MonoBehaviour:
   - {fileID: 49703783}
   targetDifficultyButtonsHolder: {fileID: 1715857104}
   endlessDifficultyButtonsHolder: {fileID: 878178217}
+  endlessModeToggleButton: {fileID: 33540724}
+  endlessModeToggleButtonText: {fileID: 715993261}
+  endlessModeToggleButtonNoninteractableTime: 1
 --- !u!114 &207330986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4032,7 +4044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - {fileID: 1939495652}
+  - {fileID: 1229207206}
   panels:
   - {fileID: 829971750}
   buttons: []
@@ -4673,7 +4685,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TTT
+  m_text: 'Endless game mode <color=#C0C0C0>0</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -6080,10 +6101,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 2A
+  m_text: 'Target game mode <color=yellow>4</color>:
 
+    
 
-    [Score <color="green">20</color> in Level 1 to unlock]'
+    Rules: Buzz Bazz
+
+    Target
+    round: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -6943,10 +6968,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 2B
+  m_text: 'Target game mode <color=#00FFFF>2</color>:
 
+    
 
-    [Score <color="green">20</color> in Level 1 to unlock]'
+    Rules: Bizz Fuzz
+
+    Target
+    round: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -9956,7 +9985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: -160}
+  m_AnchoredPosition: {x: -60, y: -180}
   m_SizeDelta: {x: 180, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &562771978
@@ -9978,10 +10007,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 2C
+  m_text: 'Target game mode <color=blue>3</color>:
 
+    
 
-    [Score <color="green">20</color> in Level 1 to unlock]'
+    Rules: Bizz Buzz
+
+    Target
+    round: 200'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -10336,7 +10369,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 52
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11030,7 +11063,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 7
+          m_IntArgument: 57
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11742,7 +11775,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 53
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -12819,10 +12852,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 3C
+  m_text: 'Target game mode <color=purple>7</color>:
 
+    
 
-    [Score <color="blue">25</color> in Level 2C to unlock]'
+    Rules: Bizz Pow;
+    Buzz Pyth; Bazz Semi; Fuzz Dupe (25 rounds each)
+
+    Target round: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -14677,7 +14714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1543741005184998, guid: 79248b353c684764ba7f502a12d2e2c8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224725658763330464, guid: 79248b353c684764ba7f502a12d2e2c8,
         type: 3}
@@ -20686,7 +20723,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 54
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20832,7 +20869,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 50
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -22110,7 +22147,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -22122,9 +22159,9 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 514
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -22839,7 +22876,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UUU
+  m_text: 'Endless game mode <color=#606060>8</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -22937,7 +22983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1229207207
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22947,7 +22993,7 @@ RectTransform:
   m_GameObject: {fileID: 1229207206}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.135, z: 1}
   m_Children:
   - {fileID: 974553847}
   - {fileID: 298747228}
@@ -22957,7 +23003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -325.9}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229207208
@@ -25076,7 +25122,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: EE
+  m_text: 'Endless game mode <color=red>6</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -25540,7 +25595,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 1 (Game Mode 0)
+  m_text: 'Target game mode <color=green>1</color>:
+
+    
+
+    Rules: Fuzz Bazz
+
+    Target
+    round: 50'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -28464,7 +28526,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: QQQ
+  m_text: 'Endless game mode <color=#00FFFF>2</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -32412,7 +32483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: -160}
+  m_AnchoredPosition: {x: -60, y: -180}
   m_SizeDelta: {x: 180, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1717847533
@@ -32434,7 +32505,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OOO
+  m_text: 'Endless game mode <color=blue>3</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -33743,7 +33823,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 51
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -34237,7 +34317,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DDD
+  m_text: 'Endless game mode <color=yellow>4</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -34953,7 +35042,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 8
+          m_IntArgument: 58
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -35336,7 +35425,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HHH
+  m_text: 'Endless game mode <color=purple>7</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -36657,11 +36755,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 4
+  m_text: 'Target game mode <color=#606060>8</color>:
 
+    
 
-    [Score <color="red">30</color> in Level 3A, <color="orange">20</color>
-    in Level 3B, and <color="purple">35</color> in Level 3C to unlock]'
+    Rules: Bizz Pow;
+    Buzz Pyth; Bazz Semi; Fuzz Dupe (50 rounds each)
+
+    Target round: 200'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -36873,12 +36974,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939011622}
   m_CullTransparentMesh: 0
---- !u!1 &1939495652 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1543741005184998, guid: 79248b353c684764ba7f502a12d2e2c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 884279447}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1940397021 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1906906312906353689, guid: 58fdafad10505044ea4b52e735d55af8,
@@ -37836,7 +37931,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 55
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -38838,12 +38933,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 3A
+  m_text: 'Target game mode <color=red>6</color>:
 
+    
 
-    [Score <color="yellow">25</color> in Level 2A to unlock]
+    Rules: Semi Pyth
 
-'
+    Target
+    round: 50'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -39192,7 +39289,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NNN
+  m_text: 'Endless game mode <color=green>1</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -39326,7 +39432,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BBB
+  m_text: 'Endless game mode <color=orange>5</color>:
+
+    
+
+    Rules: Bizz Buzz
+
+    Random
+    number range size: 100
+
+    Round interval for each range: 20'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,

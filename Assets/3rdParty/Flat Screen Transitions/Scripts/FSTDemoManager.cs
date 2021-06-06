@@ -63,10 +63,6 @@ namespace Michsky.UI.FSC
 
             nextPanel = panels[currentPanelIndex];
             nextPanelAnimator = nextPanel.GetComponent<Animator>();
-
-            Debug.Log(styleAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash);
-            Debug.Log(styleAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash);
-            Debug.Log(styleAnimator.GetCurrentAnimatorStateInfo(0).IsTag("2"));
         }
 
         public void PanelAnim(int newPanel)
