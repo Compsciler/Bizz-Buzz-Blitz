@@ -57,6 +57,15 @@ public class HighScoreLogger : MonoBehaviour
         return highScores;
     }
 
+    public int GetHighScore(int gameMode)
+    {
+        if (IsEndlessGameMode(gameMode))
+        {
+            return GetHighScores(true, false)[gameMode - endlessGameModeMinNum];
+        }
+        return GetHighScores(false, false)[gameMode];
+    }
+
     public int GetOverallHighScore(bool isEndlessMode)
     {
         return GetHighScores(isEndlessMode, false).Sum();

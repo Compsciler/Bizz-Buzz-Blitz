@@ -39,18 +39,20 @@ public class DifficultySelectMenu : MonoBehaviour
     [SerializeField] TMP_Text endlessModeToggleButtonText;
     [SerializeField] float endlessModeToggleButtonNoninteractableTime;
 
+    [SerializeField] TMP_Text collectiveScoreText;
+
     // https://stackoverflow.com/questions/5849548/is-this-array-initialization-incorrect
     //{Game mode unlock requirements, in order by the game mode (starting from tutorial here) considered for requirements}
     internal static int[][,] targetGameModeUnlockReqTargetRounds = new int[][,]{
         new int[,] {},
-        new int[,] {{0, 50}},
-        new int[,] {{1, 50}},
-        new int[,] {{1, 50}},
-        new int[,] {{1, 50}},
-        new int[,] {{2, 100}},
-        new int[,] {{4, 100}},
-        new int[,] {{5, 100}, {6, 50}},
-        new int[,] {{7, 100}}
+        new int[,] {{0, -1}},
+        new int[,] {{1, -1}},
+        new int[,] {{1, -1}},
+        new int[,] {{1, -1}},
+        new int[,] {{2, -1}},
+        new int[,] {{4, -1}},
+        new int[,] {{5, -1}, {6, -1}},
+        new int[,] {{7, -1}}
     };
     private static int targetGameModeUnlockReqTimePerRound = 10;
     internal static int[][,] targetGameModeUnlockReqs = new int[targetGameModeUnlockReqTargetRounds.Length][,];
@@ -137,6 +139,7 @@ public class DifficultySelectMenu : MonoBehaviour
             scoreTexts[i].SetActive(false);
             lockIcons[i].SetActive(false);
         }
+        collectiveScoreText.gameObject.SetActive(false);
     }
 
     private void SetUpUnlocksAndScores()
@@ -146,17 +149,20 @@ public class DifficultySelectMenu : MonoBehaviour
             targetGameModeUnlockReqs[i] = new int[currentUnlockReqCount, 2];
             for (int j = 0; j < currentUnlockReqCount; j++)
             {
+                targetGameModeUnlockReqTargetRounds[i][j, 1] = GameManager.instance.targetRoundNums[targetGameModeUnlockReqTargetRounds[i][j, 0]];
+                // Debug.Log(targetGameModeUnlockReqTargetRounds[i][j, 1]);
+
                 int targetGameModeUnlockReqTime = targetGameModeUnlockReqTargetRounds[i][j, 1] * targetGameModeUnlockReqTimePerRound;
                 targetGameModeUnlockReqs[i][j, 0] = targetGameModeUnlockReqTargetRounds[i][j, 0];
                 targetGameModeUnlockReqs[i][j, 1] = targetGameModeUnlockReqTime;
-                Debug.Log(targetGameModeUnlockReqs[i][j, 0] + " " + targetGameModeUnlockReqs[i][j, 1]);
+                // Debug.Log(targetGameModeUnlockReqs[i][j, 0] + " " + targetGameModeUnlockReqs[i][j, 1]);
             }
         }
-        GetUnlockStatus(false, 0, 0);
-        GetUnlockStatus(false, targetGameModeUnlockReqs.Length, HighScoreLogger.instance.endlessGameModeMinNum);
+        GetUnlockStatuses(false, 0, 0);
+        GetUnlockStatuses(true, targetGameModeUnlockReqs.Length, HighScoreLogger.instance.endlessGameModeMinNum);
     }
 
-    public void GetUnlockStatus(bool isEndlessMode, int rawOffset, int gameModeOffset)
+    public void GetUnlockStatuses(bool isEndlessMode, int rawOffset, int gameModeOffset)
     {
         int[] highScores = HighScoreLogger.instance.GetHighScores(isEndlessMode, false);
 
@@ -179,7 +185,8 @@ public class DifficultySelectMenu : MonoBehaviour
             {
                 int highScoreForReq = highScores[currentUnlockReqs[j, 0]];
                 int scoreReq = currentUnlockReqs[j, 1];
-                if ((isEndlessMode && highScoreForReq < scoreReq) || (!isEndlessMode && highScoreForReq > scoreReq && highScoreForReq != 0))
+                // Debug.Log(i + " " + j + " " + highScoreForReq);
+                if ((isEndlessMode && highScoreForReq < scoreReq) || (!isEndlessMode && (highScoreForReq > scoreReq || highScoreForReq == 0)))
                 {
                     currentUnlockReqsMet = false;
                 }
@@ -199,7 +206,15 @@ public class DifficultySelectMenu : MonoBehaviour
                 if (highScore > 0)
                 {
                     TMP_Text scoreText = scoreTexts[i].GetComponent<TMP_Text>();
-                    scoreText.text = highScore.ToString();
+                    if (isEndlessMode)
+                    {
+                        scoreText.text = GetScoreRank(highScore, i + gameModeOffset);
+                    }
+                    else
+                    {
+                        scoreText.text = GetScoreRank(highScore, i);
+                    }
+                    // scoreText.text = highScore.ToString();
                     scoreTexts[i].tag = "ActivateOnToggleEndlessMode";
                 }
             }
@@ -278,5 +293,80 @@ public class DifficultySelectMenu : MonoBehaviour
         {
             go.SetActive(value);
         }
+    }
+
+    public string GetScoreRank(int score, int gameMode)
+    {
+        bool isEndlessMode = HighScoreLogger.instance.IsEndlessGameMode(gameMode);
+        string[] ranks =    {
+                                "<color=#F08600>S+</color>",
+                                "<color=#FFCE54>S</color>",
+                                "<color=#A0D568>A</color>",
+                                "<color=#4FC1E8>B</color>",
+                                "<color=#AC92EB>C</color>",
+                                "<color=#ED5564>D</color>",
+                                ""
+                            };
+        
+        if (isEndlessMode)
+        {
+            switch (score)
+            {
+                case int n when n >= 200:
+                    return ranks[0];
+                case int n when n >= 100:
+                    return ranks[1];
+                case int n when n >= 50:
+                    return ranks[2];
+                case int n when n >= 20:
+                    return ranks[3];
+                case int n when n >= 10:
+                    return ranks[4];
+                case int n when n >= 5:
+                    return ranks[5];
+                default:
+                    return ranks[ranks.Length - 1];
+            }
+        }
+        if (score == 0)
+        {
+            return ranks[ranks.Length - 1];
+        }
+        float avgTimePerRound = (float)score / GameManager.instance.targetRoundNums[gameMode];
+        switch (avgTimePerRound)
+        {
+            case float n when n <= 0.75f:
+                return ranks[0];
+            case float n when n <= 1.5f:
+                return ranks[1];
+            case float n when n <= 3f:
+                return ranks[2];
+            case float n when n <= 5f:
+                return ranks[3];
+            case float n when n <= 10f:
+                return ranks[4];
+            default:
+                return ranks[5];
+        }
+    }
+
+    public void SetCollectiveScoreText(int gameMode)
+    {
+        collectiveScoreText.gameObject.SetActive(true);
+        if (HighScoreLogger.instance.IsEndlessGameMode(gameMode))
+        {
+            collectiveScoreText.text = "SCORE: ";
+        }
+        else
+        {
+            collectiveScoreText.text = "TIME: ";
+        }
+        int highScore = HighScoreLogger.instance.GetHighScore(gameMode);
+        if (highScore == 0)
+        {
+            collectiveScoreText.text += "None";
+            return;
+        }
+        collectiveScoreText.text += "<u>" + highScore + "</u>";
     }
 }
