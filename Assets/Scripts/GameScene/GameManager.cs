@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     internal bool isMultiplayer = false;
     internal int playerTotal = 1;
     internal int[] targetRoundNums = {50, 50, 100, 200, 100, 100, 50, 100, 200};
+    internal static float timerTime = 5;
 
     [SerializeField] GameObject[] enableOnMultiplayer;
     [SerializeField] GameObject[] disableOnMultiplayer;
@@ -66,13 +67,13 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
-        try
+        if (SceneManager.GetActiveScene().buildIndex != Constants.mainMenuBuildIndex)
         {
-            ApplyGameModeSettings(HighScoreLogger.instance.gameMode);
-        }
-        catch (NullReferenceException)  // When not starting game from main menu or GameManager.cs exists in main menu
-        {
-            if (SceneManager.GetActiveScene().buildIndex != Constants.mainMenuBuildIndex)
+            try
+            {
+                ApplyGameModeSettings(HighScoreLogger.instance.gameMode);
+            }
+            catch (NullReferenceException)  // When not starting game from main menu or GameManager.cs exists in main menu
             {
                 ApplyGameModeSettings(defaultGameMode);
             }
@@ -165,13 +166,16 @@ public class GameManager : MonoBehaviour
             }
             Debug.Log("Game Over!");
 
-            if (BizzBuzzButton.IsGameModeEndless())  // TODO: finish logic in 0.8.7
+            if (!isMultiplayer)
             {
-                HighScoreLogger.instance.UpdateHighScore(true, BizzBuzzButton.CalculateEndlessScore(), false);
-            }
-            else if (isGameWon)
-            {
-                HighScoreLogger.instance.UpdateHighScore(false, Mathf.CeilToInt(BizzBuzzButton.CalculateTargetScore()), false);  // RIP float high scores
+                if (BizzBuzzButton.IsGameModeEndless())
+                {
+                    HighScoreLogger.instance.UpdateHighScore(true, BizzBuzzButton.CalculateEndlessScore(), false);
+                }
+                else if (isGameWon)
+                {
+                    HighScoreLogger.instance.UpdateHighScore(false, Mathf.CeilToInt(BizzBuzzButton.CalculateTargetScore()), false);  // RIP float high scores
+                }
             }
         }
     }
@@ -262,7 +266,36 @@ public class GameManager : MonoBehaviour
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
                 playerTotal = 2;
                 break;
-            case 199:
+            case 101:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Fuzz", "Bazz"}, int.MaxValue);
+                playerTotal = 2;
+                break;
+            case 102:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Pow"}, int.MaxValue);
+                playerTotal = 2;
+                break;
+            case 103:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Semi", "Pyth"}, int.MaxValue);
+                playerTotal = 2;
+                break;
+            case 104:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);
+                BizzBuzzButton.areNumbersRandomRange = true;
+                playerTotal = 2;
+                break;
+            case 105:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"RandomIsDivisbleByOrContainsDigit", "RandomIsDivisbleByOrContainsDigit"}, 10);
+                playerTotal = 2;
+                break;
+            case 106:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 10);
+                playerTotal = 2;
+                break;
+            case 107:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"RandomIsDivisbleByOrContainsDigit", "RandomIsDivisbleByOrContainsDigit"}, 1);
+                playerTotal = 2;
+                break;
+            case 108:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
                 playerTotal = 2;
                 break;
@@ -305,6 +338,11 @@ public class GameManager : MonoBehaviour
             }
             gameModeText.text = "Game mode: Target";
             targetRoundText.text = "Target round: " + BizzBuzzButton.targetRoundNum;
+        }
+        foreach (TimerBar timerBar in timerBars)
+        {
+            timerBar.maxValue = timerTime;
+            Debug.Log(timerTime);
         }
     }
 

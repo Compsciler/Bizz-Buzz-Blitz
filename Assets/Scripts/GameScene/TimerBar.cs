@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TimerBar : MonoBehaviour
 {
-    [SerializeField] float maxValue;
+    internal float maxValue = 5;
     private float currentValue = 0;
     internal bool isTimerActive = false;
 
