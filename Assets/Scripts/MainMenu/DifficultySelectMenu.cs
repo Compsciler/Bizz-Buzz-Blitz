@@ -352,8 +352,9 @@ public class DifficultySelectMenu : MonoBehaviour
 
     public void SetCollectiveScoreText(int gameMode)
     {
+        bool isEndlessMode = HighScoreLogger.instance.IsEndlessGameMode(gameMode);
         collectiveScoreText.gameObject.SetActive(true);
-        if (HighScoreLogger.instance.IsEndlessGameMode(gameMode))
+        if (isEndlessMode)
         {
             collectiveScoreText.text = "SCORE: ";
         }
@@ -365,8 +366,12 @@ public class DifficultySelectMenu : MonoBehaviour
         if (highScore == 0)
         {
             collectiveScoreText.text += "None";
+            if (!isEndlessMode)
+            {
+                // collectiveScoreText.text += " (10000)";
+            }
             return;
         }
-        collectiveScoreText.text += "<u>" + highScore + "</u>";
+        collectiveScoreText.text += "<b>" + highScore + "</b>";
     }
 }

@@ -837,6 +837,7 @@ GameObject:
   - component: {fileID: 714441809}
   - component: {fileID: 714441811}
   - component: {fileID: 714441810}
+  - component: {fileID: 714441812}
   m_Layer: 5
   m_Name: High Score Text
   m_TagString: Untagged
@@ -960,6 +961,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714441808}
   m_CullTransparentMesh: 0
+--- !u!114 &714441812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714441808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270d10ee523eb4547af26ce342e7ac88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highScoreText: {fileID: 714441810}
 --- !u!1 &776071343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2050,7 +2064,6 @@ GameObject:
   - component: {fileID: 1099052334}
   - component: {fileID: 1099052337}
   - component: {fileID: 1099052336}
-  - component: {fileID: 1099052335}
   m_Layer: 5
   m_Name: Round Text
   m_TagString: Untagged
@@ -2077,19 +2090,6 @@ RectTransform:
   m_AnchoredPosition: {x: -205, y: 420}
   m_SizeDelta: {x: 510, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1099052335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099052333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9638628ba5ff49b46aadba8c996f6c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopwatchText: {fileID: 1099052336}
 --- !u!114 &1099052336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3395,12 +3395,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_ReferenceResolution: {x: 1082.812, y: 1925}
+  m_ScreenMatchMode: 1
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3764,7 +3764,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Time: ##.##s'
+  m_text: 'Time: 0.00s'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,

@@ -111,7 +111,7 @@ public class BizzBuzzButton : MonoBehaviour
 
     public void GoToNextRound()
     {
-        if (roundNum >= targetRoundNum && !IsGameModeEndless())
+        if (roundNum >= targetRoundNum && !IsEndlessGameMode())
         {
             PauseTimersAndStopwatches();
             GameManager.instance.isGameWon = true;
@@ -219,7 +219,7 @@ public class BizzBuzzButton : MonoBehaviour
         }
     }
 
-    public static bool IsGameModeEndless()
+    public static bool IsEndlessGameMode()
     {
         return targetRoundNum == -1;
     }

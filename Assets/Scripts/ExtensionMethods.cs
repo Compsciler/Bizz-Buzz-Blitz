@@ -69,6 +69,11 @@ public static class ExtensionMethods
 
     public static string GetColoredRichText(string s, Color color)
     {
-        return "<color=#" + ColorUtility.ToHtmlStringRGB(color) + ">" + s + "</color>";
+        return GetColoredRichText(s, ColorUtility.ToHtmlStringRGB(color));
+    }
+
+    public static string GetColoredRichText(string s, string colorHex)
+    {
+        return "<color=#" + colorHex + ">" + s + "</color>";
     }
 }

@@ -27,6 +27,7 @@ public class DifficultySelectMenuBasic : MonoBehaviour
     // Non-essential fields below
     [SerializeField] TMP_Text timerTimeToggleButtonText;
     private string[] timerTimeToggleButtonTextStrings = {".75", "1.5", "3", "5", "10"};
+    private string[] timerTimeToggleButtonTextColorHexes = {"F08600", "FFCE54", "A0D568", "4FC1E8", "AC92EB"};
     private static int timerTimeToggleButtonTextStringIndex = 3;
 
     void Awake()
@@ -114,7 +115,8 @@ public class DifficultySelectMenuBasic : MonoBehaviour
     public void ApplyTimerTimeSettings()
     {
         string newTimerTimeText = timerTimeToggleButtonTextStrings[timerTimeToggleButtonTextStringIndex];
-        timerTimeToggleButtonText.text = newTimerTimeText;
+        string newTimerTimeToggleButtonTextColorHex = timerTimeToggleButtonTextColorHexes[timerTimeToggleButtonTextStringIndex];
+        timerTimeToggleButtonText.text = ExtensionMethods.GetColoredRichText(newTimerTimeText, newTimerTimeToggleButtonTextColorHex);
         GameManager.timerTime = float.Parse(newTimerTimeText);
     }
 }

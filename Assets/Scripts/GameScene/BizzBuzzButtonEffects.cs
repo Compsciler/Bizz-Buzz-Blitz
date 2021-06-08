@@ -201,7 +201,7 @@ public class BizzBuzzButtonEffects : MonoBehaviour
             .setOnUpdate((float value) =>
             {
                 Color buttonTextColor = buttonText.color;
-                buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.a, value);
+                buttonText.color = new Color(buttonTextColor.r, buttonTextColor.g, buttonTextColor.b, value);
             }).setLoopPingPong().id;
         return tweenID;
     }

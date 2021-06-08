@@ -86,12 +86,8 @@ public class HighScoreLogger : MonoBehaviour
             highScoreStringsGameModeIndex = gameMode;
         }
         int highScore = PlayerPrefs.GetInt(highScoreStrings[highScoreStringsGameModeIndex], 0);
-        if (SceneManager.GetActiveScene().buildIndex == Constants.gameSceneBuildIndex)
-        {
-            // FindObjectOfType<SpawnPeople>().UpdateUnlockedModeText(highScore);  //{ERROR: dependent on SpawnPeople.cs; remove or change game scene script updated unlocked modes}
-        }
 
-        if ((newScore > highScore) || isUpdatingToNewScore)
+        if ((isEndlessMode && newScore > highScore) || (!isEndlessMode && newScore < highScore) || isUpdatingToNewScore)
         {
             PlayerPrefs.SetInt(highScoreStrings[highScoreStringsGameModeIndex], newScore);
             Debug.Log(highScoreStrings[highScoreStringsGameModeIndex] + " changed from " + highScore + " to " + newScore);

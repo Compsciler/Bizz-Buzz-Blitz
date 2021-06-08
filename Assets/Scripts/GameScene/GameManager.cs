@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
 
             if (!isMultiplayer)
             {
-                if (BizzBuzzButton.IsGameModeEndless())
+                if (BizzBuzzButton.IsEndlessGameMode())
                 {
                     HighScoreLogger.instance.UpdateHighScore(true, BizzBuzzButton.CalculateEndlessScore(), false);
                 }
@@ -315,7 +315,11 @@ public class GameManager : MonoBehaviour
             numberRectTransform.anchoredPosition = new Vector2(numberRectTransform.anchoredPosition.x, numberMultiplayerY);
             numberGO.GetComponent<TMP_Text>().fontSize = numberMultiplayerFontSize;
         }
-        if (BizzBuzzButton.IsGameModeEndless())
+        if (gameMode < HighScoreLogger.instance.endlessGameModeMinNum)
+        {
+            BizzBuzzButton.targetRoundNum = targetRoundNums[gameMode];
+        }
+        if (BizzBuzzButton.IsEndlessGameMode())
         {
             gameModeText.text = "Game mode: Endless";
             BizzBuzzButton.isDisplayingRoundNum = true;
@@ -323,8 +327,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            BizzBuzzButton.targetRoundNum = targetRoundNums[gameMode];
-
             roundText.gameObject.SetActive(false);
             stopwatch.gameObject.SetActive(true);
             
@@ -342,7 +344,6 @@ public class GameManager : MonoBehaviour
         foreach (TimerBar timerBar in timerBars)
         {
             timerBar.maxValue = timerTime;
-            Debug.Log(timerTime);
         }
     }
 
