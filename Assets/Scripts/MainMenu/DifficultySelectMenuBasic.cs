@@ -30,6 +30,26 @@ public class DifficultySelectMenuBasic : MonoBehaviour
     private string[] timerTimeToggleButtonTextColorHexes = {"F08600", "FFCE54", "A0D568", "4FC1E8", "AC92EB"};
     private static int timerTimeToggleButtonTextStringIndex = 3;
 
+    [SerializeField] TMP_Text nonResettingTimerTimeToggleButtonText;
+    private string[] nonResettingTimerTimeToggleButtonTextStrings = {"10", "30", "60", "120", "240"};
+    private static int nonResettingTimerTimeToggleButtonTextStringIndex = 3;
+
+    [SerializeField] TMP_Text nonResettingMaxTimeDelayAddedEachRoundToggleButtonText;
+    private string[] nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStrings = {"0", ".75", "1.5", "3", "5", "10"};
+    private string[] nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextColorHexes = {"FFFFFF", "F08600", "FFCE54", "A0D568", "4FC1E8", "AC92EB"};
+    private static int nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex = 0;
+
+    [SerializeField] Image isResettingTimerEachRoundButtonImage;
+    [SerializeField] GameObject[] enableOnToggleOffIsResettingTimerEachRound;
+    [SerializeField] GameObject[] disableOnToggleOffIsResettingTimerEachRound;
+
+    [SerializeField] Image isOneLifeOnlyButtonImage;
+    private int isOneLifeOnlyOffLives = 3;
+    private int isOneLifeOnlyOnLives = 1;
+
+    [SerializeField] Sprite toggleOffSprite;
+    [SerializeField] Sprite toggleOnSprite;
+
     void Awake()
     {
         SetDifficultyButtonRelatedUI();
@@ -43,7 +63,9 @@ public class DifficultySelectMenuBasic : MonoBehaviour
             PlayerPrefs.SetInt("IsFirstTimePlaying", 0);
         }
 
+        ApplyIsResettingTimerEachRoundSettings();
         ApplyTimerTimeSettings();
+        ApplyNonResettingTimerTimeSettings();
     }
 
     public void Play(int gameMode)
@@ -117,6 +139,85 @@ public class DifficultySelectMenuBasic : MonoBehaviour
         string newTimerTimeText = timerTimeToggleButtonTextStrings[timerTimeToggleButtonTextStringIndex];
         string newTimerTimeToggleButtonTextColorHex = timerTimeToggleButtonTextColorHexes[timerTimeToggleButtonTextStringIndex];
         timerTimeToggleButtonText.text = ExtensionMethods.GetColoredRichText(newTimerTimeText, newTimerTimeToggleButtonTextColorHex);
-        GameManager.timerTime = float.Parse(newTimerTimeText);
+        GameManager.resettingTimerTime = float.Parse(newTimerTimeText);
+    }
+
+    public void ToggleNonResettingTimerTime()
+    {
+        nonResettingTimerTimeToggleButtonTextStringIndex = (nonResettingTimerTimeToggleButtonTextStringIndex + 1) % nonResettingTimerTimeToggleButtonTextStrings.Length;
+        ApplyNonResettingTimerTimeSettings();
+    }
+
+    public void ApplyNonResettingTimerTimeSettings()
+    {
+        string newNonResettingTimerTimeText = nonResettingTimerTimeToggleButtonTextStrings[nonResettingTimerTimeToggleButtonTextStringIndex];
+        nonResettingTimerTimeToggleButtonText.text = newNonResettingTimerTimeText;
+        GameManager.nonResettingTimerTime = float.Parse(newNonResettingTimerTimeText);
+    }
+
+    public void ToggleNonResettingMaxTimeDelayAddedEachRound()
+    {
+        nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex = (nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex + 1) % nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStrings.Length;
+        ApplyNonResettingMaxTimeDelayAddedEachRoundSettings();
+    }
+
+    public void ApplyNonResettingMaxTimeDelayAddedEachRoundSettings()
+    {
+        string newTimerTimeText = nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStrings[nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex];
+        string newTimerTimeToggleButtonTextColorHex = nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextColorHexes[nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex];
+        nonResettingMaxTimeDelayAddedEachRoundToggleButtonText.text = ExtensionMethods.GetColoredRichText(newTimerTimeText, newTimerTimeToggleButtonTextColorHex);
+        GameManager.nonResettingMaxTimeDelayAddedEachRound = float.Parse(newTimerTimeText);
+        Debug.Log(GameManager.nonResettingMaxTimeDelayAddedEachRound);
+    }
+
+    public void ToggleIsResettingTimerEachRound()
+    {
+        GameManager.isResettingTimerEachRound = !GameManager.isResettingTimerEachRound;
+        ApplyIsResettingTimerEachRoundSettings();
+    }
+
+    public void ApplyIsResettingTimerEachRoundSettings()
+    {
+        if (GameManager.isResettingTimerEachRound)
+        {
+            isResettingTimerEachRoundButtonImage.sprite = toggleOnSprite;
+        }
+        else
+        {
+            isResettingTimerEachRoundButtonImage.sprite = toggleOffSprite;
+        }
+        foreach (GameObject go in enableOnToggleOffIsResettingTimerEachRound)
+        {
+            go.SetActive(!GameManager.isResettingTimerEachRound);
+        }
+        foreach (GameObject go in disableOnToggleOffIsResettingTimerEachRound)
+        {
+            go.SetActive(GameManager.isResettingTimerEachRound);
+        }
+    }
+
+    public void ToggleIsOneLifeOnly()
+    {
+        if (GameManager.maxLives == isOneLifeOnlyOnLives)
+        {
+            GameManager.maxLives = isOneLifeOnlyOffLives;
+        }
+        else
+        {
+            GameManager.maxLives = isOneLifeOnlyOnLives;
+        }
+        ApplyIsOneLifeOnlySettings();
+    }
+
+    public void ApplyIsOneLifeOnlySettings()
+    {
+        if (GameManager.maxLives == isOneLifeOnlyOnLives)
+        {
+            isOneLifeOnlyButtonImage.sprite = toggleOnSprite;
+        }
+        else
+        {
+            isOneLifeOnlyButtonImage.sprite = toggleOffSprite;
+        }
     }
 }

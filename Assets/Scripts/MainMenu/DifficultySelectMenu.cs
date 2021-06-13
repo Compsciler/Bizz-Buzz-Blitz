@@ -159,7 +159,7 @@ public class DifficultySelectMenu : MonoBehaviour
             }
         }
         GetUnlockStatuses(false, 0, 0);
-        GetUnlockStatuses(true, targetGameModeUnlockReqs.Length, HighScoreLogger.instance.endlessGameModeMinNum);
+        GetUnlockStatuses(true, targetGameModeUnlockReqs.Length, HighScoreLogger.endlessGameModeMinNum);
     }
 
     public void GetUnlockStatuses(bool isEndlessMode, int rawOffset, int gameModeOffset)

@@ -35,6 +35,8 @@ public class BizzBuzzButton : MonoBehaviour
     internal static int randomNumberRangeRoundInterval = 20;
     private static List<int> randomNumberRange;
 
+    private float roundElapsedTime = 0;
+
     [SerializeField] LifeController lifeController;
     [SerializeField] GameOverMenu gameOverMenuScript;
     [SerializeField] TMP_Text roundText;
@@ -56,6 +58,14 @@ public class BizzBuzzButton : MonoBehaviour
         }
 
         UpdateNumberText();
+    }
+
+    void Update()
+    {
+        if (timerBars[player - 1].isTimerActive)
+        {
+            roundElapsedTime += Time.deltaTime;
+        }
     }
 
     public void ButtonClick()
@@ -91,6 +101,10 @@ public class BizzBuzzButton : MonoBehaviour
 
             LoseLifeAndGoToNextRound();
         }
+        foreach (BizzBuzzButton button in buttonsByPlayer[player - 1])
+        {
+            button.roundElapsedTime = 0;
+        }
     }
 
     public void LoseLifeAndGoToNextRound()
@@ -102,21 +116,31 @@ public class BizzBuzzButton : MonoBehaviour
         }
         else
         {
-            PauseTimersAndStopwatches();
+            GameOver(false);
+        }
+    }
+
+    public void GameOver(bool isGameWon)
+    {
+        PauseTimersAndStopwatches();
+        if (isGameWon)
+        {
+            GameManager.instance.isGameWon = true;
+            gameOverMenuScript.UpdateWinText();
+        }
+        else
+        {
             losingPlayer = player;
             gameOverMenuScript.UpdateLoseText(losingPlayer, buttonRuleValues);
-            Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
         }
+        Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
     }
 
     public void GoToNextRound()
     {
         if (roundNum >= targetRoundNum && !IsEndlessGameMode())
         {
-            PauseTimersAndStopwatches();
-            GameManager.instance.isGameWon = true;
-            gameOverMenuScript.UpdateWinText();
-            Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
+            GameOver(true);
             return;
         }
 
@@ -147,9 +171,30 @@ public class BizzBuzzButton : MonoBehaviour
 
         int nextPlayer = player % GameManager.instance.playerTotal + 1;
         SetPlayerNeitherRuleButtonText(nextPlayer);
+        if (GameManager.isResettingTimerEachRound)
+        {
+            timerBars[player - 1].FillBar(0);
+            timerBars[nextPlayer - 1].ResetTimer();
+        }
+        else
+        {
+            Debug.Log(roundElapsedTime);
+            if (roundElapsedTime > GameManager.nonResettingMaxTimeDelayAddedEachRound)
+            {
+                timerBars[player - 1].AddTime(GameManager.nonResettingMaxTimeDelayAddedEachRound);
+            }
+            else
+            {
+                timerBars[player - 1].AddTime(roundElapsedTime);
+            }
+            timerBars[player - 1].FillBar();
+            timerBars[player - 1].SetBarColor(Color.black);
+            if (roundNum <= GameManager.instance.playerTotal)
+            {
+                timerBars[nextPlayer - 1].ResetTimer();
+            }
+        }
         timerBars[player - 1].isTimerActive = false;
-        timerBars[player - 1].FillBar(0);
-        timerBars[nextPlayer - 1].ResetTimer();
         timerBars[nextPlayer - 1].isTimerActive = true;
 
         if (GameManager.instance.isMultiplayer)

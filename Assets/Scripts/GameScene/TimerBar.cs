@@ -41,10 +41,17 @@ public class TimerBar : MonoBehaviour
     public void OnTimerFinished()
     {
         BizzBuzzButton randomPlayerButton = BizzBuzzButton.buttonsByPlayer[player - 1][0];
-        randomPlayerButton.GetComponent<BizzBuzzButtonEffects>().PlayIncorrectEffects(true);
-        randomPlayerButton.LoseLifeAndGoToNextRound();
+        if (!GameManager.isResettingTimerEachRound)
+        {
+            randomPlayerButton.GameOver(false);
+            randomPlayerButton.GetComponent<BizzBuzzButtonEffects>().PlayButtonSound(BizzBuzzButtonEffects.ButtonType.Incorrect);
+        }
+        else
+        {
+            randomPlayerButton.GetComponent<BizzBuzzButtonEffects>().PlayIncorrectEffects(true);
+            randomPlayerButton.LoseLifeAndGoToNextRound();
+        }
         gameOverMenuScript.UpdateLoseText(player);
-        // Timing.RunCoroutine(GameManager.instance.GameOver(), "GameOver");
     }
 
     public void ResetTimer()
@@ -65,5 +72,19 @@ public class TimerBar : MonoBehaviour
         {
             fill.color = Color.HSVToRGB(Mathf.Lerp(0f, 1f, fillAmount), 1, 1);
         }
+    }
+
+    public void AddTime(float addedTime)
+    {
+        currentValue += addedTime;
+        if (currentValue > maxValue)
+        {
+            currentValue = maxValue;
+        }
+    }
+
+    public void SetBarColor(Color color)
+    {
+        fill.color = color;
     }
 }

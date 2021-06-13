@@ -96,6 +96,7 @@ public class BizzBuzzClassification : MonoBehaviour
         rules.Put("Pow", SetUpRuleMethodList("IsPerfectPower"));
         rules.Put("Semi", SetUpRuleMethodList("IsSemiprime"));
         rules.Put("Pyth", SetUpRuleMethodList("IsSumOf2NonzeroSquares"));
+        // rules.Put("Booz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 3));
 
         ruleColorsUsed = new List<Color>();
         ruleColorsUsed.Add(new Color(1f, 0, 0));
@@ -262,11 +263,11 @@ public class BizzBuzzClassification : MonoBehaviour
             BizzBuzzButton.nextRuleChangeRound = int.MaxValue;
         }
 
-        int currPlayer = (BizzBuzzButton.roundNum - 1) % GameManager.instance.playerTotal + 1;
+        int currentPlayer = GetCurrentPlayer();
         List<BizzBuzzButton> ruleChangeBizzBuzzButtons;
         if (GameManager.instance.playerTotal > 1 && roundInterval == 1 && BizzBuzzButton.roundNum != 1)
         {
-            ruleChangeBizzBuzzButtons = BizzBuzzButton.buttonsByPlayer[currPlayer - 1];
+            ruleChangeBizzBuzzButtons = BizzBuzzButton.buttonsByPlayer[currentPlayer - 1];
         }
         else
         {
@@ -285,6 +286,11 @@ public class BizzBuzzClassification : MonoBehaviour
         {
             BizzBuzzButton.SetPlayerNeitherRuleButtonText(1);
         }
+    }
+
+    public static int GetCurrentPlayer()
+    {
+        return (BizzBuzzButton.roundNum - 1) % GameManager.instance.playerTotal + 1;
     }
 
     public static void SetRandomRules()

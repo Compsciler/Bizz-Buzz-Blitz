@@ -9,7 +9,7 @@ public class HighScoreLogger : MonoBehaviour
 
     internal string[] targetHighScoreStrings = {"GM0HighScore", "GM1HighScore", "GM2HighScore", "GM3HighScore", "GM4HighScore", "GM5HighScore", "GM6HighScore", "GM7HighScore", "GM8HighScore"};
     internal string[] endlessHighScoreStrings = {"GM50HighScore", "GM51HighScore", "GM52HighScore", "GM53HighScore", "GM54HighScore", "GM55HighScore", "GM56HighScore", "GM57HighScore", "GM58HighScore"};
-    internal int endlessGameModeMinNum = 50;
+    internal static int endlessGameModeMinNum = 50;
 
     void Awake()
     {

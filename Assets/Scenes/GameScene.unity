@@ -1864,6 +1864,9 @@ MonoBehaviour:
   timerBars:
   - {fileID: 1194256570}
   - {fileID: 2107800271}
+  lifeControllers:
+  - {fileID: 573531987}
+  - {fileID: 1055571938}
   stopwatch: {fileID: 1686760863}
   numberGO: {fileID: 1421230160}
   numberMultiplayerY: 0

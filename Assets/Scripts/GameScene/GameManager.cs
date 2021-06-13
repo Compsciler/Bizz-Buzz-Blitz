@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] float gameOverTimeScale = 0.5f;
 
-    private int defaultGameMode = 50;
+    private int defaultGameMode = 100;
 
     [Header("Additional Game Settings")]
     [SerializeField] internal bool areParticlesOn = true;
@@ -47,11 +47,17 @@ public class GameManager : MonoBehaviour
     internal bool isMultiplayer = false;
     internal int playerTotal = 1;
     internal int[] targetRoundNums = {50, 50, 100, 200, 100, 100, 50, 100, 200};
-    internal static float timerTime = 5;
+    
+    internal static bool isResettingTimerEachRound = true;  // Chess clock if false
+    internal static float resettingTimerTime = 5f;
+    internal static float nonResettingTimerTime = 60f;
+    internal static float nonResettingMaxTimeDelayAddedEachRound = 0;  // Bronstein delay
+    internal static int maxLives = 3;
 
     [SerializeField] GameObject[] enableOnMultiplayer;
     [SerializeField] GameObject[] disableOnMultiplayer;
     [SerializeField] TimerBar[] timerBars;
+    [SerializeField] LifeController[] lifeControllers;
     [SerializeField] Stopwatch stopwatch;
     [SerializeField] GameObject numberGO;
     [SerializeField] float numberMultiplayerY;
@@ -315,7 +321,7 @@ public class GameManager : MonoBehaviour
             numberRectTransform.anchoredPosition = new Vector2(numberRectTransform.anchoredPosition.x, numberMultiplayerY);
             numberGO.GetComponent<TMP_Text>().fontSize = numberMultiplayerFontSize;
         }
-        if (gameMode < HighScoreLogger.instance.endlessGameModeMinNum)
+        if (gameMode < HighScoreLogger.endlessGameModeMinNum)
         {
             BizzBuzzButton.targetRoundNum = targetRoundNums[gameMode];
         }
@@ -341,9 +347,22 @@ public class GameManager : MonoBehaviour
             gameModeText.text = "Game mode: Target";
             targetRoundText.text = "Target round: " + BizzBuzzButton.targetRoundNum;
         }
+        float timerTime;
+        if (isResettingTimerEachRound)
+        {
+            timerTime = resettingTimerTime;
+        }
+        else
+        {
+            timerTime = nonResettingTimerTime;
+        }
         foreach (TimerBar timerBar in timerBars)
         {
             timerBar.maxValue = timerTime;
+        }
+        foreach (LifeController lifeController in lifeControllers)
+        {
+            lifeController.SetMaxLives(maxLives);
         }
     }
 

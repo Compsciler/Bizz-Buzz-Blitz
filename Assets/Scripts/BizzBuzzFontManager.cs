@@ -12,7 +12,7 @@ public class BizzBuzzFontManager : MonoBehaviour
     [SerializeField] TMP_Text[] ruleTexts;
 
     [SerializeField] TMP_FontAsset symbolFont;
-    internal List<string> ruleSymbols = new List<string>() {"⑤", "⑦", "⑧", "⑨", "⎘", "m<sup>k</sup>", "p<sub>1</sub>p<sub>2</sub>", "◺"};
+    internal List<string> ruleSymbols = new List<string>() {"⑤", "⑦", "⑧", "⑨", "⎘", "m<sup>k</sup>", "p<sub>1</sub>p<sub>2</sub>", "◺", "③"};
 
     [SerializeField] GameObject ruleSymbolToggleButtonGO;
     [SerializeField] Sprite isNotUsingSymbolsSprite;
