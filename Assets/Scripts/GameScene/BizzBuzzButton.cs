@@ -178,7 +178,6 @@ public class BizzBuzzButton : MonoBehaviour
         }
         else
         {
-            Debug.Log(roundElapsedTime);
             if (roundElapsedTime > GameManager.nonResettingMaxTimeDelayAddedEachRound)
             {
                 timerBars[player - 1].AddTime(GameManager.nonResettingMaxTimeDelayAddedEachRound);

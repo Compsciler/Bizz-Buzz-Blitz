@@ -305,6 +305,10 @@ public class GameManager : MonoBehaviour
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
                 playerTotal = 2;
                 break;
+            case 109:
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Booz", "Bizz"}, int.MaxValue);
+                playerTotal = 2;
+                break;
         }
         isMultiplayer = playerTotal > 1;
         if (isMultiplayer)
@@ -347,6 +351,18 @@ public class GameManager : MonoBehaviour
             gameModeText.text = "Game mode: Target";
             targetRoundText.text = "Target round: " + BizzBuzzButton.targetRoundNum;
         }
+        if (isMultiplayer)
+        {
+            ApplyMultiplayerCustomSettings();
+        }
+        else
+        {
+            ResetMultiplayerCustomSettings();
+        }
+    }
+
+    public void ApplyMultiplayerCustomSettings()
+    {
         float timerTime;
         if (isResettingTimerEachRound)
         {
@@ -364,6 +380,18 @@ public class GameManager : MonoBehaviour
         {
             lifeController.SetMaxLives(maxLives);
         }
+    }
+    public void ResetMultiplayerCustomSettings()
+    {
+        isResettingTimerEachRound = true;
+        resettingTimerTime = 5f;
+        nonResettingTimerTime = 60f;
+        nonResettingMaxTimeDelayAddedEachRound = 0;
+        maxLives = 3;
+
+        DifficultySelectMenuBasic.timerTimeToggleButtonTextStringIndex = 3;
+        DifficultySelectMenuBasic.nonResettingTimerTimeToggleButtonTextStringIndex = 3;
+        DifficultySelectMenuBasic.nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex = 0;
     }
 
     public IEnumerator<float> FadeObjectsBehindMenu()

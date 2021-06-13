@@ -28,16 +28,16 @@ public class DifficultySelectMenuBasic : MonoBehaviour
     [SerializeField] TMP_Text timerTimeToggleButtonText;
     private string[] timerTimeToggleButtonTextStrings = {".75", "1.5", "3", "5", "10"};
     private string[] timerTimeToggleButtonTextColorHexes = {"F08600", "FFCE54", "A0D568", "4FC1E8", "AC92EB"};
-    private static int timerTimeToggleButtonTextStringIndex = 3;
+    internal static int timerTimeToggleButtonTextStringIndex = 3;
 
     [SerializeField] TMP_Text nonResettingTimerTimeToggleButtonText;
     private string[] nonResettingTimerTimeToggleButtonTextStrings = {"10", "30", "60", "120", "240"};
-    private static int nonResettingTimerTimeToggleButtonTextStringIndex = 3;
+    internal static int nonResettingTimerTimeToggleButtonTextStringIndex = 3;
 
     [SerializeField] TMP_Text nonResettingMaxTimeDelayAddedEachRoundToggleButtonText;
     private string[] nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStrings = {"0", ".75", "1.5", "3", "5", "10"};
     private string[] nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextColorHexes = {"FFFFFF", "F08600", "FFCE54", "A0D568", "4FC1E8", "AC92EB"};
-    private static int nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex = 0;
+    internal static int nonResettingMaxTimeDelayAddedEachRoundToggleButtonTextStringIndex = 0;
 
     [SerializeField] Image isResettingTimerEachRoundButtonImage;
     [SerializeField] GameObject[] enableOnToggleOffIsResettingTimerEachRound;
@@ -66,6 +66,7 @@ public class DifficultySelectMenuBasic : MonoBehaviour
         ApplyIsResettingTimerEachRoundSettings();
         ApplyTimerTimeSettings();
         ApplyNonResettingTimerTimeSettings();
+        ApplyIsOneLifeOnlySettings();
     }
 
     public void Play(int gameMode)

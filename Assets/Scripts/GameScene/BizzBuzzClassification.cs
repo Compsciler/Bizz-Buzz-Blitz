@@ -10,7 +10,9 @@ public class BizzBuzzClassification : MonoBehaviour
     private static List<Color> ruleColorsUsed;
 
     internal static List<string> ruleNames;
+    private static List<string> ruleNamesAfterExcluding;
     private static List<string> isDivisbleByOrContainsDigitRuleNames;
+    private static List<string> excludedRuleNames = new List<string>() {"Booz"};
     private static string isDivisbleByOrContainsDigitMethodInfoString = "Boolean IsDivisbleByOrContainsDigit(Int32, Int32)";
 
     internal static List<RuleInterval> ruleIntervalList = new List<RuleInterval>();
@@ -19,7 +21,7 @@ public class BizzBuzzClassification : MonoBehaviour
 
     void Awake()
     {
-        if (rules == null)
+        if (rules == null)  // Remove if setting added to change excludedRuleNames
         {
             SetUpRules();
             SetUpRandomRuleLists();
@@ -58,11 +60,6 @@ public class BizzBuzzClassification : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     public static bool[] ClassifyNum(int n)
     {
         bool[] res = new bool[rulesUsed.Count];
@@ -88,6 +85,7 @@ public class BizzBuzzClassification : MonoBehaviour
     {
         rules = new MyHashTable<string, List<object>>();
 
+        rules.Put("Booz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 3));
         rules.Put("Bizz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 5));
         rules.Put("Buzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 7));
         rules.Put("Fuzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 8));
@@ -96,7 +94,6 @@ public class BizzBuzzClassification : MonoBehaviour
         rules.Put("Pow", SetUpRuleMethodList("IsPerfectPower"));
         rules.Put("Semi", SetUpRuleMethodList("IsSemiprime"));
         rules.Put("Pyth", SetUpRuleMethodList("IsSumOf2NonzeroSquares"));
-        // rules.Put("Booz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 3));
 
         ruleColorsUsed = new List<Color>();
         ruleColorsUsed.Add(new Color(1f, 0, 0));
@@ -295,20 +292,20 @@ public class BizzBuzzClassification : MonoBehaviour
 
     public static void SetRandomRules()
     {
-        List<string> ruleNamesClone = new List<string>(ruleNames);
+        List<string> ruleNamesAfterExcludingClone = new List<string>(ruleNamesAfterExcluding);
         List<string> isDivisbleByOrContainsDigitRuleNamesClone = new List<string>(isDivisbleByOrContainsDigitRuleNames);
 
         for (int i = 0; i < rulesUsed.Count; i++)
         {
             switch (rulesUsed[i]) {
                 case "Random":
-                    rulesUsed[i] = ruleNamesClone[UnityEngine.Random.Range(0, ruleNamesClone.Count)];
+                    rulesUsed[i] = ruleNamesAfterExcludingClone[UnityEngine.Random.Range(0, ruleNamesAfterExcludingClone.Count)];
                     break;
                 case "RandomIsDivisbleByOrContainsDigit":
                     rulesUsed[i] = isDivisbleByOrContainsDigitRuleNamesClone[UnityEngine.Random.Range(0, isDivisbleByOrContainsDigitRuleNamesClone.Count)];
                     break;
             }
-            ruleNamesClone.Remove(rulesUsed[i]);
+            ruleNamesAfterExcludingClone.Remove(rulesUsed[i]);
             isDivisbleByOrContainsDigitRuleNamesClone.Remove(rulesUsed[i]);
         }
         rulesUsed = rulesUsed.OrderBy(s => ruleNames.IndexOf(s)).ToList();
@@ -317,14 +314,20 @@ public class BizzBuzzClassification : MonoBehaviour
     public static void SetUpRandomRuleLists()
     {
         ruleNames = new List<string>();
+        ruleNamesAfterExcluding = new List<string>();
         isDivisbleByOrContainsDigitRuleNames = new List<string>();
         foreach (string ruleName in rules.GetKeySet())
         {
+            ruleNames.Add(ruleName);
+            if (excludedRuleNames.Contains(ruleName))
+            {
+                continue;
+            }
             if (rules.Get(ruleName)[0].ToString().Equals(isDivisbleByOrContainsDigitMethodInfoString))
             {
                 isDivisbleByOrContainsDigitRuleNames.Add(ruleName);
             }
-            ruleNames.Add(ruleName);
+            ruleNamesAfterExcluding.Add(ruleName);
         }
     }
 }
