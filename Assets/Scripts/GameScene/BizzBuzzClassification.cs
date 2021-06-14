@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BizzBuzzClassification : MonoBehaviour
 {
@@ -50,12 +51,15 @@ public class BizzBuzzClassification : MonoBehaviour
 
     void Start()
     {
-        UpdateRulesUsed();
-        if (BizzBuzzButton.nextRuleChangeRound <= GameManager.instance.playerTotal + 1)  // Condition equivalent to (BizzBuzzButton.roundNum >= BizzBuzzButton.nextRuleChangeRound - GameManager.instance.playerTotal)
+        if (SceneManager.GetActiveScene().buildIndex != Constants.mainMenuBuildIndex)
         {
-            foreach (BizzBuzzButton button in BizzBuzzButton.buttonsByPlayer[0])
+            UpdateRulesUsed();
+            if (BizzBuzzButton.nextRuleChangeRound <= GameManager.instance.playerTotal + 1)  // Condition equivalent to (BizzBuzzButton.roundNum >= BizzBuzzButton.nextRuleChangeRound - GameManager.instance.playerTotal)
             {
-                button.preRuleChangeEffectTweenID = button.GetComponent<BizzBuzzButtonEffects>().PlayPreRuleChangeEffects();
+                foreach (BizzBuzzButton button in BizzBuzzButton.buttonsByPlayer[0])
+                {
+                    button.preRuleChangeEffectTweenID = button.GetComponent<BizzBuzzButtonEffects>().PlayPreRuleChangeEffects();
+                }
             }
         }
     }
@@ -70,7 +74,7 @@ public class BizzBuzzClassification : MonoBehaviour
         return res;
     }
 
-    private static bool ClassifyNum(int n, string rule)
+    public static bool ClassifyNum(int n, string rule)
     {
         List<object> ruleMethodList = rules.Get(rule);
         MethodInfo ruleMethod = (MethodInfo)ruleMethodList[0];
@@ -85,15 +89,15 @@ public class BizzBuzzClassification : MonoBehaviour
     {
         rules = new MyHashTable<string, List<object>>();
 
-        rules.Put("Booz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 3));
-        rules.Put("Bizz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 5));
-        rules.Put("Buzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 7));
-        rules.Put("Fuzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 8));
-        rules.Put("Bazz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 9));
-        rules.Put("Dupe", SetUpRuleMethodList("ContainsDuplicateDigit"));
-        rules.Put("Pow", SetUpRuleMethodList("IsPerfectPower"));
-        rules.Put("Semi", SetUpRuleMethodList("IsSemiprime"));
-        rules.Put("Pyth", SetUpRuleMethodList("IsSumOf2NonzeroSquares"));
+        rules.Put("Booz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 3));  // OEIS A257220
+        rules.Put("Bizz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 5));  // OEIS A092454
+        rules.Put("Buzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 7));  // OEIS A092433
+        rules.Put("Fuzz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 8));  // OEIS A092456
+        rules.Put("Bazz", SetUpRuleMethodList("IsDivisbleByOrContainsDigit", 9));  // OEIS A092457
+        rules.Put("Dupe", SetUpRuleMethodList("ContainsDuplicateDigit"));  // OEIS A109303
+        rules.Put("Pow", SetUpRuleMethodList("IsPerfectPower"));  // OEIS A001597
+        rules.Put("Semi", SetUpRuleMethodList("IsSemiprime"));  // OEIS A001358
+        rules.Put("Pyth", SetUpRuleMethodList("IsSumOf2NonzeroSquares"));  // OEIS A000404
 
         ruleColorsUsed = new List<Color>();
         ruleColorsUsed.Add(new Color(1f, 0, 0));
