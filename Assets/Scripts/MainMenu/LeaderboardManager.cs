@@ -12,27 +12,24 @@ public class LeaderboardManager : MonoBehaviour
 
 	//{Dreamlo private and public code pair for each leaderboard used}
 	private string[] privateCodes = {
-										"XH-C7irxHU69Du5NSODUIAPcassrlFlkKAaSWvS4Kbqw",
-										"twf8XCfbREq9JkpLmy_X_gPoo9nbmWbk-xExOodKpWYw",
-										"QExs4kDVL0etrqFUNqMa6QwjbqTqUIMk-kTdJ83wK-Vw",
-										"VngGAYUZf0CM2oJfL23Ehwvji82GEQQ0aGe3xfmBs-fw",
-										"DPiaLrq-GUWxthSDy7B9Ogen3SNSVYlUq2CeTIoXXNQQ",
-										"2WhenWoV9UmvZHPrAIWlUwAYp5xC2kpkenzcI-HXKqag",
-										"Wlby2p9aO0mcZtNC7r28tQX7CK07qqk0mQ6RichtwVZw",
-										"cYYLuViMakeo0uF5reXVsQjc6s-uHd3Eun9iSt3okMtg",
-										"wmnuebpHbUe8eXXsTh5BEAST8X3mGzKEuY6Uc-iq_IKQ"  // Overall leaderboard
+										"EreiRCzf-kKiYdA-tfFY2QU_FPvg2qNU6ffwXTTb_fcw",  // Overall Target
+										"osJH-jT3L0KFteYMq5sGAAO3SWeXHpBkWUdSn_sUmgAQ",
+										"Q_0hnklFE0imewaOHnXbvQC3hItJYoiEC1lnEevTo55w",
+										"tNodvh5Evkqf5cg18SlgUgMUSqq-jCkEG6J4vw90oicw",
+										"NHAJYDUGoECPUWGa0iYEyAzsuzJp9zvUeYwlcTcUzmGA",  // Overall Endless
+										"P7SdI5jLqk65ZmEkpUS1BgQCLUEf_Sx0u4AH3OSZ63wQ",
+										"94koCMYWQUeFjw0YITqAjQe63KFp5jHkSzCuL6VQ8i6w",
+										"iWIG2Rxba0m6KP9rn6atwgXnRcrvFuQEqTe8xnu8R-Bg"
 									};
 	private string[] publicCodes =	{
-										
-										"5f2b94d3eb371809c4afbd01",
-										"5f2b9be1eb371809c4afce15",
-										"5f2b9c2beb371809c4afcecb",
-										"5f2b9d05eb371809c4afd0fa",
-										"5f2b9d1aeb371809c4afd132",
-										"5f2b9e24eb371809c4afd3f4",
-										"5f2b9f33eb371809c4afd6a9",
-										"5f2ba0bbeb371809c4afdaaf",
-										"5f2b9566eb371809c4afbe68"
+										"60c7b45b8f40bb114c3ef898",
+										"60c7b45e8f40bb114c3ef89b",
+										"60c7b4608f40bb114c3ef8a0",
+										"60c7b45f8f40bb114c3ef89e",
+										"60c7b4628f40bb114c3ef8a4",
+										"60c7b4638f40bb114c3ef8aa",
+										"60c7b4638f40bb114c3ef8a7",
+										"60c7b4638f40bb114c3ef8a8"
 									};
 	const string webURL = "http://dreamlo.com/lb/";
 
@@ -57,8 +54,22 @@ public class LeaderboardManager : MonoBehaviour
 
 	private bool isFinishedDisplayingLeaderboards = false;
 	private int finishedLeaderboardDownloads = 0;
-	private int currentlyDisplayedLeaderboard = 8;
-	private string[] leaderboardStrings = {"Game Mode 0", "Game Mode 1", "Game Mode 2", "Game Mode 3", "Game Mode 4", "Game Mode 5", "Game Mode 6", "Game Mode 7", "Overall"};  //{Rename}
+	private int currentlyDisplayedLeaderboard = 0;
+	private string[] leaderboardStrings =	{
+												"Target Overall", "Target Set <color=green>A</color>", "Target Set <color=red>B</color>", "Target Set <color=blue>C</color>",
+												"Endless Overall", "Endless Set <color=#00FFFF>A</color>", "Endless Set <color=purple>B</color>", "Endless Set <color=yellow>C</color>"
+											};
+
+	private int[][] leaderboardHighScores =	{
+												new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8},
+												new int[] {0, 1, 2, 4},
+												new int[] {5, 6, 7, 8},
+												new int[] {3},
+												new int[] {50, 51, 52, 53, 54, 55, 56, 57, 58},
+												new int[] {50, 51, 52, 54},
+												new int[] {55, 56, 57, 58},
+												new int[] {53}
+											};
 
     void Awake()
     {
@@ -73,7 +84,7 @@ public class LeaderboardManager : MonoBehaviour
     void Start()
     {
 		allOnlineHighScores = new HighScore[publicCodes.Length][];
-		myLocalHighScores = HighScoreLogger.instance.GetHighScores(false, true);  // TODO: add endless mode high scores
+		myLocalHighScores = HighScoreLogger.instance.GetLeaderboardHighScores(leaderboardHighScores);
 		myUsernameText.text = "Username: " + username;
 		DisplayLocalHighScore();
 	}
@@ -121,26 +132,18 @@ public class LeaderboardManager : MonoBehaviour
 			}
 		}
 
-		for (int i = 0; i < myOnlineHighScores.Length - 1; i++)
+		for (int i = 0; i < myOnlineHighScores.Length; i++)
         {
-			if (myLocalHighScores[i] > myOnlineHighScores[i])
+			if (HighScoreLogger.IsImprovedScore(IsLeaderboardEndlessMode(i), myLocalHighScores[i], myOnlineHighScores[i]))
             {
 				StartCoroutine(UploadGameModeHighScore(i, myLocalHighScores[i]));
             }
             else
             {
 				finishedLeaderboardUpdates++;
+				Debug.Log(i);
             }
         }
-		int overallHighScoreIndex = myOnlineHighScores.Length - 1;
-		if (myLocalHighScores[overallHighScoreIndex] > myOnlineHighScores[overallHighScoreIndex])
-        {
-			StartCoroutine(UploadOverallHighScore(myLocalHighScores[overallHighScoreIndex]));
-        }
-        else
-        {
-			finishedLeaderboardUpdates++;
-		}
 		yield return new WaitUntil(() => finishedLeaderboardUpdates == myOnlineHighScores.Length);
 		messageText.text = "Upload successful!";
 		isFinishedDisplayingLeaderboards = false;
@@ -152,19 +155,23 @@ public class LeaderboardManager : MonoBehaviour
 		StartCoroutine(UploadAllHighScores());
     }
 
+	// Leaderboard mode instead of game mode
 	public void UploadNewHighScores(int gameMode, int gameModeHighScore, int overallHighScore)  // Unused
 	{
 		StartCoroutine(UploadGameModeHighScore(gameMode, gameModeHighScore));
-		StartCoroutine(UploadOverallHighScore(overallHighScore));
 	}
 
+	// Leaderboard mode instead of game mode
 	IEnumerator UploadGameModeHighScore(int gameMode, int score)
     {
-		UnityWebRequest request = UnityWebRequest.Get(webURL + privateCodes[gameMode] + "/add/" + UnityWebRequest.EscapeURL(username) + "/" + score);
+		UnityWebRequest request = UnityWebRequest.Get(webURL + privateCodes[gameMode] + "/delete/" + UnityWebRequest.EscapeURL(username));
+		request.timeout = Constants.connectionTimeoutTime;
+		yield return request.SendWebRequest();
+		request = UnityWebRequest.Get(webURL + privateCodes[gameMode] + "/add/" + UnityWebRequest.EscapeURL(username) + "/" + score);
 		request.timeout = Constants.connectionTimeoutTime;
 		yield return request.SendWebRequest();
 
-		string gameModeHighScoreString = HighScoreLogger.instance.targetHighScoreStrings[gameMode];  // TODO: add endless mode high scores
+		string gameModeHighScoreString = leaderboardStrings[gameMode];
 		if (string.IsNullOrEmpty(request.error))
 		{
 			finishedLeaderboardUpdates++;
@@ -176,26 +183,6 @@ public class LeaderboardManager : MonoBehaviour
 			StopCoroutine(UploadAllHighScores());
 			uploadScoresButtonComponent.interactable = true;
 			Debug.Log("Error uploading " + gameModeHighScoreString + ": " + request.error);
-		}
-	}
-
-	IEnumerator UploadOverallHighScore(int score)
-    {
-		UnityWebRequest request = UnityWebRequest.Get(webURL + privateCodes[privateCodes.Length - 1] + "/add/" + UnityWebRequest.EscapeURL(username) + "/" + score);
-		request.timeout = Constants.connectionTimeoutTime;
-		yield return request.SendWebRequest();
-
-		if (string.IsNullOrEmpty(request.error))
-		{
-			finishedLeaderboardUpdates++;
-			// Debug.Log("Upload Successful with OverallHighScore");
-		}
-		else
-		{
-			messageText.text = "<color=#FF4040>Check your internet connection and try again.</color>";
-			StopCoroutine(UploadAllHighScores());
-			uploadScoresButtonComponent.interactable = true;
-			Debug.Log("Error uploading OverallHighScore" + ": " + request.error);
 		}
 	}
 
@@ -214,9 +201,10 @@ public class LeaderboardManager : MonoBehaviour
 		messageText.text = "Request successful!";
 	}
 
-	IEnumerator DownloadHighScores(int leaderboardNum, int maxScores)
+	IEnumerator DownloadHighScores(int leaderboardNum, int maxScores)  // maxScores is unused
 	{
-		UnityWebRequest request = UnityWebRequest.Get(webURL + publicCodes[leaderboardNum] + "/pipe/" + maxScores);
+		UnityWebRequest request = UnityWebRequest.Get(webURL + publicCodes[leaderboardNum] + "/pipe/");
+		// UnityWebRequest request = UnityWebRequest.Get(webURL + publicCodes[leaderboardNum] + "/pipe/" + maxScores);
 		request.timeout = Constants.connectionTimeoutTime;
 		yield return request.SendWebRequest();
 
@@ -243,12 +231,22 @@ public class LeaderboardManager : MonoBehaviour
 		string[] entries = textStream.Split(new char[] {'\n'}, System.StringSplitOptions.RemoveEmptyEntries);
 		HighScore[] currentOnlineHighScores = new HighScore[entries.Length];
 
+		bool isAscending = !IsLeaderboardEndlessMode(leaderboardNum);
 		for (int i = 0; i < entries.Length; i++)
 		{
 			string[] entryInfo = entries[i].Split(new char[] {'|'});
 			string username = entryInfo[0];
 			int score = int.Parse(entryInfo[1]);
-			currentOnlineHighScores[i] = new HighScore(username, score);
+			int highScoreIndex;
+			if (isAscending)
+            {
+				highScoreIndex = entries.Length - i - 1;
+			}
+            else
+            {
+				highScoreIndex = i;
+			}
+			currentOnlineHighScores[highScoreIndex] = new HighScore(username, score);
 			// Debug.Log(leaderboardNum + " | " + currentOnlineHighScores[i].username + ": " + currentOnlineHighScores[i].score);
 		}
 		allOnlineHighScores[leaderboardNum] = currentOnlineHighScores;
@@ -282,10 +280,15 @@ public class LeaderboardManager : MonoBehaviour
 		DisplayLocalHighScore();
 	}
 
-	void DisplayLocalHighScore()
+	public void DisplayLocalHighScore()
     {
 		myLocalScoreText.text = "Score: " + myLocalHighScores[currentlyDisplayedLeaderboard];
     }
+
+	public bool IsLeaderboardEndlessMode(int leaderboardNum)
+	{
+		return HighScoreLogger.IsEndlessGameMode(leaderboardHighScores[leaderboardNum][0]);
+	}
 }
 
 public struct HighScore

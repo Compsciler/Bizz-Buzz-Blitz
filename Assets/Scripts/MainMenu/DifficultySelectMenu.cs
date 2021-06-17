@@ -229,14 +229,10 @@ public class DifficultySelectMenu : MonoBehaviour
     {
         if (endlessDifficultyButtonsHolder.activeSelf)
         {
-            endlessDifficultyButtonsHolder.SetActive(false);
-            targetDifficultyButtonsHolder.SetActive(true);
             Timing.RunCoroutine(EndlessDifficultyButtonsTextChange(false));
         }
         else
         {
-            targetDifficultyButtonsHolder.SetActive(false);
-            endlessDifficultyButtonsHolder.SetActive(true);
             Timing.RunCoroutine(EndlessDifficultyButtonsTextChange(true));
         }
     }
@@ -249,12 +245,16 @@ public class DifficultySelectMenu : MonoBehaviour
         int iEnd;
         if (isChangingToEndlessMode)
         {
+            targetDifficultyButtonsHolder.SetActive(false);
+            endlessDifficultyButtonsHolder.SetActive(true);
             endlessModeToggleButtonText.text = "Switch to\nTarget Mode";
             iStart = targetGameModeUnlockReqs.Length;
             iEnd = targetGameModeUnlockReqs.Length + endlessGameModeUnlockReqs.Length;
         }
         else
         {
+            endlessDifficultyButtonsHolder.SetActive(false);
+            targetDifficultyButtonsHolder.SetActive(true);
             endlessModeToggleButtonText.text = "Switch to\nEndless Mode";
             iStart = 0;
             iEnd = targetGameModeUnlockReqs.Length;
@@ -297,7 +297,7 @@ public class DifficultySelectMenu : MonoBehaviour
 
     public string GetScoreRank(int score, int gameMode)
     {
-        bool isEndlessMode = HighScoreLogger.instance.IsEndlessGameMode(gameMode);
+        bool isEndlessMode = HighScoreLogger.IsEndlessGameMode(gameMode);
         string[] ranks =    {
                                 "<color=#F08600>S+</color>",
                                 "<color=#FFCE54>S</color>",
@@ -352,7 +352,7 @@ public class DifficultySelectMenu : MonoBehaviour
 
     public void SetCollectiveScoreText(int gameMode)
     {
-        bool isEndlessMode = HighScoreLogger.instance.IsEndlessGameMode(gameMode);
+        bool isEndlessMode = HighScoreLogger.IsEndlessGameMode(gameMode);
         collectiveScoreText.gameObject.SetActive(true);
         if (isEndlessMode)
         {
@@ -368,7 +368,7 @@ public class DifficultySelectMenu : MonoBehaviour
             collectiveScoreText.text += "None";
             if (!isEndlessMode)
             {
-                // collectiveScoreText.text += " (10000)";
+                collectiveScoreText.text += " (10000 for leaderboard)";
             }
             return;
         }

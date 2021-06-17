@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
                 BizzBuzzButton.areNumbersRandomRange = true;
                 break;
             case 56:
-                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, int.MaxValue);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 20);
                 BizzBuzzButton.areNumbersRandomRange = true;
                 break;
             case 57:

@@ -30,7 +30,7 @@ public class TestingZone : MonoBehaviour
                     {
                         case "UHS":  // Update high score
                             HighScoreLogger.instance.gameMode = int.Parse(parsedStringArr[1]);
-                            HighScoreLogger.instance.UpdateHighScore(HighScoreLogger.instance.IsEndlessGameMode(HighScoreLogger.instance.gameMode), int.Parse(parsedStringArr[2]), true);
+                            HighScoreLogger.instance.UpdateHighScore(HighScoreLogger.IsEndlessGameMode(HighScoreLogger.instance.gameMode), int.Parse(parsedStringArr[2]), true);
                             Debug.Log("Game Mode " + parsedStringArr[1] + " high score updated to " + parsedStringArr[2]);
                             break;
                         case "UAGM":  // Unlock all game modes

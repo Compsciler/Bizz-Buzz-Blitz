@@ -37,6 +37,7 @@ public class BizzBuzzClassification : MonoBehaviour
         */
 
         /*
+        // rulesUsed = new List<string>() {"Bizz", "Buzz", "Fuzz", "Bazz", "Dupe", "Pow", "Semi", "Pyth"};  // 5257849 is the smallest number to satisfy all rules
         string s = "";
         for (int i = 1; i <= 200; i++)
         {
