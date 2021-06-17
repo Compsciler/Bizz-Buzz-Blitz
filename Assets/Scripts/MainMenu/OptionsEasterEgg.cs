@@ -31,7 +31,7 @@ public class OptionsEasterEgg : MonoBehaviour
     [SerializeField] GameObject[] enableOnEasterEgg;
     [SerializeField] GameObject[] disableOnEasterEgg;
 
-    private string linkUrl = "https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public";  //{"Developer Mode" link}
+    private string linkUrl = "https://youtu.be/LCWglXljevY";
 
     [SerializeField] AudioClip playButtonSound;
     [SerializeField] GameObject fadingMask;

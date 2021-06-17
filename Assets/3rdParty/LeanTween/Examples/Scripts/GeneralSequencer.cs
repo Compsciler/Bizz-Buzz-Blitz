@@ -53,9 +53,9 @@ public class GeneralSequencer : MonoBehaviour {
         // seq.reverse(); // not working yet
 
         // Testing canceling sequence after a bit of time
-        //LeanTween.delayedCall(3f, () =>
-        //{
-        //    LeanTween.cancel(seq.id);
-        //});
+        // LeanTween.delayedCall(3f, () =>
+        // {
+        //     LeanTween.cancel(seq.id);
+        // });
 	}
 }

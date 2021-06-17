@@ -358,11 +358,11 @@ namespace DentedPixel.LTExamples
             });
 
             // Local scale check
-            //GameObject cubeLocal = cubeNamed("cLocal");
-            //LeanTween.scale(cubeLocal, new Vector3(0.5f, 0.5f, 0.5f), 0.2f).setOnComplete(() =>
-            //{
-            //    LeanTest.expect((cubeLocal.transform.localScale.x == 0.5f && cubeLocal.transform.localScale.y == 0.5f && cubeLocal.transform.localScale.z == 0.5f), "SCALE WORKS", "scale x:" + cubeLocal.transform.localScale.x + " y:" + cubeLocal.transform.localScale.y + " z:" + cubeLocal.transform.localScale.z);
-            //});
+            // GameObject cubeLocal = cubeNamed("cLocal");
+            // LeanTween.scale(cubeLocal, new Vector3(0.5f, 0.5f, 0.5f), 0.2f).setOnComplete(() =>
+            // {
+            //     LeanTest.expect((cubeLocal.transform.localScale.x == 0.5f && cubeLocal.transform.localScale.y == 0.5f && cubeLocal.transform.localScale.z == 0.5f), "SCALE WORKS", "scale x:" + cubeLocal.transform.localScale.x + " y:" + cubeLocal.transform.localScale.y + " z:" + cubeLocal.transform.localScale.z);
+            // });
 
             // Groups of tweens testing
             groupTweens = new LTDescr[1200];

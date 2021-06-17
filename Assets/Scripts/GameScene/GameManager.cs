@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour
             yield break;
         }
         StateManager.instance.SetState(new GameOverState());
+        if (PlayerPrefs.GetInt("StoreReviewRequestTotal", 0) == 0)
+        {
+            RateGame.isReadyToRequestStoreReview = true;
+        }
         /* //<
         pauseButton.GetComponent<Button>().interactable = false;
         if (isTutorial)
@@ -120,10 +124,7 @@ public class GameManager : MonoBehaviour
             gameOverMenu.SetActive(true);
             Debug.Log("Tutorial Complete!");
 
-            if (PlayerPrefs.GetInt("StoreReviewRequestTotal", 0) == 0)
-            {
-                RateGame.isReadyToRequestStoreReview = true;
-            }
+            
             yield return Timing.WaitForOneFrame;
         }
         else */
@@ -160,7 +161,6 @@ public class GameManager : MonoBehaviour
 
             // GAME OVER SCREEN
             gameOverMenu.SetActive(true);
-            //< spawnPeopleScript.UpdateLoseScoreText();  //{Update score text
             AudioManager.instance.musicSource.Pause();
             if (isGameWon)
             {

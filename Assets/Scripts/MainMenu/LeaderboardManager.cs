@@ -10,7 +10,6 @@ public class LeaderboardManager : MonoBehaviour
 {
 	internal static LeaderboardManager instance;
 
-	//{Dreamlo private and public code pair for each leaderboard used}
 	private string[] privateCodes = {
 										"EreiRCzf-kKiYdA-tfFY2QU_FPvg2qNU6ffwXTTb_fcw",  // Overall Target
 										"osJH-jT3L0KFteYMq5sGAAO3SWeXHpBkWUdSn_sUmgAQ",

@@ -10,6 +10,8 @@ public class RateGame : MonoBehaviour
 
     internal static bool isReadyToRequestStoreReview = false;
 
+    private string appStoreLinkUrl = "https://tinyurl.com/BizzBuzzBlitz";
+
     void Start()
     {
         if (!Constants.isMobilePlatform)
@@ -21,9 +23,7 @@ public class RateGame : MonoBehaviour
         }
         else if (isReadyToRequestStoreReview)
         {
-#if UNITY_IOS
-            Device.RequestStoreReview();
-#endif
+            RequestStoreReview();
             isReadyToRequestStoreReview = false;
             PlayerPrefs.SetInt("StoreReviewRequestTotal", 1);
             Debug.Log("Ready to request store review!");
@@ -37,5 +37,9 @@ public class RateGame : MonoBehaviour
 #endif
     }
 
-    //{Rate Button should open a link to game's store page}
+    
+    public void OpenAppStorePage()
+    {
+        Application.OpenURL(appStoreLinkUrl);
+    }
 }

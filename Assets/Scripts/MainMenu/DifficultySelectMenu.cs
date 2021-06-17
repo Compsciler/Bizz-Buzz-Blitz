@@ -42,7 +42,6 @@ public class DifficultySelectMenu : MonoBehaviour
     [SerializeField] TMP_Text collectiveScoreText;
 
     // https://stackoverflow.com/questions/5849548/is-this-array-initialization-incorrect
-    //{Game mode unlock requirements, in order by the game mode (starting from tutorial here) considered for requirements}
     internal static int[][,] targetGameModeUnlockReqTargetRounds = new int[][,]{
         new int[,] {},
         new int[,] {{0, -1}},

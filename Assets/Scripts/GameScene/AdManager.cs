@@ -17,7 +17,7 @@ public class AdManager : MonoBehaviour, IUnityAdsListener
 
     internal bool isAdCompleted = false;
     internal int adsWatchedTotal = 0;
-    internal int maxAdsWatchedPerGame = 1;  //{Optional: change value}
+    internal int maxAdsWatchedPerGame = 1;
 
     void Awake()
     {
@@ -40,7 +40,7 @@ public class AdManager : MonoBehaviour, IUnityAdsListener
             Advertisement.Initialize(Constants.androidGameId, isTestMode);  // Android SPECIFIC
         }
 
-        if (true)  //{ERROR: dependent on GameManager.cs; Change if condition and description text}
+        if (true)  // ERROR: dependent on GameManager.cs; Change if condition and description text}
         {
             descriptionErrorText.text = "Watch ad to reset infection timers and reveal all infected people";
         }
