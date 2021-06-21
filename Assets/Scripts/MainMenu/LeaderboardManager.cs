@@ -140,7 +140,6 @@ public class LeaderboardManager : MonoBehaviour
             else
             {
 				finishedLeaderboardUpdates++;
-				Debug.Log(i);
             }
         }
 		yield return new WaitUntil(() => finishedLeaderboardUpdates == myOnlineHighScores.Length);

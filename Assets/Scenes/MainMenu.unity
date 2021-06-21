@@ -25054,7 +25054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: version 0.9.2
+  m_text: version 1.0.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 145bbd9f43cda6b47a883bded8221965, type: 2}
   m_sharedMaterial: {fileID: 21914024979671456, guid: 145bbd9f43cda6b47a883bded8221965,
@@ -31468,7 +31468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   svgImageGO: {fileID: 988037329}
-  isShowingLogoScreen: 0
+  isShowingLogoScreen: 1
   fadeInTime: 1.2
   fastFadeInTime: 0.2
   startImageAdditionalDelay: 0
