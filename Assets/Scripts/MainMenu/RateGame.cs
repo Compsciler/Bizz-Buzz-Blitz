@@ -10,7 +10,7 @@ public class RateGame : MonoBehaviour
 
     internal static bool isReadyToRequestStoreReview = false;
 
-    private string appStoreLinkUrl = "https://tinyurl.com/BizzBuzzBlitz";
+    private string appStoreLinkUrl = "https://apps.apple.com/us/app/bizz-buzz-blitz/id1572944610";
 
     void Start()
     {

@@ -280,7 +280,15 @@ public class LeaderboardManager : MonoBehaviour
 
 	public void DisplayLocalHighScore()
     {
-		myLocalScoreText.text = "Score: " + myLocalHighScores[currentlyDisplayedLeaderboard];
+		if (IsLeaderboardEndlessMode(currentlyDisplayedLeaderboard))
+        {
+			myLocalScoreText.text = "Score: ";
+        }
+        else
+        {
+			myLocalScoreText.text = "Time: ";
+		}
+		myLocalScoreText.text += myLocalHighScores[currentlyDisplayedLeaderboard];
     }
 
 	public bool IsLeaderboardEndlessMode(int leaderboardNum)

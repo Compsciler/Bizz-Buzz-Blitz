@@ -241,7 +241,7 @@ public class GameManager : MonoBehaviour
                 BizzBuzzButton.areNumbersRandomRange = true;
                 break;
             case 52:
-                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Pow"}, int.MaxValue);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Semi"}, int.MaxValue);
                 BizzBuzzButton.areNumbersRandomRange = true;
                 break;
             case 53:
@@ -251,7 +251,7 @@ public class GameManager : MonoBehaviour
                 BizzBuzzButton.randomNumberRangeRoundInterval = 100;
                 break;
             case 54:
-                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Semi", "Pyth"}, int.MaxValue);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Pow", "Pyth"}, int.MaxValue);  // OEIS A266927
                 BizzBuzzButton.areNumbersRandomRange = true;
                 break;
             case 55:
@@ -277,11 +277,11 @@ public class GameManager : MonoBehaviour
                 playerTotal = 2;
                 break;
             case 102:
-                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Pow"}, int.MaxValue);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Dupe", "Semi"}, int.MaxValue);
                 playerTotal = 2;
                 break;
             case 103:
-                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Semi", "Pyth"}, int.MaxValue);
+                BizzBuzzClassification.AddRuleInterval(new List<string>() {"Pow", "Pyth"}, int.MaxValue);
                 playerTotal = 2;
                 break;
             case 104:
