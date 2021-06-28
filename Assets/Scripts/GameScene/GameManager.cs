@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text targetRoundText;
     [SerializeField] TMP_Text roundText;
 
-    void Awake()  // Script Execution Order = -1
+    void Awake()  // Script Execution Order = -2
     {
         if (instance == null)
         {
@@ -264,9 +264,11 @@ public class GameManager : MonoBehaviour
                 break;
             case 57:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"RandomIsDivisbleByOrContainsDigit", "RandomIsDivisbleByOrContainsDigit"}, 1);
+                timerBars[0].maxValue = 1.5f;
                 break;
             case 58:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);
+                timerBars[0].maxValue = 3f;
                 break;
             case 100:  // Multiplayer modes start from 100
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Bizz", "Buzz"}, int.MaxValue);

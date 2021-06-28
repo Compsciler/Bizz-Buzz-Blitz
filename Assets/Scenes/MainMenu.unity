@@ -25054,7 +25054,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: version 1.0.1
+  m_text: version 1.0.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 145bbd9f43cda6b47a883bded8221965, type: 2}
   m_sharedMaterial: {fileID: 21914024979671456, guid: 145bbd9f43cda6b47a883bded8221965,
@@ -31012,7 +31012,9 @@ MonoBehaviour:
     Rules: 2 Random
 
     Random
-    number range size: 1'
+    number range size: 1
+
+    Timer length: 3s'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,
@@ -48513,7 +48515,9 @@ MonoBehaviour:
     Rules: 2 from {Bizz,
     Buzz, Fuzz, Bazz}
 
-    Random number range size: 1'
+    Random number range size: 1
+
+    Timer length: 1.5s'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36d6004f008bd91459b813bf1b27d209, type: 2}
   m_sharedMaterial: {fileID: 21573621589201580, guid: 36d6004f008bd91459b813bf1b27d209,

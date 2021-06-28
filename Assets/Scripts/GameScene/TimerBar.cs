@@ -1,4 +1,5 @@
 ﻿using MEC;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class TimerBar : MonoBehaviour
 
     [SerializeField] int player;
     [SerializeField] GameOverMenu gameOverMenuScript;
+
+    private long unixTimeMillisecondsOnPause;
 
     void Start()
     {
@@ -86,5 +89,23 @@ public class TimerBar : MonoBehaviour
     public void SetBarColor(Color color)
     {
         fill.color = color;
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (GameManager.instance.isMultiplayer)
+        {
+            return;
+        }
+        if (pauseStatus)
+        {
+            unixTimeMillisecondsOnPause = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+        }
+        else
+        {
+            long elapsedTimeMilliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds() - unixTimeMillisecondsOnPause;
+            currentValue -= elapsedTimeMilliseconds / 1000f;
+            Update();
+        }
     }
 }

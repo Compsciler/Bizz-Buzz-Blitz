@@ -43,7 +43,7 @@ public class BizzBuzzButton : MonoBehaviour
 
     private BizzBuzzButtonEffects bizzBuzzButtonEffectsScript;
 
-    void Awake()
+    void Awake()  // Script Execution Order = -1
     {
         SetUpButtonLists();
     }
