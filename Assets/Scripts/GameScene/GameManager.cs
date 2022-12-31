@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 57:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"RandomIsDivisbleByOrContainsDigit", "RandomIsDivisbleByOrContainsDigit"}, 1);
-                timerBars[0].maxValue = 1.5f;
+                timerBars[0].maxValue = 2f;
                 break;
             case 58:
                 BizzBuzzClassification.AddRuleInterval(new List<string>() {"Random", "Random"}, 1);

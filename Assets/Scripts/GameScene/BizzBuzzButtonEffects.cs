@@ -109,7 +109,9 @@ public class BizzBuzzButtonEffects : MonoBehaviour
         
         if (!AudioManager.instance.SFX_Source.mute)
         {
-            Handheld.Vibrate();
+            #if UNITY_IOS || UNITY_ANDROID
+                Handheld.Vibrate();
+            #endif
         }
 
         if (!GameManager.instance.isSFX_On)
